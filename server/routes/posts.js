@@ -1,0 +1,100 @@
+const path = require("path");
+const express = require("express");
+const router = express.Router();
+const Post = require("../../database/models/post");
+
+const publicPath = path.join(__dirname, "..", "..", "build");
+
+router.use(express.static(publicPath));
+
+// router.get("*", (req, res) => {
+//   res.sendFile(path.join(publicPath, "index.html"));
+// });
+
+router.get("/posts", async (req, res) => {
+  try {
+    const data = await Post.find({});
+    res.json(data);
+  } catch (e) {
+    res.json({
+      success: false,
+      error: "Unable to get the posts from database",
+      body: e
+    });
+  }
+});
+
+router.get("/posts/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.json(post);
+  } catch (e) {
+    res.json({
+      success: false,
+      error: "Unable to get the post by id",
+      body: e
+    });
+  }
+});
+
+router.post("/create", async (req, res) => {
+  try {
+    const postData = new Post(req.body.post);
+    const post = await postData.save();
+    res.json({
+      success: true,
+      message: "Post has been added to database",
+      post
+    });
+  } catch (e) {
+    res.json({
+      success: false,
+      error: "Unable to save to database",
+      body: e
+    });
+  }
+});
+
+router.patch("/edit/:id", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.body._id,
+      {
+        ...req.body.updates
+      },
+      {
+        new: true
+      }
+    );
+    res.json({
+      success: true,
+      message: "Post has been updated",
+      post
+    });
+  } catch (e) {
+    res.json({
+      success: false,
+      error: "Unable to update the post to database",
+      body: e
+    });
+  }
+});
+
+router.delete("/remove/:id", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndRemove(req.params.id);
+    res.json({
+      success: true,
+      message: "Post removed successfully",
+      post
+    });
+  } catch (e) {
+    res.json({
+      success: false,
+      error: "Unable to delete post",
+      body: e
+    });
+  }
+});
+
+module.exports = router;
