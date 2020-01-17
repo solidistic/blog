@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  author: String,
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdAt: Object,
   editedAt: Object,
   likes: Number,

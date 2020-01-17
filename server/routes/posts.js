@@ -11,7 +11,7 @@ router.use(express.static(publicPath));
 //   res.sendFile(path.join(publicPath, "index.html"));
 // });
 
-router.get("/posts", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const data = await Post.find({});
     res.json(data);
@@ -24,7 +24,7 @@ router.get("/posts", async (req, res) => {
   }
 });
 
-router.get("/posts/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     res.json(post);
@@ -57,8 +57,9 @@ router.post("/create", async (req, res) => {
 
 router.patch("/edit/:id", async (req, res) => {
   try {
+    console.log("patching", req.params.id);
     const post = await Post.findByIdAndUpdate(
-      req.body._id,
+      req.params.id,
       {
         ...req.body.updates
       },
@@ -66,6 +67,9 @@ router.patch("/edit/:id", async (req, res) => {
         new: true
       }
     );
+    if (!post) {
+      throw new Error("No post with given id");
+    }
     res.json({
       success: true,
       message: "Post has been updated",
