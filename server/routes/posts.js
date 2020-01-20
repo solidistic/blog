@@ -1,11 +1,7 @@
-const path = require("path");
 const express = require("express");
 const router = express.Router();
 const Post = require("../../database/models/post");
-
-const publicPath = path.join(__dirname, "..", "..", "build");
-
-router.use(express.static(publicPath));
+const auth = require("../middleware/auth");
 
 // router.get("*", (req, res) => {
 //   res.sendFile(path.join(publicPath, "index.html"));
@@ -16,7 +12,7 @@ router.get("/all", async (req, res) => {
     const data = await Post.find({});
     res.json(data);
   } catch (e) {
-    res.json({
+    res.status(500).json({
       success: false,
       error: "Unable to get the posts from database",
       body: e
@@ -37,7 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
   try {
     const postData = new Post(req.body.post);
     const post = await postData.save();
@@ -55,7 +51,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.patch("/edit/:id", async (req, res) => {
+router.patch("/edit/:id", auth, async (req, res) => {
   try {
     console.log("patching", req.params.id);
     const post = await Post.findByIdAndUpdate(
@@ -84,7 +80,7 @@ router.patch("/edit/:id", async (req, res) => {
   }
 });
 
-router.delete("/remove/:id", async (req, res) => {
+router.delete("/remove/:id", auth, async (req, res) => {
   try {
     const post = await Post.findByIdAndRemove(req.params.id);
     res.json({

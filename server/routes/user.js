@@ -1,27 +1,28 @@
-const path = require("path");
 const express = require("express");
 const router = express.Router();
 const User = require("../../database/models/user");
 
-const publicPath = path.join(__dirname, "..", "..", "build");
-
-router.use(express.static(publicPath));
-
-router.post("/create", async (req, res) => {
+router.get("/:userId", async (req, res) => {
   try {
-    const user = new User(req.body.user);
-    const account = await user.save();
-    res.json({
-      success: true,
-      message: "Account created succesfully",
-      account
-    });
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      throw new Error("Account doesn't exist");
+    }
+    // OTA SELVÄÄ:
+    // pitäisi toimiä myös spread operaattorilla:
+    // const { password, tokens, ...publicUser } = user;
+    // mutta palauttaa publicUseriksi oudon objektin??
+    const publicUser = {
+      _id: user._id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      posts: user.posts
+    };
+    res.status(200).json(publicUser);
   } catch (e) {
-    res.json({
-      success: false,
-      message: "Unable to create account",
-      body: e
-    })
+    res.status(500).json({ message: "Something went wrong!", error: e });
   }
 });
 

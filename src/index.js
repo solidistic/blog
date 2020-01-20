@@ -5,11 +5,15 @@ import AppRouter from "./routers/AppRouter";
 import * as serviceWorker from "./serviceWorker";
 import PostsContext from "./context/posts-context";
 import postsReducer from "./reducers/posts";
+import userReducer from "./reducers/user";
 import api from "./api/index";
 import { populatePosts } from "./actions/posts";
+import UserContext from "./context/user-context";
+import { startLogin } from "./actions/user";
 
 const App = () => {
   const [posts, dispatch] = useReducer(postsReducer, []);
+  const [user, userDispatch] = useReducer(userReducer, undefined);
   const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
@@ -17,17 +21,27 @@ const App = () => {
       .getAllPosts()
       .then(response => {
         dispatch(populatePosts(response.data));
-        setDataFetched(true);
       })
-      .catch(e => console.log(e))
-      .finally(() => console.log("Data fetched from database"));
+      .catch(e => console.error(e))
+      .finally(() => {
+        console.log("Data fetched from database");
+        setDataFetched(true);
+      });
+
+    // check for possible login with current active token
+    api.login().then(res => {
+      const { username, password } = res.data.user;
+      startLogin({ username, password }).then(login => userDispatch(login));
+    });
   }, []);
 
-  if (!dataFetched) return <div>Loading</div>;
+  if (!dataFetched) return <div>Loading...</div>;
   return (
-    <PostsContext.Provider value={{ posts, dispatch }}>
-      <AppRouter />
-    </PostsContext.Provider>
+    <UserContext.Provider value={{ user, userDispatch }}>
+      <PostsContext.Provider value={{ posts, dispatch }}>
+        <AppRouter />
+      </PostsContext.Provider>
+    </UserContext.Provider>
   );
 };
 

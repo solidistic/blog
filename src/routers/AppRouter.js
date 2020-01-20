@@ -6,6 +6,7 @@ import CreatePost from "../components/CreatePost";
 import ReadPostPage from "../components/ReadPostPage";
 import EditPostPage from "../components/EditPostPage";
 import NotFoundPage from "../components/NotFoundPage";
+import LoginPage from "../components/LoginPage";
 import Playground from "../test-data/Playground";
 
 export const history = createBrowserHistory();
@@ -23,7 +24,7 @@ const AppRouter = () => {
         <Route path="/posts/:id" component={ReadPostPage} />
         <Route path="/create" component={CreatePost} />
         <Route path="/edit/:id" component={EditPostPage} />
-        <Route path="/playground" component={Playground} />
+        <Route path="/login" component={LoginPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </Router>
