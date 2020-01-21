@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import api from "../api";
+import Post from "./Post";
 
 const ViewUserProfilePage = ({ match }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const loadUser = async () => {
-      const { data: userData } = await api.getUserById(match.params.id);
-      console.log(userData);
-      setUser(userData);
+      const { data } = await api.getUserById(match.params.id);
+      setUser(data);
     };
     loadUser();
   }, [match.params.id]);
@@ -21,12 +21,14 @@ const ViewUserProfilePage = ({ match }) => {
         <div>
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
-          <p>
+          <div>
             Posts:{" "}
             {user.posts.map(post => (
-              <div>Another post</div>
+              <div key={post._id}>
+                <Post post={post} />
+              </div>
             ))}
-          </p>
+          </div>
         </div>
       ) : (
         <div>User not found</div>

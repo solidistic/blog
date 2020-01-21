@@ -14,7 +14,7 @@ const Post = ({ post }) => (
           <span>
             <Link to={`/users/${post.author._id}`}>{post.author.username}</Link>
           </span>
-        )}
+        )}{" "}
         posted this at {post.createdAt}
       </span>
       {post.editedAt && <span> - Edited {post.editedAt}</span>}

@@ -37,17 +37,14 @@ router.get("/:id", async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const user = await User.findById(req.cookies.id);
-    const postData = new Post({ author: user._id, ...req.body.post });
-    // await user.stories.push(postData._id);
-    // await user.save((err, data) => {
-    //   console.log("Error", err);
-    //   console.log("Data", data);
-    // });
-    const post = await postData.save();
+    const post = new Post({ author: user._id, ...req.body.post });
+    await user.posts.push(post);
+    await user.save();
+    const postData = await post.save();
     res.status(200).json({
       success: true,
       message: "Post has been added to database",
-      post
+      post: postData
     });
   } catch (e) {
     res.status(500).json({
