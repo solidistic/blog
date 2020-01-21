@@ -4,11 +4,12 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import BlogApp from "./components/BlogApp";
 
-/*
-TODO:
+/* TODO:
   - Kommentit blogi postauksille
   - Tyylittely
   - Production (heroku?)
+  - Kun tili poistetaan, poistuu myös sen kirjoittamat postaukset
+  - Postausta luodessa tekijän nimi suoraan contextiin eikä pelkästään ID:tä
 */
 
 ReactDOM.render(<BlogApp />, document.getElementById("root"));
