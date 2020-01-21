@@ -16,7 +16,6 @@ const ReadPostPage = ({ match, history }) => {
   useEffect(() => {
     const postData = posts.find(post => post._id === match.params.id);
     if (!postData) history.push("/");
-    console.log(postData);
     setPost(postData);
   }, [match.params.id, history, posts]);
 
@@ -25,6 +24,7 @@ const ReadPostPage = ({ match, history }) => {
       <Header />
       <Post post={post} />
       {user && <Link to={`/edit/${post._id}`}>Edit post</Link>}
+      <h2>Comments:</h2>
       <CommentList comments={post.comments} />
       <CommentForm id={post._id} />
     </>

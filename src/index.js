@@ -5,7 +5,7 @@ import "./index.scss";
 import BlogApp from "./components/BlogApp";
 
 /* TODO:
-  - Kommentit blogi postauksille
+  - Siirrä focus lisättyyn kommenttiin kun se lisätään
   - Tyylittely
   - Production (heroku?)
   - Kun tili poistetaan, poistuu myös sen kirjoittamat postaukset

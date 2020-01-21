@@ -14,6 +14,15 @@ export default (state = [], action) => {
           return post;
         }
       });
+    case "ADD_COMMENT":
+      return state.map(post => {
+        if (post._id === action.comment.post._id) {
+          post.comments.push(action.comment);
+          return post;
+        } else {
+          return post;
+        }
+      });
     default:
       throw new Error("Error in posts reducer");
   }

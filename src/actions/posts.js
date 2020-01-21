@@ -48,3 +48,18 @@ export const startEditPost = async (id, updates) => {
     console.log("Error in startEditPost action", e);
   }
 };
+
+export const addComment = comment => ({
+  type: "ADD_COMMENT",
+  comment
+});
+
+export const startAddComment = async commentData => {
+  try {
+    const res = await api.saveComment(commentData);
+    if (res.status !== 200) throw new Error();
+    return addComment(res.data.comment);
+  } catch (e) {
+    console.log(e);
+  }
+};

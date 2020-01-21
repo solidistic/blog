@@ -14,7 +14,10 @@ router.get("/all", async (req, res) => {
     const data = await Post.find({})
       .populate("author")
       .populate("comments")
-      .populate({ path: "comments", populate: { path: "postedBy", select: "username" } });
+      .populate({
+        path: "comments",
+        populate: { path: "postedBy", select: "username" }
+      });
     res.json(data);
   } catch (e) {
     res.status(500).json({
@@ -118,7 +121,7 @@ router.post("/comments/create", auth, async (req, res) => {
     await post.save();
     await postedBy.save();
     await comment.save();
-    res.status(200).send("Comment added");
+    res.status(200).json({ message: "Comment added", comment });
   } catch (error) {
     res.status(500).send({ message: "Unable to add comment", error });
   }

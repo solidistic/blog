@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import moment from "moment";
-import api from "../api";
+import { startAddComment } from "../actions/posts";
+import PostsContext from "../context/posts-context";
 
 const CommentForm = ({ id }) => {
+  const { dispatch } = useContext(PostsContext);
   const [body, setBody] = useState("");
+  const [active, setActivity] = useState(false);
 
   const addComment = async e => {
     e.preventDefault();
-
+    setActivity(true);
     const createdAt = moment().format("D/MM/YYYY - hh:mm");
-    
-    await api.saveComment({ body, createdAt, id });
+    dispatch(await startAddComment({ body, createdAt, id }));
     setBody("");
+    setActivity(false);
   };
 
   return (
@@ -22,7 +25,7 @@ const CommentForm = ({ id }) => {
           placeholder="Comment..."
           onChange={e => setBody(e.target.value)}
         />
-        <button>Comment</button>
+        <button disabled={active}>Comment</button>
       </form>
     </>
   );
