@@ -5,9 +5,8 @@ const User = require("../../database/models/user");
 router.get("/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate("posts");
-    if (!user) {
-      throw new Error("Account doesn't exist");
-    }
+    if (!user) throw new Error("Account doesn't exist");
+
     // OTA SELVÄÄ:
     // pitäisi toimiä myös spread operaattorilla:
     // const { password, tokens, ...publicUser } = user;

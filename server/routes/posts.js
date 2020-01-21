@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const user = await User.findById(req.cookies.id);
-    const post = new Post({ author: user._id, ...req.body.post });
+    const post = new Post({ author: user, ...req.body.post });
     await user.posts.push(post);
     await user.save();
     const postData = await post.save();

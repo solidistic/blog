@@ -25,7 +25,7 @@ const ViewUserProfilePage = ({ match }) => {
             Posts:{" "}
             {user.posts.map(post => (
               <div key={post._id}>
-                <Post post={post} />
+                <Post post={post} author={user.username} />
               </div>
             ))}
           </div>
