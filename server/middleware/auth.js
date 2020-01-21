@@ -16,6 +16,6 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (e) {
-    res.status(400).json({ message: "Please authenticate" });
+    res.status(401).json({ message: "Please authenticate" });
   }
 };

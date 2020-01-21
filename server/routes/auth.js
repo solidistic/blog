@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../../database/models/user");
+const auth = require("../middleware/auth");
 
 router.post("/login", async (req, res) => {
   let user, token;
@@ -52,12 +53,40 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/logout", (req, res) => {
-  res
-    .status(200)
-    .clearCookie("jwt_token")
-    .clearCookie("id")
-    .json({ message: "Logged out successfully" });
+router.post("/logout", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.cookies.id);
+    user.tokens = user.tokens.filter(
+      index => index.token !== req.cookies.jwt_token
+    );
+    await user.save();
+    res
+      .status(200)
+      .clearCookie("jwt_token")
+      .clearCookie("id")
+      .json({ message: "Logged out successfully" });
+  } catch (e) {
+    res.status(400).json({
+      message: "Unable to logout safely"
+    });
+  }
+});
+
+router.post("/logoutAll", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.cookies.id);
+    user.tokens = [];
+    await user.save();
+    res
+      .status(200)
+      .clearCookie("jwt_token")
+      .clearCookie("id")
+      .json({ message: "Logged out successfully" });
+  } catch (e) {
+    res.status(400).json({
+      message: "Unable to logout safely all devices"
+    });
+  }
 });
 
 module.exports = router;
