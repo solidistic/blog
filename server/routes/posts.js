@@ -11,7 +11,6 @@ const auth = require("../middleware/auth");
 router.get("/all", async (req, res) => {
   try {
     const data = await Post.find({}).populate("author");
-    console.log(data);
     res.json(data);
   } catch (e) {
     res.status(500).json({
