@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../../database/models/post");
+const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
 
@@ -10,7 +11,10 @@ const auth = require("../middleware/auth");
 
 router.get("/all", async (req, res) => {
   try {
-    const data = await Post.find({}).populate("author");
+    const data = await Post.find({})
+      .populate("author")
+      .populate("comments")
+      .populate({ path: "comments", populate: { path: "postedBy", select: "username" } });
     res.json(data);
   } catch (e) {
     res.status(500).json({
@@ -57,7 +61,6 @@ router.post("/create", auth, async (req, res) => {
 
 router.patch("/edit/:id", auth, async (req, res) => {
   try {
-    console.log("patching", req.params.id);
     const post = await Post.findByIdAndUpdate(
       req.params.id,
       {
@@ -98,6 +101,26 @@ router.delete("/remove/:id", auth, async (req, res) => {
       error: "Unable to delete post",
       body: e
     });
+  }
+});
+
+router.post("/comments/create", auth, async (req, res) => {
+  try {
+    const postedBy = await User.findById(req.cookies.id);
+    const post = await Post.findById(req.body.id);
+    const comment = new Comment({ post, postedBy, ...req.body.comment });
+
+    if (!post || !postedBy) throw new Error("Can't find post or user");
+
+    post.comments.push(comment);
+    postedBy.comments.push(comment);
+
+    await post.save();
+    await postedBy.save();
+    await comment.save();
+    res.status(200).send("Comment added");
+  } catch (error) {
+    res.status(500).send({ message: "Unable to add comment", error });
   }
 });
 

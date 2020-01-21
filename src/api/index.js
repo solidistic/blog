@@ -13,6 +13,10 @@ export const editPost = (_id, updates) =>
   api.patch(`/posts/edit/${_id}`, { updates });
 export const getAllPosts = () => api.get("/posts/all");
 
+// Comments
+export const saveComment = ({ id, ...comment }) =>
+  api.post("/posts/comments/create", { comment, id });
+
 // User
 export const getUserById = id => api.get(`/users/${id}`);
 
@@ -25,6 +29,7 @@ export const signup = (username, password) =>
 
 export default {
   savePost,
+  saveComment,
   getPost,
   removePost,
   editPost,

@@ -9,7 +9,6 @@ import BlogApp from "./components/BlogApp";
   - Tyylittely
   - Production (heroku?)
   - Kun tili poistetaan, poistuu myös sen kirjoittamat postaukset
-  - Postausta luodessa tekijän nimi suoraan contextiin eikä pelkästään ID:tä
 */
 
 ReactDOM.render(<BlogApp />, document.getElementById("root"));

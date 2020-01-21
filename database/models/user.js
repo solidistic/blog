@@ -33,6 +33,12 @@ const userSchema = mongoose.Schema({
       ref: "Post"
     }
   ],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ],
   isAdmin: Boolean,
   tokens: [
     {
@@ -63,7 +69,7 @@ userSchema.methods.createToken = async function(password) {
     const token = await jwt.sign({ _id: this._id.toString() }, tokenSecret, {
       expiresIn: "1h"
     });
-    
+
     this.tokens = this.tokens.concat({ token });
 
     await this.save();
