@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 const Post = ({ post, author }) => (
   <div>
     <Link to={`/posts/${post._id}`}>
-      <h2>
-        {post.title} - {post._id}
-      </h2>
+      <h2>{post.title}</h2>
     </Link>
     <div>
       <>

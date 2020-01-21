@@ -22,7 +22,7 @@ const ViewUserProfilePage = ({ match }) => {
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
           <div>
-            Posts:{" "}
+            Latest activity:{" "}
             {user.posts.map(post => (
               <div key={post._id}>
                 <Post post={post} author={user.username} />
