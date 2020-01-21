@@ -4,6 +4,13 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import BlogApp from "./components/BlogApp";
 
+/*
+TODO:
+  - Kommentit blogi postauksille
+  - Tyylittely
+  - Production (heroku?)
+*/
+
 ReactDOM.render(<BlogApp />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
