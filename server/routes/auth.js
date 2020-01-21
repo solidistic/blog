@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     const user = new User(req.body.user);
-    await user.createToken();
+    // await user.createToken();
     const account = await user.save();
     res.status(201).json({
       success: true,
@@ -56,6 +56,7 @@ router.post("/logout", (req, res) => {
   res
     .status(200)
     .clearCookie("jwt_token")
+    .clearCookie("id")
     .json({ message: "Logged out successfully" });
 });
 

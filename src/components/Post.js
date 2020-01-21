@@ -1,12 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => (
   <div>
-    <h2>
-      {post.title} - {post._id}
-    </h2>
+    <Link to={`/posts/${post._id}`}>
+      <h2>
+        {post.title} - {post._id}
+      </h2>
+    </Link>
     <p>
-      <span>Posted at {post.createdAt}</span>
+      <span>
+        {post.author && (
+          <span>
+            <Link to={`/users/${post.author._id}`}>{post.author.username}</Link>
+          </span>
+        )}
+        posted this at {post.createdAt}
+      </span>
       {post.editedAt && <span> - Edited {post.editedAt}</span>}
     </p>
     <p>{post.body}</p>

@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Post from "./Post";
 import PostsContext from "../context/posts-context";
 import postsSelector from "../selectors/posts";
@@ -23,9 +22,7 @@ const PostsList = () => {
       ) : (
         visiblePosts.map(post => (
           <div key={post._id}>
-            <Link to={`/posts/${post._id}`}>
-              <Post post={post} />
-            </Link>
+            <Post post={post} />
           </div>
         ))
       )}

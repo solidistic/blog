@@ -4,7 +4,7 @@ const User = require("../../database/models/user");
 
 router.get("/:userId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.userId).populate("posts");
     if (!user) {
       throw new Error("Account doesn't exist");
     }

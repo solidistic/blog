@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index.scss";
 import AppRouter from "./routers/AppRouter";
 import * as serviceWorker from "./serviceWorker";
 import PostsContext from "./context/posts-context";
@@ -29,10 +29,15 @@ const App = () => {
       });
 
     // check for possible login with current active token
-    api.login().then(res => {
-      const { username, password } = res.data.user;
-      startLogin({ username, password }).then(login => userDispatch(login));
-    });
+    api
+      .login()
+      .then(res => {
+        if (res.status === 200) {
+          const { username, password } = res.data.user;
+          startLogin({ username, password }).then(login => userDispatch(login));
+        }
+      })
+      .catch(e => console.error(e));
   }, []);
 
   if (!dataFetched) return <div>Loading...</div>;

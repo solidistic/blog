@@ -4,14 +4,16 @@ import Post from "./Post";
 import Header from "./Header";
 import { withRouter } from "react-router";
 import PostsContext from "../context/posts-context";
+import UserContext from "../context/user-context";
 
 const ReadPostPage = ({ match, history }) => {
   const { posts } = useContext(PostsContext);
+  const { user } = useContext(UserContext);
   const [post, setPost] = useState({});
 
   useEffect(() => {
     const postData = posts.find(post => post._id === match.params.id);
-    // if (!postData) history.push("/");
+    if (!postData) history.push("/");
     setPost(postData);
   }, [match.params.id, history, posts]);
 
@@ -19,7 +21,7 @@ const ReadPostPage = ({ match, history }) => {
     <>
       <Header />
       <Post post={post} />
-      <Link to={`/edit/${post._id}`}>Edit post</Link>
+      {user && <Link to={`/edit/${post._id}`}>Edit post</Link>}
     </>
   );
 };

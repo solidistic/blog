@@ -25,7 +25,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 // Routes
 app.use("/posts", postRoutes);
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 app.use("/", authRoutes);
 
 app.on("error", e => console.log("Server error:", e));

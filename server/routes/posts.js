@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../../database/models/post");
+const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
 
 // router.get("*", (req, res) => {
@@ -9,7 +10,8 @@ const auth = require("../middleware/auth");
 
 router.get("/all", async (req, res) => {
   try {
-    const data = await Post.find({});
+    const data = await Post.find({}).populate("author");
+    console.log(data);
     res.json(data);
   } catch (e) {
     res.status(500).json({
@@ -22,7 +24,7 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate("author");
     res.json(post);
   } catch (e) {
     res.json({
@@ -35,15 +37,21 @@ router.get("/:id", async (req, res) => {
 
 router.post("/create", auth, async (req, res) => {
   try {
-    const postData = new Post(req.body.post);
+    const user = await User.findById(req.cookies.id);
+    const postData = new Post({ author: user._id, ...req.body.post });
+    // await user.stories.push(postData._id);
+    // await user.save((err, data) => {
+    //   console.log("Error", err);
+    //   console.log("Data", data);
+    // });
     const post = await postData.save();
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Post has been added to database",
       post
     });
   } catch (e) {
-    res.json({
+    res.status(500).json({
       success: false,
       error: "Unable to save to database",
       body: e

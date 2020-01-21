@@ -1,5 +1,4 @@
 export default (state = undefined, action) => {
-  console.log("ACTION OBJECT", action);
   switch (action.type) {
     case "LOGIN":
       return {

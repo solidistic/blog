@@ -12,8 +12,9 @@ export const addPost = post => ({
 
 export const startAddPost = async (post = {}) => {
   try {
-    const newPost = await (await api.savePost(post)).data.post;
-    return addPost(newPost);
+    const res = await api.savePost(post);
+    if (res.status !== 200) throw new Error("Unable to save post to database");
+    return addPost(res.data.post);
   } catch (e) {
     console.log("Error in posts actions", e);
   }
@@ -44,6 +45,6 @@ export const startEditPost = async (id, updates) => {
     await api.editPost(id, updates);
     return editPost(id, updates);
   } catch (e) {
-    console.log("Error in startEditPost actions", e);
+    console.log("Error in startEditPost action", e);
   }
 };

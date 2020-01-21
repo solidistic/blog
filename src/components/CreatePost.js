@@ -6,11 +6,20 @@ import PostsContext from "../context/posts-context";
 
 const CreatePost = ({ history }) => {
   const { dispatch } = useContext(PostsContext);
-  const createPost = async post => {
-    const addPost = await startAddPost(post);
-    dispatch(addPost);
-    history.push(`/posts/${addPost.post._id}`);
+
+  const createPost = post => {
+    startAddPost(post)
+      .then(addPost => {
+        console.log("ADDPOST createpost", addPost);
+        return addPost;
+      })
+      .then(addPost => {
+        dispatch(addPost);
+        history.push(`/posts/${addPost.post._id}`);
+      })
+      .catch(e => console.log(e));
   };
+
   return (
     <>
       <Header />

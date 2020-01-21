@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Schema = mongoose.Schema;
 
-const userSchema = Schema({
+const tokenSecret = process.env.JWT_TOKEN_SECRET || "justfordevelopment";
+
+const userSchema = mongoose.Schema({
   username: {
     type: String,
     required: [true, "You must provide an username"],
@@ -28,7 +29,7 @@ const userSchema = Schema({
   },
   posts: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Post"
     }
   ],
@@ -59,18 +60,17 @@ userSchema.statics.findByName = function(username) {
 userSchema.methods.createToken = async function(password) {
   const pwMatch = await bcrypt.compare(password, this.password);
   if (pwMatch) {
-    const token = await jwt.sign(
-      { _id: this._id.toString() },
-      "this should be a secret",
-      {
-        expiresIn: "1h"
-      }
-    );
+    const token = await jwt.sign({ _id: this._id.toString() }, tokenSecret, {
+      expiresIn: "1h"
+    });
+    
     this.tokens = this.tokens.concat({ token });
+
     await this.save();
+
     return token;
   } else {
-    throw new Error("Unable to create token");
+    throw new Error("Unable to create token, check your password");
   }
 };
 
