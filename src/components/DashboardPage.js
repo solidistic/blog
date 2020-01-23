@@ -5,7 +5,6 @@ import PostsList from "./PostsList";
 function DashboardPage() {
   return (
     <div className="App">
-      <Header />
       <h2>Janne Mulari's blog</h2>
       <p>Welcome to my blog!</p>
       <p>

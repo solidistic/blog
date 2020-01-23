@@ -45,7 +45,7 @@ router.post("/create", auth, async (req, res) => {
   try {
     const user = await User.findById(req.cookies.id);
     const post = new Post({ author: user, ...req.body.post });
-    await user.posts.push(post);
+    await user.posts.push(post._id);
     await user.save();
     const postData = await post.save();
     res.status(200).json({
@@ -107,23 +107,32 @@ router.delete("/remove/:id", auth, async (req, res) => {
   }
 });
 
-router.post("/comments/create", auth, async (req, res) => {
+router.post("/comments/create", auth, async (req, res, next) => {
+  console.log("Adding comment", req.body);
   try {
     const postedBy = await User.findById(req.cookies.id);
     const post = await Post.findById(req.body.id);
     const comment = new Comment({ post, postedBy, ...req.body.comment });
 
-    if (!post || !postedBy) throw new Error("Can't find post or user");
+    // console.log(postedBy === null, post === null);
+    // console.log("POSTED BY:", postedBy);
+    // console.log("POST:", post);
+    // console.log("NEW COMMENT:", comment);
 
-    post.comments.push(comment);
-    postedBy.comments.push(comment);
+    // if (!post || !postedBy) throw new Error("Can't find post or user");
 
-    await post.save();
-    await postedBy.save();
-    await comment.save();
+    post.comments.push(comment._id);
+    postedBy.comments.push(comment._id);
+
+    Promise.all([post.save(), postedBy.save(), comment.save()])
+      .then(() => console.log("PROMISE ALL DONE"))
+      .catch(e => console.log("PROMISE ALL ERROR", e));
+
     res.status(200).json({ message: "Comment added", comment });
   } catch (error) {
-    res.status(500).send({ message: "Unable to add comment", error });
+    console.log(error);
+    res.status(500);
+    res.json({ error });
   }
 });
 

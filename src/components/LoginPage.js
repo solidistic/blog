@@ -6,7 +6,6 @@ import Header from "./Header";
 const LoginPage = ({ history }) => {
   return (
     <>
-      <Header />
       <LoginForm history={history}/>
       <div>
         <p>

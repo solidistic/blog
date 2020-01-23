@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 
-export const PostForm = ({ post, onSubmit }) => {
+export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [error, setError] = useState(undefined);
@@ -41,7 +41,9 @@ export const PostForm = ({ post, onSubmit }) => {
         defaultValue={body}
         onChange={e => setBody(e.target.value)}
       />
-      <button type="submit">Publish</button>
+      <button disabled={active} type="submit">
+        Publish
+      </button>
     </form>
   );
 };

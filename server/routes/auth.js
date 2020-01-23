@@ -14,6 +14,8 @@ router.post("/login", async (req, res) => {
       user = await User.findByName(req.body.username);
       token = await user.createToken(req.body.password);
     }
+    
+    // console.log(user, token);
 
     if (!user) {
       throw new Error("User not found");

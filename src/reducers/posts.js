@@ -6,6 +6,8 @@ export default (state = [], action) => {
       return [...state, action.post];
     case "REMOVE_POST":
       return state.filter(post => post._id !== action.id);
+    case "REMOVE_ALL_FROM_USER":
+      return state.filter(post => post.author._id !== action.id);
     case "EDIT_POST":
       return state.map(post => {
         if (post._id === action.id) {
@@ -14,7 +16,8 @@ export default (state = [], action) => {
           return post;
         }
       });
-    case "ADD_COMMENT":
+    case "ADD_COMMENT": {
+      console.log("ADD COMMENT REDUCER", action.comment);
       return state.map(post => {
         if (post._id === action.comment.post._id) {
           post.comments.push(action.comment);
@@ -23,6 +26,7 @@ export default (state = [], action) => {
           return post;
         }
       });
+    }
     default:
       throw new Error("Error in posts reducer");
   }

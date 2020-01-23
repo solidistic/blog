@@ -5,8 +5,11 @@ const api = axios.create({
   withCredentials: true
 });
 
+api.defaults.timeout = 1000000;
+
 // Post
-export const savePost = post => api.post("/posts/create", { post });
+export const savePost = post =>
+  api.post("/posts/create", { post }).catch(e => console.log("AXIOS", e));
 export const getPost = id => api.get(`/posts/${id}`);
 export const removePost = id => api.delete(`/posts/remove/${id}`);
 export const editPost = (_id, updates) =>
@@ -15,10 +18,13 @@ export const getAllPosts = () => api.get("/posts/all");
 
 // Comments
 export const saveComment = ({ id, ...comment }) =>
-  api.post("/posts/comments/create", { comment, id });
+  api
+    .post("/posts/comments/create", { comment, id })
+    .catch(e => console.log("AXIOS", e));
 
 // User
 export const getUserById = id => api.get(`/users/${id}`);
+export const removeUser = () => api.post("/users/remove");
 
 // Authentication
 export const login = (username, password) =>
@@ -35,6 +41,7 @@ export default {
   editPost,
   getAllPosts,
   getUserById,
+  removeUser,
   login,
   logout,
   signup

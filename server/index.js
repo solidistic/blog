@@ -9,6 +9,7 @@ const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 const app = express();
 const port = process.env.PORT || 8080;
+const host = process.env.HOST || "0.0.0.0";
 const parserSecret = "anothersecret";
 require("../database/mongoose");
 
@@ -29,6 +30,6 @@ app.use("/users", userRoutes);
 app.use("/", authRoutes);
 
 app.on("error", e => console.log("Server error:", e));
-app.listen(port, () => {
-  console.log(`Server is up and running on port ${port}`);
+app.listen(port, host, () => {
+  console.log(`Server is up and running on http://${host}:${port}`);
 });

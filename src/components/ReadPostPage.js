@@ -21,7 +21,6 @@ const ReadPostPage = ({ match, history }) => {
 
   return (
     <>
-      <Header />
       <Post post={post} />
       {user && <Link to={`/edit/${post._id}`}>Edit post</Link>}
       <h2>Comments:</h2>

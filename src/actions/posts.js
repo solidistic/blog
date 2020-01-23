@@ -20,6 +20,11 @@ export const startAddPost = async (post = {}) => {
   }
 };
 
+export const removeAllFromUser = id => ({
+  type: "REMOVE_ALL_FROM_USER",
+  id
+});
+
 export const removePost = ({ _id: id }) => ({
   type: "REMOVE_POST",
   id
@@ -57,9 +62,10 @@ export const addComment = comment => ({
 export const startAddComment = async commentData => {
   try {
     const res = await api.saveComment(commentData);
-    if (res.status !== 200) throw new Error();
+    console.log("SAVE COMMENT RESPONSE", res);
+    if (res.status !== 200) throw new Error(res.error);
     return addComment(res.data.comment);
   } catch (e) {
-    console.log(e);
+    return { error: e };
   }
 };
