@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Post from "./Post";
-import Header from "./Header";
 import { withRouter } from "react-router";
 import PostsContext from "../context/posts-context";
 import UserContext from "../context/user-context";

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LoginForm from "./LoginForm";
-import Header from "./Header";
 
 const LoginPage = ({ history }) => {
   return (
