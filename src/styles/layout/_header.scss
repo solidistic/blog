@@ -1,0 +1,26 @@
+.header {
+  background: $secondary;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+  padding: 10px 25px;
+  margin-bottom: $m-size;
+
+  a {
+    color: $font-secondary-color;
+  }
+}
+
+.header__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: $l-size;
+  color: white;
+  transition: all 0.2s ease;
+  // text-shadow: 2px 2px 0px white;
+
+  &:hover {
+    transform: translateX(15px);
+  }
+}

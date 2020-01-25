@@ -1,0 +1,10 @@
+.link {
+  color: $font-secondary-color;
+  font-size: $font-s-size;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: white;
+    text-shadow: 2px 2px 0 darken($font-secondary-color, 10%);
+  }
+}

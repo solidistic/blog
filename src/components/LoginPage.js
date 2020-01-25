@@ -6,7 +6,7 @@ const LoginPage = ({ history }) => {
   return (
     <>
       <LoginForm history={history}/>
-      <div>
+      <div className="content-container">
         <p>
           Don't have an account yet?
           <Link to="/signup">Sign up</Link>.

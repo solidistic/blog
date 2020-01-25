@@ -1,0 +1,19 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $l-size;
+  padding: $m-size;
+  transition: all 0.5s ease;
+}
+
+.content-container__title {
+  font-size: $font-l-size;
+  color: $secondary;
+}

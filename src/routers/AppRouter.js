@@ -24,6 +24,7 @@ const AppRouter = () => {
         <PrivateRoute path="/create" component={CreatePost} />
         <PrivateRoute path="/edit/:id" component={EditPostPage} />
         <Route path="/users/:id" component={ViewUserProfilePage} />
+        <PrivateRoute path="/users/me" component={ViewUserProfilePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/playground" component={Playground} />
         <Route path="*" component={NotFoundPage} />

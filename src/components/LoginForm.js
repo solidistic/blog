@@ -21,22 +21,24 @@ const LoginForm = ({ history }) => {
   };
 
   return (
-    <>
+    <div className="content-container content-container--centered">
       {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>
         <input
+          className="input"
           placeholder="Username"
           type="text"
           onChange={e => setUsername(e.target.value)}
         />
         <input
+          className="input"
           placeholder="Password"
           type="password"
           onChange={e => setPassword(e.target.value)}
         />
-        <button>Login</button>
+        <button className="button">Login</button>
       </form>
-    </>
+    </div>
   );
 };
 

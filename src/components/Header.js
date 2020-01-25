@@ -26,25 +26,17 @@ const Header = ({ history }) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("USER OBJECT", user);
-  // }, [user]);
-
   return (
-    <div>
-      <NavLink
-        to="/"
-        exact={true}
-        activeStyle={{ fontWeight: "italic", color: "red" }}
-      >
-        <h2>JM's Blog</h2>
+    <div className="header">
+      <NavLink to="/" exact={true}>
+        <h2 className="header__title">Blog</h2>
       </NavLink>
       {user && (
         <>
-          <h2>Welcome, {user.user.username}!</h2>
-          <NavLink to="/create">Create post</NavLink>
-          <button onClick={handleLogout}>Logout</button>
-          <button onClick={handleRemoveUser}>Delete account</button>
+          <NavLink className="link" to="/create">Create post</NavLink>
+          <NavLink className="link" to="/users/me">My account</NavLink>
+          <button className="button--nav" onClick={handleLogout}>Logout</button>
+          <button className="button--nav" onClick={handleRemoveUser}>Delete account</button>
         </>
       )}
       {!user && <NavLink to="/login">Login</NavLink>}

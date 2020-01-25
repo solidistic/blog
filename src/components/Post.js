@@ -4,25 +4,23 @@ import { Link } from "react-router-dom";
 const Post = ({ post, author }) => (
   <div>
     <Link to={`/posts/${post._id}`}>
-      <h2>{post.title}</h2>
+      <h2 className="list-item__title">{post.title}</h2>
     </Link>
-    <div>
-      <>
-        {post.author ? (
-          <>
-            <Link to={`/users/${post.author._id}`}>
-              {post.author.username || author}
-            </Link>{" "}
-            posted this
-          </>
-        ) : (
-          <>Posted by anonymous</>
-        )}{" "}
-        at {post.createdAt}
-      </>
-      {post.editedAt && <span> - Edited {post.editedAt}</span>}
-    </div>
-    <p>{post.body}</p>
+    <p className="list-item__subtitle">
+      {post.author ? (
+        <>
+          <Link className="list-item__subtitle--link" to={`/users/${post.author._id}`}>
+            {post.author.username || author}
+          </Link>{" "}
+          posted this
+        </>
+      ) : (
+        <>Posted by anonymous</>
+      )}{" "}
+      at {post.createdAt}
+    </p>
+    {post.editedAt && <span> - Edited {post.editedAt}</span>}
+    <p className="list-item__body">{post.body}</p>
     {post.editComments && <p>{post.editComments}</p>}
   </div>
 );

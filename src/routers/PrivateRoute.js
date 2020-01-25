@@ -10,14 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       component={props => {
         // console.log(props);
-        return user ? (
-          <div>
-            <p>You are logged in and viewing private page</p>
-            <Component {...props} />
-          </div>
-        ) : (
-          <Redirect to="/" />
-        );
+        return user ? <Component {...props} /> : <Redirect to="/" />;
       }}
     />
   );

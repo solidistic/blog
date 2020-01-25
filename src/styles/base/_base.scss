@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
+html, button, input, textarea {
+  font-size: 62, 5%;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: darken(#4e413b, 10%);
+  color: $font-primary-color;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.4s ease;
+}

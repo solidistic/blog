@@ -28,13 +28,11 @@ const CreatePost = ({ history }) => {
   };
 
   return (
-    <>
-      <div>
-        <h2>Create a post</h2>
-        {error && <p>{error}</p>}
-        <PostForm onSubmit={createPost} active={buttonDisabled} />
-      </div>
-    </>
+    <div className="content-container input-group">
+      <h2>Create a post</h2>
+      {error && <p>{error}</p>}
+      <PostForm onSubmit={createPost} active={buttonDisabled} />
+    </div>
   );
 };
 

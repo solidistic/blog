@@ -29,22 +29,26 @@ export const PostForm = ({ post, onSubmit, active }) => {
   };
 
   return (
-    <form onSubmit={submitPost}>
-      {error && <p>{error}</p>}
-      <input
-        placeholder="Title"
-        defaultValue={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      <textarea
-        placeholder="Post body"
-        defaultValue={body}
-        onChange={e => setBody(e.target.value)}
-      />
-      <button disabled={active} type="submit">
-        Publish
-      </button>
-    </form>
+    <div className="input-group">
+      <form onSubmit={submitPost}>
+        {error && <p>{error}</p>}
+        <input
+          className="input"
+          placeholder="Title"
+          defaultValue={title}
+          onChange={e => setTitle(e.target.value)}
+        />
+        <textarea
+          className="textarea"
+          placeholder="Post body"
+          defaultValue={body}
+          onChange={e => setBody(e.target.value)}
+        />
+        <button className="button" disabled={active} type="submit">
+          Publish
+        </button>
+      </form>
+    </div>
   );
 };
 

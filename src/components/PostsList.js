@@ -16,12 +16,12 @@ const PostsList = () => {
   };
   return (
     <div>
-      <input placeholder="Find posts" onChange={handleSearch} />
+      <input className="input input--small" placeholder="Find posts" onChange={handleSearch} />
       {visiblePosts.length === 0 ? (
         <p>No posts found</p>
       ) : (
         visiblePosts.map(post => (
-          <div key={post._id}>
+          <div className="list-item" key={post._id}>
             <Post post={post} />
           </div>
         ))

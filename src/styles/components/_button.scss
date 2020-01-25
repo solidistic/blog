@@ -1,0 +1,18 @@
+.button {
+  background: $secondary;
+  color: $font-secondary-color;
+  padding: $s-size;
+  border: none;
+  border-radius: 5px;
+  font-size: $font-s-size;
+
+  &:hover {
+    color: $font-primary-color;
+    text-shadow: 2px 2px 0 darken($font-secondary-color, 10%);
+  }
+}
+
+.button--nav {
+  @extend .button;
+  background: none;
+}

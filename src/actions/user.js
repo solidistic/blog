@@ -7,10 +7,12 @@ export const login = user => ({
 
 export const startLogin = async ({ username, password }) => {
   const res = await api.login(username, password);
+  console.log(res);
+  const { password: pw, ...user } = res.data.user;
 
   if (res.status !== 200) return null;
 
-  return login({ username, password });
+  return login(user);
 };
 
 export const logout = () => ({
