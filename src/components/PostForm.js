@@ -44,7 +44,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
           defaultValue={body}
           onChange={e => setBody(e.target.value)}
         />
-        <button className="button" disabled={active} type="submit">
+        <button className="button button--wide" disabled={active}>
           Publish
         </button>
       </form>

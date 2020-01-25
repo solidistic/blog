@@ -5,7 +5,7 @@ const CommentList = ({ comments }) => (
   <div>
     {comments &&
       comments.map(comment => {
-        return <Comment key={comment._id} {...comment} />;
+        return <Comment class="list-item" key={comment._id} {...comment} />;
       })}
   </div>
 );

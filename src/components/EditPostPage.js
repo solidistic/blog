@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { withRouter } from "react-router";
 import PostForm from "./PostForm";
-import Header from "./Header";
 import PostsContext from "../context/posts-context";
 import { startEditPost, startRemovePost } from "../actions/posts";
 
@@ -26,10 +25,10 @@ const EditPostPage = ({ match, history }) => {
   };
 
   return (
-    <div>
-      <Header />
+    <div className="content-container input-group">
+      <h1 className="content-container__title">Edit Post</h1>
       <PostForm onSubmit={editPost} post={post} />
-      <button onClick={handleRemove}>Delete post</button>
+      <button className="button button--delete button--wide" onClick={handleRemove}>Delete post</button>
     </div>
   );
 };

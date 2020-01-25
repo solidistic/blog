@@ -9,7 +9,10 @@ const Post = ({ post, author }) => (
     <p className="list-item__subtitle">
       {post.author ? (
         <>
-          <Link className="list-item__subtitle--link" to={`/users/${post.author._id}`}>
+          <Link
+            className="list-item__subtitle--link"
+            to={`/users/${post.author._id}`}
+          >
             {post.author.username || author}
           </Link>{" "}
           posted this
@@ -18,8 +21,8 @@ const Post = ({ post, author }) => (
         <>Posted by anonymous</>
       )}{" "}
       at {post.createdAt}
+      {post.editedAt && <span> - Edited {post.editedAt}</span>}
     </p>
-    {post.editedAt && <span> - Edited {post.editedAt}</span>}
     <p className="list-item__body">{post.body}</p>
     {post.editComments && <p>{post.editComments}</p>}
   </div>

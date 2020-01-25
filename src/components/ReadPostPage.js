@@ -19,13 +19,13 @@ const ReadPostPage = ({ match, history }) => {
   }, [match.params.id, history, posts]);
 
   return (
-    <>
+    <div className="content-container">
       <Post post={post} />
       {user && <Link to={`/edit/${post._id}`}>Edit post</Link>}
       <h2>Comments:</h2>
       <CommentList comments={post.comments} />
       <CommentForm id={post._id} />
-    </>
+    </div>
   );
 };
 
