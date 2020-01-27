@@ -1,16 +1,24 @@
 import React, { useContext } from "react";
 import PostsList from "./PostsList";
 import UserContext from "../context/user-context";
-import background from "../images/blog.jpg";
+import bgOne from "../images/blog.jpg";
+import bgTwo from "../images/blog2.jpg";
+import bgThree from "../images/blog3.jpg";
+
+const getRandomBG = () => {
+  const bgs = [bgOne, bgTwo, bgThree];
+  const random = Math.floor(Math.random() * bgs.length);
+  return bgs[random];
+};
 
 function DashboardPage() {
   const { user } = useContext(UserContext);
   return (
-    <div className="content">
+    <>
       <div
         className="content-container hero"
         style={{
-          backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${background})`
+          backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${getRandomBG()})`
         }}
       >
         <div className="hero__content">
@@ -23,10 +31,12 @@ function DashboardPage() {
           <p className="">Web Development for life</p>
         </div>
       </div>
-      <div className="content-container">
-        <PostsList />
+      <div className="content">
+        <div className="content-container">
+          <PostsList />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

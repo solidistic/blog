@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  max-width: 960px;
 }
 
 .content-container {
@@ -10,7 +11,6 @@
   margin-bottom: $l-size;
   padding: $l-size $m-size;
   transition: all 0.5s ease;
-  max-width: 960px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

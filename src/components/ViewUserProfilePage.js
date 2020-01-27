@@ -198,12 +198,12 @@ const ViewUserProfilePage = ({ history, match }) => {
               )}
             </div>
             <div>
-              <h2 className="content-container__title">Latest activity:</h2>
-              {user.posts.map(post => (
+              <h2 className="content-container__title">Your latest posts:</h2>
+              {user.posts.length > 0 ?user.posts.map(post => (
                 <div className="list-item" key={post._id}>
                   <Post post={post} author={user.username} />
                 </div>
-              ))}
+              )) : <p>No posts yet</p>}
             </div>
           </div>
         ) : (
