@@ -119,7 +119,7 @@ const ViewUserProfilePage = ({ history, match }) => {
       history.location.pathname === "/account" && loggedUser.user._id
         ? loggedUser.user._id
         : match.params.id;
-        
+
     const loadUser = async () => {
       const res = await api.getUserById(id);
       console.log(res);
@@ -149,7 +149,7 @@ const ViewUserProfilePage = ({ history, match }) => {
     }
   };
 
-  if (!isLoaded) return <LoadingPage />
+  if (!isLoaded) return <LoadingPage />;
   return (
     <div className="content">
       <div className="content-container">
@@ -186,13 +186,13 @@ const ViewUserProfilePage = ({ history, match }) => {
               {loggedUser.user._id === user._id && (
                 <div>
                   <Link className="button" to="/accout/edit">
-                    Change information
+                    <i className="fas fa-edit"></i> Change information
                   </Link>
                   <button
                     className="button button--delete"
                     onClick={handleRemoveUser}
                   >
-                    Delete account
+                    <i className="fas fa-trash-alt"></i> Delete account
                   </button>
                 </div>
               )}

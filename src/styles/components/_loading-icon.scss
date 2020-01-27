@@ -1,3 +1,5 @@
+$animation-time: 1.5s;
+
 .loading__root {
   transform: translate(-50%, -50%);
   position: absolute;
@@ -9,7 +11,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    animation: rootLoading 3s infinite;
     height: 20px;
     opacity: 0;
     background: $font-primary-color;
@@ -20,24 +21,25 @@
     margin-top: 4px;
   }
   div:nth-child(1) {
-    animation: firstBlock 3s infinite;
+    animation: firstBlock $animation-time infinite;
     background: $secondary;
   }
   div:nth-child(2) {
-    animation: secondBlock 3s 0.1s infinite;
+    animation: secondBlock $animation-time 0.1s infinite;
     background: lighten($primary, 10%);
   }
   div:nth-child(3) {
-    animation: thirdBlock 3s 0.2s infinite;
+    animation: thirdBlock $animation-time 0.2s infinite;
     background: $alert;
   }
   div:nth-child(4) {
-    animation: fourthBlock 3s 0.3s infinite;
-    background: darken($primary, 5%);
-
+    animation: fourthBlock $animation-time 0.3s infinite;
+    background: lighten($secondary, 8%);
+    
   }
   div:nth-child(5) {
-    animation: fifthBlock 3s 0.4s infinite;
+    animation: fifthBlock $animation-time 0.4s infinite;
+    background: $alert;
   }
 }
 

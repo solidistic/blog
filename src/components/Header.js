@@ -4,7 +4,7 @@ import UserContext from "../context/user-context";
 import api from "../api";
 import { logout } from "../actions/user";
 
-const Header = ({ history }) => {
+const Header = () => {
   const { user, userDispatch } = useContext(UserContext);
 
   const handleLogout = () => {
@@ -40,4 +40,4 @@ const Header = ({ history }) => {
   );
 };
 
-export { Header as default };
+export default Header;

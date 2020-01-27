@@ -16,13 +16,14 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
   const submitPost = e => {
     e.preventDefault();
-    let createdAt = moment().format("D.MM.YYYY");
+    let createdAt = moment().local().format("D.MM.YYYY HH:mm");
+    console.log(createdAt);
     let editedAt;
     if (!title || !body) setError("Title and body are required");
     else {
       if (post) {
         createdAt = post.createdAt;
-        editedAt = moment().format("D/MM/YYYY");
+        editedAt = moment().local().format("D.MM.YYYY HH:mm");
       }
       onSubmit({ title, body, createdAt, editedAt });
     }

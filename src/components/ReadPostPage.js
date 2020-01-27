@@ -21,8 +21,8 @@ const ReadPostPage = ({ match, history }) => {
     setIsLoaded(true);
   }, [match.params.id, posts]);
 
+  // remove post with id
   const handleRemove = async () => {
-    // remove post with id
     dispatch(await startRemovePost(post));
     history.push("/account");
   };
@@ -33,11 +33,11 @@ const ReadPostPage = ({ match, history }) => {
       <div className="content-container">
         <Post post={post} />
         {user && user.user._id === post.author._id && (
-          <div className="content-container__edit">
+          <div className="content-container__edit list-item__content">
             <Link className="button" to={`/edit/${post._id}`}>
               <i className="fas fa-edit"></i> Edit post
             </Link>
-            <button className="button" onClick={handleRemove}>
+            <button className="button button--delete" onClick={handleRemove}>
               <i className="fas fa-trash-alt"></i> Delete post
             </button>
           </div>

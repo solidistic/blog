@@ -1,7 +1,10 @@
 .header {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
   background: $secondary;
   padding: 15px 0;
-  margin-bottom: $m-size;
+  margin-bottom: $l-size;
 
   a {
     color: $font-secondary-color;
@@ -25,7 +28,7 @@
 .header__title {
   margin: 0;
   font-weight: 600;
-  font-size: $l-size;
+  font-size: $font-xl-size;
   color: white;
   transition: all 0.2s ease;
 

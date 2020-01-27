@@ -18,7 +18,7 @@ export const history = createBrowserHistory();
 const AppRouter = () => {
   return (
     <Router history={history}>
-      <Header history={history} />
+      <Header />
       <Switch>
         <Route path="/" component={DashboardPage} exact={true} />
         <Route path="/posts/:id" component={ReadPostPage} />
