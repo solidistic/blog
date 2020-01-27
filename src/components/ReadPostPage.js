@@ -7,9 +7,10 @@ import UserContext from "../context/user-context";
 import CommentList from "./CommentsList";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
+import { startRemovePost } from "../actions/posts";
 
 const ReadPostPage = ({ match, history }) => {
-  const { posts } = useContext(PostsContext);
+  const { posts, dispatch } = useContext(PostsContext);
   const { user } = useContext(UserContext);
   const [post, setPost] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,25 +21,26 @@ const ReadPostPage = ({ match, history }) => {
     setIsLoaded(true);
   }, [match.params.id, posts]);
 
-  // useEffect(() => {
-  //   const isOwner = () => {
-  //     console.log("IS OWNER:");
-  //     console.log(user);
-  //     console.log(post);
-  //     if (user && post) return user._id === post.author._id;
-  //   };
-  //   isOwner();
-  // }, [user, post]);
+  const handleRemove = async () => {
+    // remove post with id
+    dispatch(await startRemovePost(post));
+    history.push("/account");
+  };
 
   if (!isLoaded) return <LoadingPage />;
   return (
     <div className="content">
       <div className="content-container">
         <Post post={post} />
-        {user && user._id === post.author._id && (
-          <Link className="link" to={`/edit/${post._id}`}>
-            Edit post
-          </Link>
+        {user && user.user._id === post.author._id && (
+          <div className="content-container__edit">
+            <Link className="button" to={`/edit/${post._id}`}>
+              <i className="fas fa-edit"></i> Edit post
+            </Link>
+            <button className="button" onClick={handleRemove}>
+              <i className="fas fa-trash-alt"></i> Delete post
+            </button>
+          </div>
         )}
         <h2 className="content-container__title">Comments:</h2>
         <CommentList comments={post.comments} />

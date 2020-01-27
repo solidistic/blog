@@ -21,7 +21,7 @@ const Post = ({ post, author }) => (
         ) : (
           <>Posted by anonymous</>
         )}{" "}
-        at {post.createdAt}
+        on {post.createdAt}
         {post.editedAt && <span> - Edited {post.editedAt}</span>}
       </p>
       <p className="list-item__body">{post.body}</p>

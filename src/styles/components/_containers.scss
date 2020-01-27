@@ -22,6 +22,11 @@
   margin-bottom: $m-size;
 }
 
+.content-container__edit {
+  margin: $s-size 0;
+  display: flex;
+}
+
 .content-container__title {
   font-size: $font-l-size;
   color: $secondary;
