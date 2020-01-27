@@ -6,6 +6,7 @@ import UserContext from "../context/user-context";
 import PostsContext from "../context/posts-context";
 import { logout, startRemoveUser } from "../actions/user";
 import { removeAllFromUser } from "../actions/posts";
+import LoadingPage from "./LoadingPage";
 
 // class ViewUserProfilePage extends React.Component {
 //   constructor(props) {
@@ -148,7 +149,7 @@ const ViewUserProfilePage = ({ history, match }) => {
     }
   };
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <LoadingPage />
   return (
     <div className="content">
       <div className="content-container">

@@ -5,6 +5,8 @@ const LoadingPage = () => (
     <div></div>
     <div></div>
     <div></div>
+    <div></div>
+    <div></div>
   </div>
 );
 

@@ -17,7 +17,7 @@ const ReadPostPage = ({ match, history }) => {
   useEffect(() => {
     const postData = posts.find(post => post._id === match.params.id);
     setPost(postData);
-    // setIsLoaded(true);
+    setIsLoaded(true);
   }, [match.params.id, posts]);
 
   // useEffect(() => {

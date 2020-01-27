@@ -7,6 +7,7 @@ import api from "../api/index";
 import { populatePosts } from "../actions/posts";
 import UserContext from "../context/user-context";
 import { startLogin } from "../actions/user";
+import LoadingPage from "./LoadingPage";
 
 const BlogApp = () => {
   const [posts, dispatch] = useReducer(postsReducer, []);
@@ -38,7 +39,7 @@ const BlogApp = () => {
       .catch(e => console.error(e));
   }, []);
 
-  if (!dataFetched) return <div>Loading...</div>;
+  if (!dataFetched) return <LoadingPage />;
   return (
     <UserContext.Provider value={{ user, userDispatch }}>
       <PostsContext.Provider value={{ posts, dispatch }}>
