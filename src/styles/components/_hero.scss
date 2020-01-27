@@ -1,0 +1,28 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.hero__content {
+  background: $primary-transparent;
+  width: 80%;
+  color: $font-primary-color;
+  font-size: $m-size;
+  text-shadow: 2px 2px 0px $primary;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: $m-size;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.hero__title {
+  font-size: $font-xl-size;
+}
+
+.hero__subtitle {
+  color: $secondary;
+  font-size: $font-xl-size;
+}

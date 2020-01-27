@@ -15,7 +15,7 @@ const Header = () => {
     <div className="header">
       <div className="header-content">
         <NavLink to="/" exact={true}>
-          <h2 className="header__title">Blog</h2>
+          <h2 className="header__title">BlogPortal</h2>
         </NavLink>
         {user && (
           <div>

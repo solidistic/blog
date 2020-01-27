@@ -1,27 +1,27 @@
 import React, { useContext } from "react";
 import PostsList from "./PostsList";
 import UserContext from "../context/user-context";
+import background from "../images/blog.jpg";
 
 function DashboardPage() {
   const { user } = useContext(UserContext);
   return (
     <div className="content">
-      <div className="content-container">
-        {user && <h1>Welcome, {user.user.username}!</h1>}
-        <h2 className="content-container__title">This is your blog</h2>
-        <p className="list-item__content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-          cupiditate? Sapiente ut, deserunt ex consequuntur ea hic quo, minima
-          odio voluptate magnam odit earum dolor dolorem delectus minus
-          pariatur? Unde provident, quo maxime veniam non quisquam assumenda
-          impedit earum sint aliquam numquam nisi totam eius illo? Incidunt
-          repudiandae sint animi non voluptas, provident, sunt eos nostrum quis
-          nulla velit. Ut non dicta totam unde at, beatae repellendus adipisci
-          itaque, tempora provident excepturi doloremque consequuntur sequi
-          laudantium laborum perspiciatis. Libero autem magni ipsa molestias cum
-          blanditiis, adipisci cumque veniam! Error necessitatibus voluptatibus
-          dolor saepe dignissimos voluptatem culpa maxime sunt nulla quam.
-        </p>
+      <div
+        className="content-container hero"
+        style={{
+          backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${background})`
+        }}
+      >
+        <div className="hero__content">
+          <h1>BlogPortal</h1>
+          {user ? (
+            <h1 className="hero__subtitle">Welcome, {user.user.username}!</h1>
+          ) : (
+            <h1 className="hero__subtitle">Welcome!</h1>
+          )}
+          <p className="">Web Development for life</p>
+        </div>
       </div>
       <div className="content-container">
         <PostsList />
