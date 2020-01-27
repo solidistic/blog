@@ -9,7 +9,7 @@ function DashboardPage() {
       <div className="content-container">
         {user && <h1>Welcome, {user.user.username}!</h1>}
         <h2 className="content-container__title">This is your blog</h2>
-        <p>
+        <p className="list-item__content">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
           cupiditate? Sapiente ut, deserunt ex consequuntur ea hic quo, minima
           odio voluptate magnam odit earum dolor dolorem delectus minus

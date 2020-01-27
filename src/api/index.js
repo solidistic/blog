@@ -25,6 +25,9 @@ export const saveComment = ({ id, ...comment }) =>
 // User
 export const getUserById = id => api.get(`/users/${id}`);
 export const removeUser = () => api.post("/users/remove");
+export const createUser = user => api.post("/signup", { user });
+export const updateUser = (id, updates) =>
+  api.patch("/users/update", { id, updates });
 
 // Authentication
 export const login = (username, password) =>
@@ -41,6 +44,7 @@ export default {
   editPost,
   getAllPosts,
   getUserById,
+  createUser,
   removeUser,
   login,
   logout,

@@ -1,15 +1,25 @@
 .header {
   background: $secondary;
-  display: flex;
-  flex-direction: row;
-  justify-content:space-between;
-  align-items: center;
-  padding: 10px 25px;
+  padding: 15px 0;
   margin-bottom: $m-size;
 
   a {
     color: $font-secondary-color;
   }
+
+  i {
+    margin-left: 30px;
+  }
+}
+
+.header-content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 $m-size;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__title {
@@ -18,9 +28,9 @@
   font-size: $l-size;
   color: white;
   transition: all 0.2s ease;
-  // text-shadow: 2px 2px 0px white;
 
   &:hover {
     transform: translateX(15px);
+    text-shadow: 2px 2px 0px $primary;
   }
 }

@@ -14,6 +14,7 @@ const BlogApp = () => {
   const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
+    console.log("THIS RAN");
     api
       .getAllPosts()
       .then(response => {

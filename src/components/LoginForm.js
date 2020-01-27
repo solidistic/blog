@@ -21,7 +21,7 @@ const LoginForm = ({ history }) => {
   };
 
   return (
-    <div className="content-container content-container--centered">
+    <div className="content-container--centered">
       {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>
         <input

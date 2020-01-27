@@ -25,10 +25,17 @@ const EditPostPage = ({ match, history }) => {
   };
 
   return (
-    <div className="content-container input-group">
-      <h1 className="content-container__title">Edit Post</h1>
-      <PostForm onSubmit={editPost} post={post} />
-      <button className="button button--delete button--wide" onClick={handleRemove}>Delete post</button>
+    <div className="content">
+      <div className="content-container input-group">
+        <h1 className="content-container__title">Edit Post</h1>
+        <PostForm onSubmit={editPost} post={post} />
+        <button
+          className="button button--delete button--wide"
+          onClick={handleRemove}
+        >
+          Delete post
+        </button>
+      </div>
     </div>
   );
 };

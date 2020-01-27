@@ -10,6 +10,7 @@ import NotFoundPage from "../components/NotFoundPage";
 import LoginPage from "../components/LoginPage";
 import ViewUserProfilePage from "../components/ViewUserProfilePage";
 import Header from "../components/Header";
+import CreateAccountPage from "../components/CreateAccountPage";
 import Playground from "../playground/Playground";
 
 export const history = createBrowserHistory();
@@ -24,7 +25,12 @@ const AppRouter = () => {
         <PrivateRoute path="/create" component={CreatePost} />
         <PrivateRoute path="/edit/:id" component={EditPostPage} />
         <Route path="/users/:id" component={ViewUserProfilePage} />
-        <PrivateRoute path="/users/me" component={ViewUserProfilePage} />
+        <PrivateRoute
+          path="/account"
+          component={ViewUserProfilePage}
+          exact={true}
+        />
+        <Route path="/signup" component={CreateAccountPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/playground" component={Playground} />
         <Route path="*" component={NotFoundPage} />

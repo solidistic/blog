@@ -1,7 +1,15 @@
 .link {
+  color: $secondary;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.link__nav {
   color: $font-secondary-color;
   font-size: $font-s-size;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     color: white;

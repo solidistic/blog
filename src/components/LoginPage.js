@@ -4,15 +4,18 @@ import LoginForm from "./LoginForm";
 
 const LoginPage = ({ history }) => {
   return (
-    <>
-      <LoginForm history={history}/>
+    <div className="content">
       <div className="content-container">
+        <LoginForm history={history} />
         <p>
-          Don't have an account yet?
-          <Link to="/signup">Sign up</Link>.
+          Don't have an account yet?{" "}
+          <Link className="link" to="/signup">
+            Sign up
+          </Link>
+          !
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

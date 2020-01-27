@@ -2,20 +2,20 @@
   background: $secondary;
   color: $font-secondary-color;
   padding: $s-size;
-  margin-bottom: $s-size;
+  margin: 0 $s-size $s-size 0;
   border: none;
   border-radius: 5px;
   font-size: $font-s-size;
 
   &:hover {
     color: $font-primary-color;
-    text-shadow: 2px 2px 0 darken($font-secondary-color, 10%);
+    text-shadow: 1px 1px 0 darken($font-secondary-color, 10%);
   }
 }
 
 .button--nav {
   @extend .button;
-  min-width: 0;
+  min-width: fit-content;
   width: fit-content;
   background: none;
   padding: 0;
@@ -23,9 +23,11 @@
 }
 
 .button--delete {
-  background: $primary;
+  display: inline-block;
+  background: $alert;
+  color: $font-secondary-color;
   &:hover {
-    background: darken($primary, 10%);
+    background: lighten($alert, 5%);
   }
 }
 

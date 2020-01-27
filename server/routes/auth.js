@@ -37,6 +37,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
+  console.log("SIGNUP", req.body);
   try {
     const user = new User(req.body.user);
     // await user.createToken();

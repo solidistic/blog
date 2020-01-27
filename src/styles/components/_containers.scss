@@ -9,11 +9,37 @@
   display: flex;
   flex-direction: column;
   margin-bottom: $l-size;
-  padding: $m-size;
+  padding: 0 $m-size;
   transition: all 0.5s ease;
+}
+
+.content-container__information {
+  background: lighten($primary, 5%);
+  color: $font-primary-color;
+  font-size: $s-size;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: $m-size;
 }
 
 .content-container__title {
   font-size: $font-l-size;
   color: $secondary;
+  // text-transform: uppercase;
+  padding-left: 10px;
+  border-left: 5px solid $font-sand;
+  border-radius: 3px;
+}
+
+.content-container__subtitle {
+  font-size: $font-m-size;
+  font-weight: 600;
+  margin-top: 0;
+  color: $font-sand;
+}
+
+.content-container__subtitle--secondary {
+  font-size: $font-s-size;
+  font-weight: 500;
+  color: $font-sand;
 }
