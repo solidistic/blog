@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import getRandomBG from "../utils/randomBackground";
 
 const Hero = ({ user, post }) => {
-  if (user) {
+  if (!post) {
     return (
       <div
         className="content-container hero"

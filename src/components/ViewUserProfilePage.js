@@ -7,6 +7,7 @@ import PostsContext from "../context/posts-context";
 import { logout, startRemoveUser } from "../actions/user";
 import { removeAllFromUser } from "../actions/posts";
 import LoadingPage from "./LoadingPage";
+import Modal from "./Modal";
 
 // class ViewUserProfilePage extends React.Component {
 //   constructor(props) {
@@ -113,6 +114,7 @@ const ViewUserProfilePage = ({ history, match }) => {
   const [user, setCurrentUser] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [modalActive, setModalActive] = useState(false);
 
   useEffect(() => {
     const id =
@@ -137,15 +139,17 @@ const ViewUserProfilePage = ({ history, match }) => {
     if (!isLoaded) loadUser();
   }, [match.params.id, loggedUser, history, user, isLoaded, error]);
 
-  const handleRemoveUser = async () => {
-    try {
-      const id = await startRemoveUser();
-      console.log("REMOVED USER ID", id);
-      await dispatch(removeAllFromUser(id));
-      userDispatch(logout());
-      history.push("/");
-    } catch (e) {
-      console.log("Unable to safely remove account:", e);
+  const handleRemoveUser = async confirmRemoval => {
+    if (confirmRemoval) {
+      try {
+        const id = await startRemoveUser();
+        console.log("REMOVED USER ID", id);
+        await dispatch(removeAllFromUser(id));
+        userDispatch(logout());
+        history.push("/");
+      } catch (e) {
+        console.log("Unable to safely remove account:", e);
+      }
     }
   };
 
@@ -185,12 +189,15 @@ const ViewUserProfilePage = ({ history, match }) => {
               </p>
               {loggedUser.user._id === user._id && (
                 <div>
+                  <Modal active={modalActive} confirmAction={handleRemoveUser}>
+                    <h2>Are you sure to remove your account PERMANENTLY?</h2>
+                  </Modal>
                   <Link className="button" to="/accout/edit">
                     <i className="fas fa-edit"></i> Change information
                   </Link>
                   <button
                     className="button button--delete"
-                    onClick={handleRemoveUser}
+                    onClick={() => setModalActive(!modalActive)}
                   >
                     <i className="fas fa-trash-alt"></i> Delete account
                   </button>
@@ -199,11 +206,15 @@ const ViewUserProfilePage = ({ history, match }) => {
             </div>
             <div>
               <h2 className="content-container__title">Your latest posts:</h2>
-              {user.posts.length > 0 ?user.posts.map(post => (
-                <div className="list-item" key={post._id}>
-                  <Post post={post} author={user.username} />
-                </div>
-              )) : <p>No posts yet</p>}
+              {user.posts.length > 0 ? (
+                user.posts.map(post => (
+                  <div className="list-item" key={post._id}>
+                    <Post post={post} author={user.username} />
+                  </div>
+                ))
+              ) : (
+                <p>No posts yet</p>
+              )}
             </div>
           </div>
         ) : (
