@@ -24,19 +24,12 @@ const ReadPostPage = ({ match, history }) => {
     setIsLoaded(true);
   }, [match.params.id, posts]);
 
-  const toggleModal = () => {
-    document.body.classList.toggle("noscroll", !modalActive);
-    setModalActive(!modalActive);
-  };
-
   const handleRemove = async confirmRemoval => {
     if (confirmRemoval) {
       dispatch(await startRemovePost(post));
-      document.body.classList.toggle("noscroll", !modalActive);
       history.push("/account");
     } else {
       setModalActive(false);
-      document.body.classList.toggle("noscroll", !modalActive);
     }
   };
 
@@ -46,20 +39,19 @@ const ReadPostPage = ({ match, history }) => {
       <Hero post={post} />
       <div className="content">
         <div className="content-container">
-          {modalActive && (
-            <Modal
-              confirmAction={handleRemove}
-              active={modalActive}
-              title={"Are you sure you want to remove post?"}
-            />
-          )}
+          <Modal confirmAction={handleRemove} active={modalActive}>
+            <h2>Delete post "{post.title}"?</h2>
+          </Modal>
           <Post post={post} />
           {user && user.user._id === post.author._id && (
             <div className="content-container__edit list-item__content">
               <Link className="button" to={`/edit/${post._id}`}>
                 <i className="fas fa-edit"></i> Edit post
               </Link>
-              <button className="button button--delete" onClick={toggleModal}>
+              <button
+                className="button button--delete"
+                onClick={() => setModalActive(!modalActive)}
+              >
                 <i className="fas fa-trash-alt"></i> Delete post
               </button>
             </div>

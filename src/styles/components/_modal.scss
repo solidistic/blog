@@ -1,9 +1,10 @@
 .modal {
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  overflow-y: scroll;
+  overflow: hidden;
   z-index: 1;
   width: 100vw;
   height: 100vh;

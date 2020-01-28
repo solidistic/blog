@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Modal = ({ title, active, confirmAction }) => {
+const Modal = ({ children, active, confirmAction }) => {
   const toggleModal = active
     ? "modal modal__display--flex"
     : "modal modal__display--none";
@@ -10,17 +10,26 @@ const Modal = ({ title, active, confirmAction }) => {
     left: 0
   };
 
+  useEffect(() => {
+    document.body.classList.toggle("noscroll", active);
+  }, [active]);
+
+  const handleSelection = selection => {
+    document.body.classList.toggle("noscroll", !active);
+    confirmAction(selection);
+  };
+
   return (
     <div className={toggleModal} style={modalPosition}>
       <div className="modal__content">
-        <h2>{title || "Are you sure?"}</h2>
+        {children}
         <button
           className="button button--delete"
-          onClick={() => confirmAction(true)}
+          onClick={() => handleSelection(true)}
         >
           <i className="fas fa-check"></i> Yes
         </button>
-        <button className="button" onClick={() => confirmAction(false)}>
+        <button className="button" onClick={() => handleSelection(false)}>
           <i className="fas fa-times"></i> No
         </button>
       </div>
