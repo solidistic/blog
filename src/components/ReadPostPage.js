@@ -8,8 +8,8 @@ import CommentList from "./CommentsList";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
 import { startRemovePost } from "../actions/posts";
-import getRandomBG from "../utils/randomBackground";
 import Modal from "./Modal";
+import Hero from "./Hero";
 
 const ReadPostPage = ({ match, history }) => {
   const { posts, dispatch } = useContext(PostsContext);
@@ -43,16 +43,7 @@ const ReadPostPage = ({ match, history }) => {
   if (!isLoaded) return <LoadingPage />;
   return (
     <>
-      <div
-        className="content-container hero"
-        style={{
-          backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${getRandomBG()})`
-        }}
-      >
-        <div className="hero__content">
-          {post && <h1 className="hero__title">{post.title}</h1>}
-        </div>
-      </div>
+      <Hero post={post} />
       <div className="content">
         <div className="content-container">
           {modalActive && (
