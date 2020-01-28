@@ -7,14 +7,14 @@ import getRandomBG from "../utils/randomBackground";
 function DashboardPage() {
   const { user } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   const getScrollHeight = () => {
-  //     console.log(window.scrollY);
-  //   };
-  //   window.addEventListener("click", getScrollHeight());
+  useEffect(() => {
+    const getScrollHeight = () => {
+      console.log(window.scrollY);
+    };
+    window.addEventListener("click", getScrollHeight());
 
-  //   // return window.removeEventListener("scroll", getScrollHeight());
-  // });
+    // return window.removeEventListener("scroll", getScrollHeight());
+  });
   return (
     <>
       <div
