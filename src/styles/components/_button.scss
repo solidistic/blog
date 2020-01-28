@@ -6,10 +6,32 @@
   border: none;
   border-radius: 5px;
   font-size: $font-s-size;
+  text-align: center;
 
   &:hover {
     color: white;
     text-shadow: 1px 1px 0 darken($font-secondary-color, 10%);
+  }
+}
+
+.button--big {
+  background: $primary;
+  padding: $s-size $m-size;
+  margin: 0 $xl-size $xl-size 0;
+  color: $font-sand;
+  font-weight: 800;
+  box-shadow: 0px 2px 0 darken($secondary, 10%);
+  transition: box-shadow 0.3s ease-in-out;
+  
+  &:hover {
+    background: darken($primary, 5%);
+    box-shadow: 0px 5px 0 $font-primary-color;
+  }
+
+  @media (max-width: 700px) {
+    margin: 0 0 $m-size 0;
+    width: fit-content;
+    min-width: 230px;
   }
 }
 

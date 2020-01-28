@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
@@ -12,30 +12,36 @@ import ViewUserProfilePage from "../components/ViewUserProfilePage";
 import Header from "../components/Header";
 import CreateAccountPage from "../components/CreateAccountPage";
 import Playground from "../playground/Playground";
+import Footer from "../components/Footer";
 
 export const history = createBrowserHistory();
 
 const AppRouter = () => {
+  
+
   return (
-    <Router history={history}>
-      <Header />
-      <Switch>
-        <Route path="/" component={DashboardPage} exact={true} />
-        <Route path="/posts/:id" component={ReadPostPage} />
-        <PrivateRoute path="/create" component={CreatePost} />
-        <PrivateRoute path="/edit/:id" component={EditPostPage} />
-        <Route path="/users/:id" component={ViewUserProfilePage} />
-        <PrivateRoute
-          path="/account"
-          component={ViewUserProfilePage}
-          exact={true}
-        />
-        <Route path="/signup" component={CreateAccountPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/playground" component={Playground} />
-        <Route path="*" component={NotFoundPage} />
-      </Switch>
-    </Router>
+    <div className="app-router">
+      <Router history={history}>
+        <Header />
+        <Switch>
+          <Route path="/" component={DashboardPage} exact={true} />
+          <Route path="/posts/:id" component={ReadPostPage} />
+          <PrivateRoute path="/create" component={CreatePost} />
+          <PrivateRoute path="/edit/:id" component={EditPostPage} />
+          <Route path="/users/:id" component={ViewUserProfilePage} />
+          <PrivateRoute
+            path="/account"
+            component={ViewUserProfilePage}
+            exact={true}
+          />
+          <Route path="/signup" component={CreateAccountPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/playground" component={Playground} />
+          <Route path="*" component={NotFoundPage} />
+        </Switch>
+        <Footer />
+      </Router>
+    </div>
   );
 };
 

@@ -15,7 +15,7 @@ const PostsList = () => {
     setVisiblePosts(postsSelector(posts, e.target.value));
   };
   return (
-    <div>
+    <div id="latest">
       <input className="input input--small" placeholder="Find posts" onChange={handleSearch} />
       {visiblePosts.length === 0 ? (
         <p>No posts found</p>

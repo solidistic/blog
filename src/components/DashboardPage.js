@@ -1,34 +1,59 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PostsList from "./PostsList";
 import UserContext from "../context/user-context";
-import bgOne from "../images/blog.jpg";
-import bgTwo from "../images/blog2.jpg";
-import bgThree from "../images/blog3.jpg";
-
-const getRandomBG = () => {
-  const bgs = [bgOne, bgTwo, bgThree];
-  const random = Math.floor(Math.random() * bgs.length);
-  return bgs[random];
-};
+import getRandomBG from "../utils/randomBackground";
 
 function DashboardPage() {
   const { user } = useContext(UserContext);
+
+  // useEffect(() => {
+  //   const getScrollHeight = () => {
+  //     console.log(window.scrollY);
+  //   };
+  //   window.addEventListener("click", getScrollHeight());
+
+  //   // return window.removeEventListener("scroll", getScrollHeight());
+  // });
   return (
     <>
       <div
         className="content-container hero"
         style={{
-          backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${getRandomBG()})`
+          backgroundImage: `linear-gradient(30deg, #534a46ad, #312925ad), url(${getRandomBG()})`
         }}
       >
         <div className="hero__content">
-          <h1>BlogPortal</h1>
+          {/* <h1 className="hero__title">BlogPortal</h1> */}
           {user ? (
-            <h1 className="hero__subtitle">Welcome, {user.user.username}!</h1>
+            <>
+              <h1 className="hero__title">
+                Welcome to BlogPortal, {user.user.username}!
+              </h1>
+              <p className="hero__subtitle">Web Development for life</p>
+              <div className="hero__button-group">
+                <Link className="button button--big" to="/create">
+                  Share your thoughts
+                </Link>
+                <a className="button button--big" href="#latest">
+                  Read posts
+                </a>
+              </div>
+            </>
           ) : (
-            <h1 className="hero__subtitle">Welcome!</h1>
+            <>
+              <h1 className="hero__title">Welcome to BlogPortal!</h1>
+              <p className="hero__subtitle">Web Development for life</p>
+              <div className="hero__button-group">
+                <Link className="button button--big" to="/signup">
+                  Signup
+                </Link>
+                <Link className="button button--big" to="/login">
+                  Login
+                </Link>
+              </div>
+            </>
           )}
-          <p className="">Web Development for life</p>
         </div>
       </div>
       <div className="content">

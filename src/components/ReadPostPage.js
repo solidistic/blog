@@ -8,6 +8,7 @@ import CommentList from "./CommentsList";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
 import { startRemovePost } from "../actions/posts";
+import getRandomBG from "../utils/randomBackground";
 
 const ReadPostPage = ({ match, history }) => {
   const { posts, dispatch } = useContext(PostsContext);
@@ -29,24 +30,34 @@ const ReadPostPage = ({ match, history }) => {
 
   if (!isLoaded) return <LoadingPage />;
   return (
-    <div className="content">
-      <div className="content-container">
-        <Post post={post} />
-        {user && user.user._id === post.author._id && (
-          <div className="content-container__edit list-item__content">
-            <Link className="button" to={`/edit/${post._id}`}>
-              <i className="fas fa-edit"></i> Edit post
-            </Link>
-            <button className="button button--delete" onClick={handleRemove}>
-              <i className="fas fa-trash-alt"></i> Delete post
-            </button>
-          </div>
-        )}
-        <h2 className="content-container__title">Comments:</h2>
-        <CommentList comments={post.comments} />
-        {user && <CommentForm id={post._id} />}
+    <>
+      <div
+        className="content-container hero"
+        style={{
+          backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${getRandomBG()})`
+        }}
+      >
+        <div className="hero__content">{post && <h1 className="hero__title">{post.title}</h1>}</div>
       </div>
-    </div>
+      <div className="content">
+        <div className="content-container">
+          <Post post={post} />
+          {user && user.user._id === post.author._id && (
+            <div className="content-container__edit list-item__content">
+              <Link className="button" to={`/edit/${post._id}`}>
+                <i className="fas fa-edit"></i> Edit post
+              </Link>
+              <button className="button button--delete" onClick={handleRemove}>
+                <i className="fas fa-trash-alt"></i> Delete post
+              </button>
+            </div>
+          )}
+          <h2 className="content-container__title">Comments:</h2>
+          <CommentList comments={post.comments} />
+          {user && <CommentForm id={post._id} />}
+        </div>
+      </div>
+    </>
   );
 };
 
