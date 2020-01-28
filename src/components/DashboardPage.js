@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import PostsList from "./PostsList";
 import UserContext from "../context/user-context";
@@ -7,14 +7,6 @@ import getRandomBG from "../utils/randomBackground";
 function DashboardPage() {
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    const getScrollHeight = () => {
-      console.log(window.scrollY);
-    };
-    window.addEventListener("click", getScrollHeight());
-
-    // return window.removeEventListener("scroll", getScrollHeight());
-  });
   return (
     <>
       <div

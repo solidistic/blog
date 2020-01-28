@@ -1,0 +1,31 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  overflow-y: scroll;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  padding: $l-size;
+  background: $primary-transparent;
+}
+
+.modal__content {
+  background: darken($primary, 5%);
+  max-width: 300px;
+  padding: $l-size;
+  border-radius: 5px;
+}
+
+.modal__display--none {
+  display: none;
+}
+
+.modal__display--flex {
+  display: flex;
+}
+
+.noscroll {
+  overflow: hidden;
+}
