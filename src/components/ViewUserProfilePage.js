@@ -150,6 +150,8 @@ const ViewUserProfilePage = ({ history, match }) => {
       } catch (e) {
         console.log("Unable to safely remove account:", e);
       }
+    } else {
+      setModalActive(false);
     }
   };
 
