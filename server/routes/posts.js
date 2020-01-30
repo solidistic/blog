@@ -124,9 +124,9 @@ router.post("/comments/create", auth, async (req, res, next) => {
     post.comments.push(comment._id);
     postedBy.comments.push(comment._id);
 
-    Promise.all([post.save(), postedBy.save(), comment.save()])
-      .then(() => console.log("PROMISE ALL DONE"))
-      .catch(e => console.log("PROMISE ALL ERROR", e));
+    Promise.all([post.save(), postedBy.save(), comment.save()]);
+    // .then(() => console.log("PROMISE ALL DONE"))
+    // .catch(e => console.log("PROMISE ALL ERROR", e));
 
     res.status(200).json({ message: "Comment added", comment });
   } catch (error) {

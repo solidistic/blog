@@ -43,7 +43,7 @@ const ReadPostPage = ({ match, history }) => {
             <h2>Delete post "{post.title}"?</h2>
           </Modal>
           <Post post={post} />
-          {user && user.user._id === post.author._id && (
+          {user && user._id === post.author._id && (
             <div className="content-container__edit list-item__content">
               <Link className="button" to={`/edit/${post._id}`}>
                 <i className="fas fa-edit"></i> Edit post

@@ -12,7 +12,7 @@ const Comment = ({ _id, createdAt, postedBy, body, user, removeComment }) => {
           <p className="list-item__body list-item__content">{body}</p>
         </div>
         <div>
-          {user && user.user._id === postedBy._id && (
+          {user && user._id === postedBy._id && (
             <i
               className="fas fa-times comment__icon"
               onClick={() => removeComment(_id)}

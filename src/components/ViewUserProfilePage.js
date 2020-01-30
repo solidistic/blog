@@ -118,8 +118,8 @@ const ViewUserProfilePage = ({ history, match }) => {
 
   useEffect(() => {
     const id =
-      history.location.pathname === "/account" && loggedUser.user._id
-        ? loggedUser.user._id
+      history.location.pathname === "/account" && loggedUser._id
+        ? loggedUser._id
         : match.params.id;
 
     const loadUser = async () => {
@@ -189,7 +189,7 @@ const ViewUserProfilePage = ({ history, match }) => {
                 </span>{" "}
                 {user.email}
               </p>
-              {loggedUser.user._id === user._id && (
+              {loggedUser._id === user._id && (
                 <div>
                   <Modal active={modalActive} confirmAction={handleRemoveUser}>
                     <h2>Are you sure to remove your account PERMANENTLY?</h2>

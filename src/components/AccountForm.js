@@ -4,14 +4,18 @@ class AccountForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: null,
-      firstName: null,
-      lastName: null,
-      email: null,
+      username: this.props.user.username || null,
+      firstName: this.props.user.firstName || null,
+      lastName: this.props.user.lastName || null,
+      email: this.props.user.email || null,
       password: null,
       repeatedPassword: null,
       error: null
     };
+  }
+
+  componentWillMount() {
+    console.log("PROPS", this.props);
   }
 
   confirmPassword = () => this.state.password === this.state.repeatedPassword;
@@ -31,6 +35,7 @@ class AccountForm extends React.Component {
             className="input"
             type="text"
             placeholder="* Username"
+            defaultValue={this.state.username}
             required
             onChange={e => this.setState({ username: e.target.value })}
           />
@@ -38,18 +43,21 @@ class AccountForm extends React.Component {
             className="input"
             type="text"
             placeholder="First Name"
+            defaultValue={this.state.firstName}
             onChange={e => this.setState({ firstName: e.target.value })}
           />
           <input
             className="input"
             type="text"
             placeholder="Last Name"
+            defaultValue={this.state.lastName}
             onChange={e => this.setState({ lastName: e.target.value })}
           />
           <input
             className="input"
             type="text"
             placeholder="* Email"
+            defaultValue={this.state.email}
             required
             onChange={e => this.setState({ email: e.target.value })}
           />
