@@ -13,11 +13,7 @@ class AccountForm extends React.Component {
       error: null
     };
   }
-
-  componentWillMount() {
-    console.log("PROPS", this.props);
-  }
-
+  
   confirmPassword = () => this.state.password === this.state.repeatedPassword;
 
   handleSubmit = e => {

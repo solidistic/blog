@@ -12,7 +12,6 @@ const Hero = ({ user, post }) => {
         }}
       >
         <div className="hero__content">
-          {/* <h1 className="hero__title">BlogPortal</h1> */}
           {user ? (
             <>
               <h1 className="hero__title">
