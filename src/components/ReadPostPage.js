@@ -65,4 +65,4 @@ const ReadPostPage = ({ match, history }) => {
   );
 };
 
-export default React.memo(withRouter(ReadPostPage));
+export default withRouter(ReadPostPage);

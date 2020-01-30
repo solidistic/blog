@@ -1,28 +1,6 @@
-import React, { useContext, useState } from "react";
-import PostsContext from "../context/posts-context";
-import { startRemoveComment } from "../actions/comments";
-import Modal from "./Modal";
+import React from "react";
 
-const Comment = ({
-  _id: commentId,
-  createdAt,
-  postedBy,
-  body,
-  user,
-  postId
-}) => {
-  const { dispatch } = useContext(PostsContext);
-  const [isModalActive, setIsModalActive] = useState(false);
-
-  const handleRemove = async confirmRemoval => {
-    if (confirmRemoval) {
-      const commentAction = await startRemoveComment({ commentId, postId });
-      if (commentAction.error) return console.error(commentAction.error);
-      dispatch(commentAction);
-    }
-    setIsModalActive(false);
-  };
-
+const Comment = ({ _id, createdAt, postedBy, body, user, removeComment }) => {
   return (
     <div className="content-container__information">
       <div className="comment">
@@ -34,13 +12,10 @@ const Comment = ({
           <p className="list-item__body list-item__content">{body}</p>
         </div>
         <div>
-          <Modal confirmAction={handleRemove} active={isModalActive}>
-            <h2>Are you sure you want to remove comment?</h2>
-          </Modal>
           {user && user.user._id === postedBy._id && (
             <i
               className="fas fa-times comment__icon"
-              onClick={() => setIsModalActive(!isModalActive)}
+              onClick={() => removeComment(_id)}
             ></i>
           )}
         </div>
@@ -49,4 +24,4 @@ const Comment = ({
   );
 };
 
-export default Comment;
+export default React.memo(Comment);
