@@ -54,18 +54,3 @@ export const startEditPost = async (id, updates) => {
   }
 };
 
-export const addComment = comment => ({
-  type: "ADD_COMMENT",
-  comment
-});
-
-export const startAddComment = async commentData => {
-  try {
-    const res = await api.saveComment(commentData);
-    console.log("SAVE COMMENT RESPONSE", res);
-    if (res.status !== 200) throw new Error(res.error);
-    return addComment(res.data.comment);
-  } catch (e) {
-    return { error: e };
-  }
-};

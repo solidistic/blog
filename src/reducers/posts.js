@@ -27,6 +27,17 @@ export default (state = [], action) => {
         }
       });
     }
+    case "REMOVE_COMMENT": {
+      return state.map(post => {
+        if (post._id === action.postId) {
+          post.comments = post.comments.filter(
+            comment => comment._id !== action.commentId
+          );
+          return post;
+        }
+        return post;
+      });
+    }
     default:
       throw new Error("Error in posts reducer");
   }

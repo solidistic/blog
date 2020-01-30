@@ -194,7 +194,7 @@ const ViewUserProfilePage = ({ history, match }) => {
                   <Modal active={modalActive} confirmAction={handleRemoveUser}>
                     <h2>Are you sure to remove your account PERMANENTLY?</h2>
                   </Modal>
-                  <Link className="button" to="/accout/edit">
+                  <Link className="button" to="/account/edit">
                     <i className="fas fa-edit"></i> Change information
                   </Link>
                   <button

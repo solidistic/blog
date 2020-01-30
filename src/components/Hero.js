@@ -61,4 +61,4 @@ const Hero = ({ user, post }) => {
   }
 };
 
-export default Hero;
+export default React.memo(Hero);

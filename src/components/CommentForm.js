@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import moment from "moment";
-import { startAddComment } from "../actions/posts";
+import { startAddComment } from "../actions/comments";
 import PostsContext from "../context/posts-context";
 
 const CommentForm = ({ id }) => {

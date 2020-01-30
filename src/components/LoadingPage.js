@@ -2,11 +2,13 @@ import React from "react";
 
 const LoadingPage = () => (
   <div className="loading__root">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+    <div className="loading__animation">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 );
 

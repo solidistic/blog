@@ -1,14 +1,22 @@
 import React from "react";
 import Comment from "./Comment";
 
-const CommentList = ({ comments }) => (
+const CommentList = ({ comments, user, postId }) => (
   <div>
-    {comments ? (
+    {comments && comments.length > 0 ? (
       comments.map(comment => {
-        return <Comment class="list-item" key={comment._id} {...comment} />;
+        return (
+          <Comment
+            class="list-item"
+            key={comment._id}
+            postId={postId}
+            user={user}
+            {...comment}
+          />
+        );
       })
     ) : (
-      <p>No comments yet</p>
+      <p>No comments yet, please leave yours now!</p>
     )}
   </div>
 );

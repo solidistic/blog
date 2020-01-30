@@ -1,10 +1,15 @@
 $animation-time: 1.5s;
 
 .loading__root {
-  transform: translate(-50%, -50%);
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  display: flex;
+  flex: 5;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loading__animation {
+  justify-content: center;
   width: 300px;
 
   div {

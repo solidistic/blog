@@ -57,4 +57,4 @@ const Post = ({ post, author }) => {
     </div>
   );
 };
-export default Post;
+export default React.memo(Post);

@@ -21,6 +21,8 @@ export const saveComment = ({ id, ...comment }) =>
   api
     .post("/posts/comments/create", { comment, id })
     .catch(e => console.log("AXIOS", e));
+export const removeComment = ({ commentId, postId }) =>
+  api.patch("/posts/comments/remove", { commentId, postId });
 
 // User
 export const getUserById = id => api.get(`/users/${id}`);
@@ -41,6 +43,7 @@ export default {
   saveComment,
   getPost,
   removePost,
+  removeComment,
   editPost,
   getAllPosts,
   getUserById,

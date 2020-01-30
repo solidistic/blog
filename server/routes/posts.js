@@ -136,4 +136,21 @@ router.post("/comments/create", auth, async (req, res, next) => {
   }
 });
 
+router.patch("/comments/remove", auth, async (req, res) => {
+  try {
+    const postedBy = await User.findById(req.cookies.id);
+    const post = await Post.findById(req.body.postId);
+    const removedComment = await Comment.findByIdAndRemove(req.body.commentId);
+
+    postedBy.comments.pull(removedComment._id);
+    post.comments.pull(removedComment._id);
+
+    Promise.all([post.save(), postedBy.save()]);
+
+    res.status(200).json({ message: "Comment removed", removedComment });
+  } catch (error) {
+    res.status(500).json({ message: "Unable to remove comment", error });
+  }
+});
+
 module.exports = router;

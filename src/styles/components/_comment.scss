@@ -1,0 +1,14 @@
+.comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.comment__icon {
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary;
+    text-shadow: 2px 2px 0 $primary;
+  }
+}
