@@ -9,11 +9,17 @@ api.defaults.timeout = 1000000;
 
 // Post
 export const savePost = post =>
-  api.post("/posts/create", { post }).catch(e => console.log("AXIOS", e));
+  api
+    .post("/posts/create", post, {
+      headers: { "Content-type": "multipart/form-data" }
+    })
+    .catch(e => console.log("AXIOS", e));
 export const getPost = id => api.get(`/posts/${id}`);
 export const removePost = id => api.delete(`/posts/remove/${id}`);
 export const editPost = (_id, updates) =>
-  api.patch(`/posts/edit/${_id}`, { updates });
+  api.patch(`/posts/edit/${_id}`, updates, {
+    headers: { "Content-type": "multipart/form-data" }
+  });
 export const getAllPosts = () => api.get("/posts/all");
 
 // Comments

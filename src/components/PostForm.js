@@ -5,6 +5,7 @@ import moment from "moment";
 export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [file, setFile] = useState(null);
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
@@ -16,11 +17,13 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
   const submitPost = e => {
     e.preventDefault();
+    const formData = new FormData();
+
     let createdAt = moment()
       .local()
       .format("D.MM.YYYY HH:mm");
-    console.log(createdAt);
     let editedAt;
+
     if (!title || !body) setError("Title and body are required");
     else {
       if (post) {
@@ -28,8 +31,16 @@ export const PostForm = ({ post, onSubmit, active }) => {
         editedAt = moment()
           .local()
           .format("D.MM.YYYY HH:mm");
+        formData.append("editedAt", editedAt);
       }
-      onSubmit({ title, body, createdAt, editedAt });
+
+      formData.append("heroImage", file);
+      formData.append("title", title);
+      formData.append("body", body);
+      formData.append("createdAt", createdAt);
+
+      // onSubmit({ title, body, createdAt, editedAt });
+      onSubmit(formData);
     }
   };
 
@@ -43,7 +54,12 @@ export const PostForm = ({ post, onSubmit, active }) => {
           defaultValue={title}
           onChange={e => setTitle(e.target.value)}
         />
-        <input className="input" type="file" />
+        <input
+          className="input"
+          type="file"
+          name="heroImage"
+          onChange={e => setFile(e.target.files[0])}
+        />
         <textarea
           className="input textarea"
           placeholder="Post body"

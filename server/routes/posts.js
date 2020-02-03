@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const fs = require("fs");
+const upload = multer({ dest: "./uploads/" });
 const Post = require("../../database/models/post");
 const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
@@ -41,10 +44,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
+  console.log("BODY", req.body);
+  console.log("FILE", req.file);
+
+  const heroImg = fs.readFileSync(req.file.path);
+
   try {
     const user = await User.findById(req.cookies.id);
-    const post = new Post({ author: user, ...req.body.post });
+    const post = new Post({ author: user, heroImg, ...req.body });
     await user.posts.push(post._id);
     await user.save();
     const postData = await post.save();
@@ -62,33 +70,39 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/edit/:id", auth, async (req, res) => {
-  try {
-    const post = await Post.findByIdAndUpdate(
-      req.params.id,
-      {
-        ...req.body.updates
-      },
-      {
-        new: true
+router.patch(
+  "/edit/:id",
+  auth,
+  upload.single("heroImage"),
+  async (req, res) => {
+    try {
+      const post = await Post.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body
+        },
+        {
+          new: true
+        }
+      );
+      console.log("POST11", post);
+      if (!post) {
+        throw new Error("No post with given id");
       }
-    );
-    if (!post) {
-      throw new Error("No post with given id");
+      res.json({
+        success: true,
+        message: "Post has been updated",
+        post
+      });
+    } catch (e) {
+      res.json({
+        success: false,
+        error: "Unable to update the post to database",
+        body: e
+      });
     }
-    res.json({
-      success: true,
-      message: "Post has been updated",
-      post
-    });
-  } catch (e) {
-    res.json({
-      success: false,
-      error: "Unable to update the post to database",
-      body: e
-    });
   }
-});
+);
 
 router.delete("/remove/:id", auth, async (req, res) => {
   try {

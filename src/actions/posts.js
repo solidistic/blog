@@ -47,10 +47,10 @@ export const editPost = (id, updates) => ({
 
 export const startEditPost = async (id, updates) => {
   try {
-    await api.editPost(id, updates);
-    return editPost(id, updates);
+    const res = await api.editPost(id, updates);
+    const { author, createdAt, ...updatedPost } = res.data.post;
+    return editPost(id, updatedPost);
   } catch (e) {
     console.log("Error in startEditPost action", e);
   }
 };
-
