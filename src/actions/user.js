@@ -25,3 +25,21 @@ export const startRemoveUser = async user => {
   if (res.status !== 200) throw new Error();
   return res.data.id;
 };
+
+export const updateUser = updates => ({
+  type: "UPDATE_USER",
+  updates
+});
+
+export const startUpdateUser = async (id, updates, password) => {
+  try {
+    const res = await api.updateUser(id, updates, password);
+    const { password: pw, ...user } = res.data.user;
+
+    if (res.status !== 200) throw new Error();
+
+    return updateUser(user);
+  } catch (error) {
+    return new Error(error);
+  }
+};

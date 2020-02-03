@@ -16,14 +16,18 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
   const submitPost = e => {
     e.preventDefault();
-    let createdAt = moment().local().format("D.MM.YYYY HH:mm");
+    let createdAt = moment()
+      .local()
+      .format("D.MM.YYYY HH:mm");
     console.log(createdAt);
     let editedAt;
     if (!title || !body) setError("Title and body are required");
     else {
       if (post) {
         createdAt = post.createdAt;
-        editedAt = moment().local().format("D.MM.YYYY HH:mm");
+        editedAt = moment()
+          .local()
+          .format("D.MM.YYYY HH:mm");
       }
       onSubmit({ title, body, createdAt, editedAt });
     }
@@ -39,8 +43,9 @@ export const PostForm = ({ post, onSubmit, active }) => {
           defaultValue={title}
           onChange={e => setTitle(e.target.value)}
         />
+        <input className="input" type="file" />
         <textarea
-          className="textarea"
+          className="input textarea"
           placeholder="Post body"
           defaultValue={body}
           onChange={e => setBody(e.target.value)}

@@ -122,22 +122,21 @@ const ViewUserProfilePage = ({ history, match }) => {
         ? loggedUser._id
         : match.params.id;
 
+    console.log("ID:", id);
+
     const loadUser = async () => {
       const res = await api.getUserById(id);
       console.log(res);
       if (res.status !== 200) {
-        console.log("ERROR", error);
         setError(true);
         return setIsLoaded(true);
       }
       setCurrentUser(res.data);
       setIsLoaded(true);
-
-      console.log("USER", user, isLoaded);
     };
 
     if (!isLoaded) loadUser();
-  }, [match.params.id, loggedUser, history, user, isLoaded, error]);
+  }, [match.params.id, loggedUser, history, user, isLoaded]);
 
   const handleRemoveUser = async confirmRemoval => {
     if (confirmRemoval) {
@@ -156,75 +155,86 @@ const ViewUserProfilePage = ({ history, match }) => {
   };
 
   if (!isLoaded) return <LoadingPage />;
-  return (
-    <div className="content">
-      <div className="content-container">
-        {!error ? (
-          <div>
-            <div className="content-container__information">
-              <h3 className="content-container__subtitle">
-                Account information
-              </h3>
-              <p>
-                <span className="content-container__subtitle--secondary">
-                  Username:
-                </span>{" "}
-                {user.username}
-              </p>
-              <p>
-                <span className="content-container__subtitle--secondary">
-                  First name:
-                </span>{" "}
-                {user.firstName}
-              </p>
-              <p>
-                <span className="content-container__subtitle--secondary">
-                  Last name:
-                </span>{" "}
-                {user.lastName}
-              </p>
-              <p>
-                <span className="content-container__subtitle--secondary">
-                  Email:
-                </span>{" "}
-                {user.email}
-              </p>
-              {loggedUser._id === user._id && (
-                <div>
-                  <Modal active={modalActive} confirmAction={handleRemoveUser}>
-                    <h2>Are you sure to remove your account PERMANENTLY?</h2>
-                  </Modal>
-                  <Link className="button" to="/account/edit">
-                    <i className="fas fa-edit"></i> Change information
-                  </Link>
-                  <button
-                    className="button button--delete"
-                    onClick={() => setModalActive(!modalActive)}
-                  >
-                    <i className="fas fa-trash-alt"></i> Delete account
-                  </button>
-                </div>
-              )}
-            </div>
+  else {
+    return (
+      <div className="content">
+        <div className="content-container">
+          {!error ? (
             <div>
-              <h2 className="content-container__title">Your latest posts:</h2>
-              {user.posts.length > 0 ? (
-                user.posts.map(post => (
-                  <div className="list-item" key={post._id}>
-                    <Post post={post} author={user.username} />
+              <div className="content-container__information">
+                <h3 className="content-container__subtitle">
+                  Account information
+                </h3>
+                <p>
+                  <span className="content-container__subtitle--secondary">
+                    Username:
+                  </span>{" "}
+                  {user.username}
+                </p>
+                <p>
+                  <span className="content-container__subtitle--secondary">
+                    First name:
+                  </span>{" "}
+                  {user.firstName}
+                </p>
+                <p>
+                  <span className="content-container__subtitle--secondary">
+                    Last name:
+                  </span>{" "}
+                  {user.lastName}
+                </p>
+                <p>
+                  <span className="content-container__subtitle--secondary">
+                    Email:
+                  </span>{" "}
+                  {user.email}
+                </p>
+                <p>
+                  <span className="content-container__subtitle--secondary">
+                    Description:
+                  </span>{" "}
+                  {user.description}
+                </p>
+                {loggedUser._id === user._id && (
+                  <div>
+                    <Modal
+                      active={modalActive}
+                      confirmAction={handleRemoveUser}
+                    >
+                      <h2>Are you sure to remove your account PERMANENTLY?</h2>
+                    </Modal>
+                    <Link className="button" to="/account/edit">
+                      <i className="fas fa-edit"></i> Change information
+                    </Link>
+                    <button
+                      className="button button--delete"
+                      onClick={() => setModalActive(!modalActive)}
+                    >
+                      <i className="fas fa-trash-alt"></i> Delete account
+                    </button>
                   </div>
-                ))
-              ) : (
-                <p>No posts yet</p>
-              )}
+                )}
+              </div>
+              <div>
+                <h2 className="content-container__title">Your latest posts:</h2>
+                {user.posts.length > 0 ? (
+                  user.posts.map(post => (
+                    <div className="list-item" key={post._id}>
+                      <Post post={post} author={user.username} />
+                    </div>
+                  ))
+                ) : (
+                  <p>No posts yet</p>
+                )}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div>User not found</div>
-        )}
+          ) : (
+            <div>User not found</div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default ViewUserProfilePage;

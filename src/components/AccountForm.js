@@ -1,25 +1,37 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 class AccountForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.user.username || null,
-      firstName: this.props.user.firstName || null,
-      lastName: this.props.user.lastName || null,
-      email: this.props.user.email || null,
-      password: null,
+      user: {
+        username: this.props.user ? this.props.user.username : null,
+        firstName: this.props.user ? this.props.user.firstName : null,
+        lastName: this.props.user ? this.props.user.lastName : null,
+        email: this.props.user ? this.props.user.email : null,
+        description: this.props.user ? this.props.user.description : null,
+        password: null
+      },
       repeatedPassword: null,
-      error: null
+      error: null,
+      disableInput: this.props.user ? true : false
     };
   }
-  
-  confirmPassword = () => this.state.password === this.state.repeatedPassword;
 
   handleSubmit = e => {
     e.preventDefault();
-    if (!this.confirmPassword()) return console.log("Passwords doesn't match");
-    this.props.handleSubmit(this.state);
+    console.log(this.props.location.pathname === "/signup");
+    console.log(this.state.user.password === this.state.repeatedPassword);
+    if (
+      this.props.location.pathname !== "/signup" &&
+      this.state.user.password === this.state.repeatedPassword
+    ) {
+      return console.log("Passwords doesn't match");
+    } else {
+      console.log("passed");
+      this.props.handleSubmit(this.state.user);
+    }
   };
 
   render() {
@@ -31,53 +43,107 @@ class AccountForm extends React.Component {
             className="input"
             type="text"
             placeholder="* Username"
-            defaultValue={this.state.username}
+            defaultValue={this.state.user.username}
+            disabled={this.state.disableInput}
             required
-            onChange={e => this.setState({ username: e.target.value })}
-          />
-          <input
-            className="input"
-            type="text"
-            placeholder="First Name"
-            defaultValue={this.state.firstName}
-            onChange={e => this.setState({ firstName: e.target.value })}
-          />
-          <input
-            className="input"
-            type="text"
-            placeholder="Last Name"
-            defaultValue={this.state.lastName}
-            onChange={e => this.setState({ lastName: e.target.value })}
+            autoFocus
+            minLength="3"
+            onChange={e => {
+              const username = e.target.value;
+              this.setState(state => ({
+                user: { ...state.user, username }
+              }));
+            }}
           />
           <input
             className="input"
             type="text"
             placeholder="* Email"
-            defaultValue={this.state.email}
+            defaultValue={this.state.user.email}
             required
-            onChange={e => this.setState({ email: e.target.value })}
+            onChange={e => {
+              const email = e.target.value;
+              this.setState(state => ({
+                user: { ...state.user, email }
+              }));
+            }}
           />
+          <div className="input-group__name">
+            <input
+              className="input input__name"
+              type="text"
+              placeholder="First Name"
+              defaultValue={this.state.user.firstName}
+              onChange={e => {
+                const firstName = e.target.value;
+                this.setState(state => ({
+                  user: { ...state.user, firstName }
+                }));
+              }}
+            />
+            <input
+              className="input input__name"
+              type="text"
+              placeholder="Last Name"
+              defaultValue={this.state.user.lastName}
+              onChange={e => {
+                const lastName = e.target.value;
+                this.setState(state => ({
+                  user: { ...state.user, lastName }
+                }));
+              }}
+            />
+          </div>
+          <textarea
+            className="input textarea"
+            type="text"
+            placeholder="Describe yourself (max. 200 characters)"
+            defaultValue={this.state.user.description}
+            maxLength="200"
+            onChange={e => {
+              const description = e.target.value;
+              this.setState(state => ({
+                user: { ...state.user, description }
+              }));
+            }}
+          />
+          <legend className="legend">
+            {!this.props.user
+              ? "Your password:"
+              : "Password needed to confirm changes:"}
+          </legend>
           <input
             className="input"
             type="password"
             placeholder="* Password"
             required
             minLength="6"
-            onChange={e => this.setState({ password: e.target.value })}
+            onChange={e => {
+              const password = e.target.value;
+              this.setState(state => ({
+                user: { ...state.user, password }
+              }));
+            }}
           />
-          <input
-            className="input"
-            type="password"
-            placeholder="* Repeat Password"
-            required
-            minLength="6"
-            onChange={e => this.setState({ repeatedPassword: e.target.value })}
-          />
-          <button className="button">Save account</button>
+          {!this.props.user && (
+            <input
+              className="input"
+              type="password"
+              placeholder="* Repeat Password"
+              required
+              minLength="6"
+              onChange={e =>
+                this.setState({ repeatedPassword: e.target.value })
+              }
+            />
+          )}
+          <button className="button">
+            {this.props.user ? "Save account" : "Create account"}
+          </button>
         </form>
       </>
     );
   }
 }
 
-export default AccountForm;
+export default withRouter(AccountForm);

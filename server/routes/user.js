@@ -20,7 +20,8 @@ router.get("/:userId", async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      posts: user.posts
+      posts: user.posts,
+      description: user.description
     };
     res.status(200).json(publicUser);
   } catch (e) {
@@ -58,6 +59,27 @@ router.post("/remove", auth, async (req, res) => {
       .json({ message: "Account removed", id: user._id });
   } catch (e) {
     res.status(500).json({ message: "Unable to remove account" });
+  }
+});
+
+router.patch("/update", async (req, res) => {
+  try {
+    const user = await User.findById(req.body.id);
+    const correctPassword = await user.comparePasswords(req.body.password);
+
+    if (!user || !correctPassword) throw new Error("Unable to update user");
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.body.id,
+      req.body.updates,
+      {
+        new: true
+      }
+    );
+    console.log(updatedUser);
+    res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Unable to save user infromation", error });
   }
 });
 

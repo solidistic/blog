@@ -28,8 +28,8 @@ export const removeComment = ({ commentId, postId }) =>
 export const getUserById = id => api.get(`/users/${id}`);
 export const removeUser = () => api.post("/users/remove");
 export const createUser = user => api.post("/signup", { user });
-export const updateUser = (id, updates) =>
-  api.patch("/users/update", { id, updates });
+export const updateUser = (id, updates, password) =>
+  api.patch("/users/update", { id, updates, password });
 
 // Authentication
 export const login = (username, password) =>
@@ -49,6 +49,7 @@ export default {
   getUserById,
   createUser,
   removeUser,
+  updateUser,
   login,
   logout,
   signup

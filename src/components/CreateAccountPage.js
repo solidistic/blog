@@ -17,7 +17,10 @@ const CreateAccount = ({ history }) => {
         <p className="content-container__subtitle--secondary">
           Fields with * are required
         </p>
-        <AccountForm history={history} handleSubmit={createAccount} />
+        <AccountForm
+          history={history}
+          handleSubmit={createAccount}
+        />
       </div>
     </div>
   );

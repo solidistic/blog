@@ -6,6 +6,11 @@ export default (state = undefined, action) => {
       };
     case "LOGOUT":
       return undefined;
+    case "UPDATE_USER":
+      return {
+        ...state.user,
+        ...action.updates
+      };
     default:
       throw new Error("Error in user reducer");
   }

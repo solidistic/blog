@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "Password is required"]
   },
+  description: String,
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,

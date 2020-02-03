@@ -8,9 +8,31 @@
   background: lighten($primary, 5%);
   color: $font-sand;
   font-size: $font-s-size;
+  transition: border 0.3s ease-in-out;
 
   &:focus {
     background: lighten($primary, 15%);
+  }
+
+  &:valid {
+    border-bottom: 4px solid $valid-green;
+  }
+
+  &:invalid {
+    border-bottom: 4px solid $valid-red;
+  }
+
+  &:disabled {
+    color: darken($font-primary-color, 15%);
+    background-color: lighten($primary, 2%);
+  }
+
+  &:optional {
+    border: none;
+  }
+
+  &:placeholder-shown {
+    border: none;
   }
 
   &::placeholder {
@@ -18,12 +40,19 @@
   }
 }
 
-.input-group--vertical {
+.input-group__name {
   display: flex;
   flex-direction: row;
 }
 
+.input__name:nth-child(1) {
+  margin-right: $s-size;
+}
+
 .textarea {
-  @extend .input;
   height: 250px;
+}
+
+.legend {
+  margin-bottom: $s-size;
 }

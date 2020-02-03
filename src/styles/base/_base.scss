@@ -7,7 +7,7 @@
 }
 
 *:focus {
-  outline: 1px solid $alert;
+  outline: 1px solid lighten($primary, 20%);
 }
 
 html,
