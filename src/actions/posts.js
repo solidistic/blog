@@ -48,7 +48,8 @@ export const editPost = (id, updates) => ({
 export const startEditPost = async (id, updates) => {
   try {
     const res = await api.editPost(id, updates);
-    const { author, createdAt, ...updatedPost } = res.data.post;
+    console.log("STARTEDITPOST", res);
+    const { author, createdAt, comments, ...updatedPost } = res.data.post;
     return editPost(id, updatedPost);
   } catch (e) {
     console.log("Error in startEditPost action", e);

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
+import Modal from "./Modal";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(undefined);
   const [error, setError] = useState(undefined);
+  const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
     if (post) {
@@ -14,6 +16,18 @@ export const PostForm = ({ post, onSubmit, active }) => {
       setBody(post.body);
     }
   }, [post]);
+
+  const showImageFromBuffer = buffer => {
+    return (
+      <img
+        className="hero-preview"
+        src={`data:${buffer.contentType};base64,${Buffer.from(
+          buffer.data
+        ).toString("base64")}`}
+        alt="Hero"
+      />
+    );
+  };
 
   const submitPost = e => {
     e.preventDefault();
@@ -44,8 +58,24 @@ export const PostForm = ({ post, onSubmit, active }) => {
     }
   };
 
+  const closeModal = selection => {
+    console.log(selection);
+    setIsModalActive(false);
+  };
+
   return (
     <div className="input-group">
+      {post && post.heroImg && (
+        <div>
+          <Modal active={isModalActive} confirmAction={closeModal}>
+            <p>Current post image:</p>
+            {showImageFromBuffer(post.heroImg)}
+          </Modal>
+          <button className="button" onClick={() => setIsModalActive(true)}>
+            View hero
+          </button>
+        </div>
+      )}
       <form onSubmit={submitPost}>
         {error && <p>{error}</p>}
         <input
@@ -66,7 +96,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
           defaultValue={body}
           onChange={e => setBody(e.target.value)}
         />
-        <button className="button button--wide" disabled={active}>
+        <button type="submit" className="button button--wide" disabled={active}>
           Publish
         </button>
       </form>

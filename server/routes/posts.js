@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
 const fs = require("fs");
-const upload = multer({ dest: "./uploads/" });
+const sharp = require("sharp");
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 const Post = require("../../database/models/post");
 const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
@@ -45,10 +47,10 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
-  console.log("BODY", req.body);
-  console.log("FILE", req.file);
+  let heroImg = undefined;
 
-  const heroImg = fs.readFileSync(req.file.path);
+  if (req.file)
+    heroImg = { data: req.file.buffer, contentType: req.file.mimetype };
 
   try {
     const user = await User.findById(req.cookies.id);
@@ -75,20 +77,25 @@ router.patch(
   auth,
   upload.single("heroImage"),
   async (req, res) => {
+    let heroImg,
+      updates = undefined;
+
+    if (req.file) {
+      heroImg = { data: req.file.buffer, contentType: req.file.mimetype };
+      updates = { heroImg, ...req.body };
+    } else {
+      updates = { ...req.body };
+    }
+
     try {
-      const post = await Post.findByIdAndUpdate(
-        req.params.id,
-        {
-          ...req.body
-        },
-        {
-          new: true
-        }
-      );
+      const post = await Post.findByIdAndUpdate(req.params.id, updates, {
+        new: true
+      });
       console.log("POST11", post);
       if (!post) {
         throw new Error("No post with given id");
       }
+
       res.json({
         success: true,
         message: "Post has been updated",

@@ -14,7 +14,7 @@ router.post("/login", async (req, res) => {
       user = await User.findByName(req.body.username);
       token = await user.createToken(req.body.password);
     }
-    
+
     // console.log(user, token);
 
     if (!user) {
@@ -42,11 +42,15 @@ router.post("/signup", async (req, res) => {
     const user = new User(req.body.user);
     // await user.createToken();
     const account = await user.save();
-    res.status(201).json({
-      success: true,
-      message: "Account created succesfully",
-      account
-    });
+    res
+      .status(201)
+      .clearCookie("id")
+      .clearCookie("jwt_token")
+      .json({
+        success: true,
+        message: "Account created succesfully",
+        account
+      });
   } catch (e) {
     res.status(400).json({
       success: false,

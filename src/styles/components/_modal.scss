@@ -14,7 +14,7 @@
 
 .modal__content {
   background: darken($primary, 5%);
-  max-width: 300px;
+  max-width: fit-content;
   padding: $l-size;
   border-radius: 5px;
 }

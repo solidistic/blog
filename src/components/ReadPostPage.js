@@ -14,15 +14,15 @@ import { startRemovePost } from "../actions/posts";
 const ReadPostPage = ({ match, history }) => {
   const { posts, dispatch } = useContext(PostsContext);
   const { user } = useContext(UserContext);
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isModalActive, setModalActive] = useState(false);
 
   useEffect(() => {
     const postData = posts.find(post => post._id === match.params.id);
     setPost(postData);
-    if (postData) setIsLoaded(true);
-  }, [match.params.id, posts]);
+    if (post) setIsLoaded(true);
+  }, [match.params.id, posts, post]);
 
   const handleRemove = async confirmRemoval => {
     if (confirmRemoval) {
@@ -57,7 +57,13 @@ const ReadPostPage = ({ match, history }) => {
             </div>
           )}
           <h2 className="content-container__title">Comments:</h2>
-          <CommentList comments={post.comments} postId={post._id} user={user} />
+          {post && user && (
+            <CommentList
+              comments={post.comments}
+              postId={post._id}
+              user={user}
+            />
+          )}
           {user && <CommentForm id={post._id} />}
         </div>
       </div>

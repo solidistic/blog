@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  heroImg: Buffer,
+  heroImg: { data: Buffer, contentType: String },
   createdAt: Object,
   editedAt: Object,
   likes: Number,

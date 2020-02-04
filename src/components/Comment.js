@@ -24,4 +24,4 @@ const Comment = ({ _id, createdAt, postedBy, body, user, removeComment }) => {
   );
 };
 
-export default React.memo(Comment);
+export default Comment;

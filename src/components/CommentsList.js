@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback, useEffect } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import PostsContext from "../context/posts-context";
 import { startRemoveComment } from "../actions/comments";
@@ -28,9 +28,6 @@ const CommentList = ({ comments, user, match }) => {
     [commentId, postId, dispatch]
   );
 
-  useEffect(() => {
-    console.log("this ran", comments);
-  }, [comments]);
   return (
     <div>
       <Modal confirmAction={handleRemove} active={isModalActive}>

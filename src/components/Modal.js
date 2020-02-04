@@ -15,6 +15,7 @@ const Modal = ({ children, active, confirmAction }) => {
   }, [active]);
 
   const handleSelection = selection => {
+    console.log("handled selection");
     document.body.classList.toggle("noscroll", !active);
     confirmAction(selection);
   };
@@ -37,4 +38,4 @@ const Modal = ({ children, active, confirmAction }) => {
   );
 };
 
-export default Modal;
+export default React.memo(Modal);
