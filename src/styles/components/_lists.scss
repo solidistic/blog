@@ -8,6 +8,7 @@
 
   &:hover {
     background: lighten($primary, 5%);
+    padding-left: 10px;
   }
 
   @media (max-width: 960px) {
@@ -18,15 +19,15 @@
 .list-item__title {
   font-size: $font-l-size;
   font-weight: 600;
-  color: $secondary;
+  color: $font-primary-color;
   margin: 0;
-  padding-left: 10px;
-  transition: all 0.2s ease-in-out;
-  border-left: 5px solid $font-sand;
+  transition: all 0.15s ease-in-out;
+  // padding-left: 10px;
+  // border-left: 5px solid $font-sand;
 
   &:hover {
     color: darken($font-sand, 10%);
-    transform: translateX(5px);
+    // transform: translateX(5px);
     // text-shadow: 1px 1px 0px $secondary;
   }
 }

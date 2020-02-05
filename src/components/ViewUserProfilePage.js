@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import Post from "./Post";
@@ -105,24 +105,32 @@ import Modal from "./Modal";
 
 // ViewUserProfilePage.contextType = UserContext;
 
-//! Jos päivittää suoraan /accounts/me niin failaa, koska renderöi ennen
-//! datan hakua..
-
 const ViewUserProfilePage = ({ history, match }) => {
-  const { dispatch } = useContext(PostsContext);
+  const { posts, dispatch } = useContext(PostsContext);
   const { user: loggedUser, userDispatch } = useContext(UserContext);
   const [user, setCurrentUser] = useState(null);
+  const [userPosts, setUserPosts] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [modalActive, setModalActive] = useState(false);
 
+  const getPostsFromUser = useCallback(
+    userId => {
+      return posts.filter(post => {
+        console.log(post.author._id, userId);
+        return post.author._id === userId;
+      });
+    },
+    [posts]
+  );
+
   useEffect(() => {
+    console.log("useEffect");
+
     const id =
       history.location.pathname === "/account" && loggedUser._id
         ? loggedUser._id
         : match.params.id;
-
-    console.log("ID:", id);
 
     const loadUser = async () => {
       const res = await api.getUserById(id);
@@ -131,12 +139,14 @@ const ViewUserProfilePage = ({ history, match }) => {
         setError(true);
         return setIsLoaded(true);
       }
+      const postsData = getPostsFromUser(id);
       setCurrentUser(res.data);
+      setUserPosts(postsData);
       setIsLoaded(true);
     };
 
     if (!isLoaded) loadUser();
-  }, [match.params.id, loggedUser, history, user, isLoaded]);
+  }, [match.params.id, loggedUser, history, user, isLoaded, getPostsFromUser]);
 
   const handleRemoveUser = async confirmRemoval => {
     if (confirmRemoval) {
@@ -217,8 +227,8 @@ const ViewUserProfilePage = ({ history, match }) => {
               </div>
               <div>
                 <h2 className="content-container__title">Your latest posts:</h2>
-                {user.posts.length > 0 ? (
-                  user.posts.map(post => (
+                {userPosts && userPosts.length > 0 ? (
+                  userPosts.map(post => (
                     <div className="list-item" key={post._id}>
                       <Post post={post} author={user.username} />
                     </div>

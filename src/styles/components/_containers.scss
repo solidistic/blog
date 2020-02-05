@@ -33,16 +33,16 @@
 }
 
 .content-container__title {
-  font-size: $font-l-size;
-  color: $secondary;
+  font-size: $font-xl-size;
+  color: $font-primary-color;
   // text-transform: uppercase;
-  padding-left: 10px;
-  border-left: 5px solid $font-sand;
-  border-radius: 3px;
+  // padding-left: 10px;
+  // border-left: 5px solid $font-sand;
+  // border-radius: 3px;
 }
 
 .content-container__subtitle {
-  font-size: $font-m-size;
+  font-size: $font-l-size;
   font-weight: 600;
   margin-top: 0;
   color: $font-sand;

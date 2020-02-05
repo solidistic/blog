@@ -32,9 +32,18 @@ const CommentList = ({ comments, user, match }) => {
     <div>
       <Modal confirmAction={handleRemove} active={isModalActive}>
         <h2>Are you sure you want to remove comment?</h2>
+        <button
+          className="button button--delete"
+          onClick={() => handleRemove(true)}
+        >
+          <i className="fas fa-check"></i> Yes
+        </button>
+        <button className="button" onClick={() => handleRemove(false)}>
+          <i className="fas fa-times"></i> No
+        </button>
       </Modal>
 
-      {comments && comments.length > 0 ? (
+      {comments.length > 0 ? (
         comments.map(comment => {
           return (
             <Comment

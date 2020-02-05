@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
 const sharp = require("sharp");
 const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
 const Post = require("../../database/models/post");
 const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
+
+const upload = multer({ dest: "./uploads" });
 
 // router.get("*", (req, res) => {
 //   res.sendFile(path.join(publicPath, "index.html"));
@@ -26,7 +25,6 @@ router.get("/all", async (req, res) => {
     res.json(data);
   } catch (e) {
     res.status(500).json({
-      success: false,
       error: "Unable to get the posts from database",
       body: e
     });
@@ -39,7 +37,6 @@ router.get("/:id", async (req, res) => {
     res.json(post);
   } catch (e) {
     res.json({
-      success: false,
       error: "Unable to get the post by id",
       body: e
     });
@@ -47,25 +44,31 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
+  console.log("Create post", req.file);
   let heroImg = undefined;
 
-  if (req.file)
-    heroImg = { data: req.file.buffer, contentType: req.file.mimetype };
-
   try {
+    if (req.file) {
+      const buffer = await sharp(req.file.path)
+        .resize(1000)
+        .png()
+        .toBuffer();
+      heroImg = { data: buffer, contentType: req.file.mimetype };
+    }
+
     const user = await User.findById(req.cookies.id);
     const post = new Post({ author: user, heroImg, ...req.body });
+
     await user.posts.push(post._id);
     await user.save();
+
     const postData = await post.save();
     res.status(200).json({
-      success: true,
       message: "Post has been added to database",
       post: postData
     });
   } catch (e) {
     res.status(500).json({
-      success: false,
       error: "Unable to save to database",
       body: e
     });
@@ -81,7 +84,7 @@ router.patch(
       updates = undefined;
 
     if (req.file) {
-      heroImg = { data: req.file.buffer, contentType: req.file.mimetype };
+      heroImg = { data: req.file.path, contentType: req.file.mimetype };
       updates = { heroImg, ...req.body };
     } else {
       updates = { ...req.body };
@@ -97,13 +100,11 @@ router.patch(
       }
 
       res.json({
-        success: true,
         message: "Post has been updated",
         post
       });
     } catch (e) {
       res.json({
-        success: false,
         error: "Unable to update the post to database",
         body: e
       });
@@ -115,13 +116,11 @@ router.delete("/remove/:id", auth, async (req, res) => {
   try {
     const post = await Post.findByIdAndRemove(req.params.id);
     res.json({
-      success: true,
       message: "Post removed successfully",
       post
     });
   } catch (e) {
     res.json({
-      success: false,
       error: "Unable to delete post",
       body: e
     });

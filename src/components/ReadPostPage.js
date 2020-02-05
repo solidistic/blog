@@ -19,9 +19,10 @@ const ReadPostPage = ({ match, history }) => {
   const [isModalActive, setModalActive] = useState(false);
 
   useEffect(() => {
+    console.log("useEffect");
     const postData = posts.find(post => post._id === match.params.id);
     setPost(postData);
-    if (post) setIsLoaded(true);
+    if (postData) setIsLoaded(true);
   }, [match.params.id, posts, post]);
 
   const handleRemove = async confirmRemoval => {
@@ -41,6 +42,15 @@ const ReadPostPage = ({ match, history }) => {
         <div className="content-container">
           <Modal confirmAction={handleRemove} active={isModalActive}>
             <h2>Delete post "{post.title}"?</h2>
+            <button
+              className="button button--delete"
+              onClick={() => handleRemove(true)}
+            >
+              <i className="fas fa-check"></i> Yes
+            </button>
+            <button className="button" onClick={() => handleRemove(false)}>
+              <i className="fas fa-times"></i> No
+            </button>
           </Modal>
           <Post post={post} />
           {user && user._id === post.author._id && (
@@ -57,7 +67,7 @@ const ReadPostPage = ({ match, history }) => {
             </div>
           )}
           <h2 className="content-container__title">Comments:</h2>
-          {post && user && (
+          {post && (
             <CommentList
               comments={post.comments}
               postId={post._id}

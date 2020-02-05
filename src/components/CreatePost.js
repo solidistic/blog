@@ -12,16 +12,15 @@ const CreatePost = ({ history }) => {
     setButtonActivity(true);
     startAddPost(post)
       .then(addPost => {
+        if (!addPost) throw new Error();  
         console.log("ADDPOST createpost", addPost);
         return addPost;
       })
       .then(addPost => {
         dispatch(addPost);
-        // await setButtonActivity(false);
         history.push(`/posts/${addPost.post._id}`);
       })
       .catch(e => {
-        console.log(e);
         setError("Unable to create a new post, please try again.");
         setButtonActivity(false);
       });

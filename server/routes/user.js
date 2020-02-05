@@ -7,7 +7,7 @@ const auth = require("../middleware/auth");
 
 router.get("/:userId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).populate("posts");
+    const user = await User.findById(req.params.userId);
     if (!user) throw new Error("Account doesn't exist");
 
     // OTA SELVÄÄ:
@@ -20,7 +20,6 @@ router.get("/:userId", async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      posts: user.posts,
       description: user.description
     };
     res.status(200).json(publicUser);

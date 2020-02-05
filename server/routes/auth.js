@@ -47,13 +47,11 @@ router.post("/signup", async (req, res) => {
       .clearCookie("id")
       .clearCookie("jwt_token")
       .json({
-        success: true,
         message: "Account created succesfully",
         account
       });
   } catch (e) {
     res.status(400).json({
-      success: false,
       message: "Unable to create account",
       body: e
     });

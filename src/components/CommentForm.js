@@ -16,6 +16,7 @@ const CommentForm = ({ id }) => {
       setActivity(true);
       const createdAt = moment().format("D.MM.YYYY - hh:mm");
       const res = await startAddComment({ body, createdAt, id });
+      console.log(res);
       if (res.error) throw new Error();
       dispatch(res);
     } catch (e) {

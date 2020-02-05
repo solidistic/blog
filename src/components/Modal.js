@@ -11,28 +11,23 @@ const Modal = ({ children, active, confirmAction }) => {
   };
 
   useEffect(() => {
+    console.log("useEffect");
+
     document.body.classList.toggle("noscroll", active);
   }, [active]);
-
-  const handleSelection = selection => {
-    console.log("handled selection");
-    document.body.classList.toggle("noscroll", !active);
-    confirmAction(selection);
-  };
 
   return (
     <div className={toggleModal} style={modalPosition}>
       <div className="modal__content">
-        {children}
-        <button
-          className="button button--delete"
-          onClick={() => handleSelection(true)}
-        >
-          <i className="fas fa-check"></i> Yes
-        </button>
-        <button className="button" onClick={() => handleSelection(false)}>
-          <i className="fas fa-times"></i> No
-        </button>
+        <div className="input-group__name">
+          <div>{children}</div>
+          <div>
+            <i
+              className="fas fa-times comment__icon"
+              onClick={() => confirmAction(false)}
+            ></i>
+          </div>
+        </div>
       </div>
     </div>
   );
