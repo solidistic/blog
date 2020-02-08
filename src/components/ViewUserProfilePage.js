@@ -109,7 +109,7 @@ const ViewUserProfilePage = ({ history, match }) => {
                   </span>{" "}
                   {user.description}
                 </p>
-                {loggedUser._id === user._id && (
+                {loggedUser && loggedUser._id === user._id && (
                   <div>
                     <Modal
                       active={modalActive}

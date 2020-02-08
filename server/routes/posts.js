@@ -59,20 +59,27 @@ router.get("/:id", async (req, res) => {
 
 router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
   console.log("Create post", req.file);
+  console.log("Body", req.body);
+  console.log("id", req.cookies.id);
   let image = undefined;
 
   try {
-    upload(req, res, err => {
-      if (err instanceof multer.MulterError) {
-        return new Error("File is not valid");
-      }
-    });
+    // Ei toimi läppärillä?!
+
+    // upload(req, res, err => {
+    //   if (err instanceof multer.MulterError) {
+    //     console.log("running here", err);
+    //     return new Error("File is not valid");
+    //   } else if (err) {
+    //     console.log("also herer", err);
+    //   }
+    // });
 
     if (req.file) {
-      const buffer = await sharp(req.file)
-        .resize(1000)
-        .png();
-      console.log("BUFFER", buffer);
+      // const buffer = await sharp(req.file)
+      //   .resize(1000)
+      //   .png();
+      // console.log("BUFFER", buffer);
       image = {
         name: `${req.file.originalname}`,
         contentType: req.file.mimetype
@@ -80,8 +87,8 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
     }
 
     const user = await User.findById(req.cookies.id);
+    console.log("here", user);
     const post = new Post({ author: user, image, ...req.body });
-
     await user.posts.push(post._id);
     await user.save();
 
@@ -90,10 +97,10 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
       message: "Post has been added to database",
       post: postData
     });
-  } catch (e) {
+  } catch (error) {
     res.status(500).json({
       error: "Unable to save to database",
-      body: e
+      body: error
     });
   }
 });
