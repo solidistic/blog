@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import Modal from "./Modal";
@@ -9,6 +9,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [file, setFile] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [isModalActive, setIsModalActive] = useState(false);
+  const fileInput = useRef(null);
 
   useEffect(() => {
     if (post) {
@@ -25,6 +26,16 @@ export const PostForm = ({ post, onSubmit, active }) => {
           buffer.data
         ).toString("base64")}`}
         alt="Hero"
+      />
+    );
+  };
+
+  const showImage = image => {
+    return (
+      <img
+        className="hero-preview"
+        src={`http://localhost:8080/images/${image.name}`}
+        alt="testi"
       />
     );
   };
@@ -58,18 +69,29 @@ export const PostForm = ({ post, onSubmit, active }) => {
     }
   };
 
-  const closeModal = selection => {
-    console.log(selection);
-    setIsModalActive(false);
+  const checkFile = file => {
+    console.log(file);
+    if (!file) return;
+    if (file.size > 1000000) {
+      fileInput.current.value = null;
+      return alert("File is too large");
+    } else if (!file.name.match(/\.(jpg|jpeg|png)$/)) {
+      fileInput.current.value = null;
+      return alert("File must be an image");
+    }
+    setFile(file);
   };
 
   return (
     <div className="input-group">
-      {post && post.heroImg && (
+      {post && post.image && (
         <div>
-          <Modal active={isModalActive} confirmAction={closeModal}>
+          <Modal
+            active={isModalActive}
+            confirmAction={() => setIsModalActive(false)}
+          >
             <p>Current post image:</p>
-            {showImageFromBuffer(post.heroImg)}
+            {showImage(post.image)}
           </Modal>
           <button className="button" onClick={() => setIsModalActive(true)}>
             View hero
@@ -84,11 +106,15 @@ export const PostForm = ({ post, onSubmit, active }) => {
           defaultValue={title}
           onChange={e => setTitle(e.target.value)}
         />
+        <legend className="legend">
+          Optional hero image for you post (max. 1Mb):
+        </legend>
         <input
           className="input"
           type="file"
           name="heroImage"
-          onChange={e => setFile(e.target.files[0])}
+          ref={fileInput}
+          onChange={e => checkFile(e.target.files[0])}
         />
         <textarea
           className="input textarea"

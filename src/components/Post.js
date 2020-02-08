@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import showImage from "../utils/showImage";
 
 const Post = ({ post, author }) => {
   const [postMoment, setPostMoment] = useState("");
@@ -14,16 +15,6 @@ const Post = ({ post, author }) => {
           buffer.data
         ).toString("base64")}`}
         alt="Hero"
-      />
-    );
-  };
-
-  const showImage = image => {
-    return (
-      <img
-        className="hero-preview"
-        src={`http://localhost:8080/images/${image.name}`}
-        alt="testi"
       />
     );
   };
