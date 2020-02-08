@@ -5,8 +5,6 @@ const api = axios.create({
   withCredentials: true
 });
 
-api.defaults.timeout = 1000000;
-
 // Post
 export const savePost = post =>
   api

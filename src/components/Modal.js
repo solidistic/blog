@@ -24,7 +24,10 @@ const Modal = ({ children, active, confirmAction }) => {
           <div>
             <i
               className="fas fa-times comment__icon"
-              onClick={() => confirmAction(false)}
+              onClick={() => {
+                document.body.classList.toggle("noscroll", !active);
+                confirmAction(false);
+              }}
             ></i>
           </div>
         </div>

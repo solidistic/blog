@@ -18,6 +18,16 @@ const Post = ({ post, author }) => {
     );
   };
 
+  const showImage = image => {
+    return (
+      <img
+        className="hero-preview"
+        src={`http://localhost:8080/images/${image.name}`}
+        alt="testi"
+      />
+    );
+  };
+
   useEffect(() => {
     moment.defaultFormat = "D.MM.YYYY HH:mm";
     const daysFromPost = moment(post.createdAt, moment.defaultFormat).fromNow();
@@ -42,7 +52,7 @@ const Post = ({ post, author }) => {
 
   return (
     <div className="input-group__name">
-      <div>{post.heroImg && showImageFromBuffer(post.heroImg)}</div>
+      <div>{post.image && showImage(post.image)}</div>
       <div className="list-item__content">
         <Link to={`/posts/${post._id}`}>
           <h2 className="list-item__title">{post.title}</h2>

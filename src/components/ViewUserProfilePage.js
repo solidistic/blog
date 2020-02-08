@@ -9,102 +9,6 @@ import { removeAllFromUser } from "../actions/posts";
 import LoadingPage from "./LoadingPage";
 import Modal from "./Modal";
 
-// class ViewUserProfilePage extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       user: null,
-//       isLoaded: false
-//     };
-//   }
-
-//   handleRemoveUser = async () => {
-//     const { userDispatch } = this.context;
-//     console.log(this.props);
-//     try {
-//       // const id = await startRemoveUser();
-//       // console.log("REMOVED USER ID", id);
-//       // await dispatch(removeAllFromUser(id));
-//       // userDispatch(logout());
-//       // this.props.history.push("/");
-//     } catch (e) {
-//       console.log("Unable to safely remove account:", e);
-//     }
-//   };
-
-//   componentDidMount() {
-//     const { user } = this.context;
-//     let id;
-
-//     if (this.props.history.location.pathname === "/account" && user.user) {
-//       id = user.user._id;
-//     } else {
-//       id = this.props.match.params.id;
-//     }
-
-//     const fetchUser = async () => {
-//       try {
-//         const { data: user } = await api.getUserById(id);
-//         this.setState(() => ({ user, isLoaded: true }));
-//       } catch (e) {
-//         console.error("ERROR FETCHING USER:", e);
-//       }
-//     };
-//     fetchUser();
-//   }
-
-//   componentDidUpdate() {
-//     console.log("UPDATED", this.state, this.context);
-//   }
-
-//   render() {
-//     const { user: contextUser } = this.context;
-//     if (contextUser && this.state.user) {
-//       console.log(contextUser.user._id);
-//       console.log("STATE USER", this.state.user);
-//       console.log(contextUser.user._id === this.state.user._id);
-//     }
-//     if (this.isLoaded === false) {
-//       return <div>Loading...</div>;
-//     } else {
-//       return (
-//         <div className="content-container">
-//           {this.state.user ? (
-//             <div>
-//               <p className="content-container__subtitle">
-//                 Username: {this.state.user.username}
-//               </p>
-//               <p className="content-container__subtitle">
-//                 Email: {this.state.user.email}
-//               </p>
-//               {contextUser.user._id === this.state.user._id && (
-//                 <button
-//                   className="button button--delete"
-//                   onClick={this.handleRemoveUser}
-//                 >
-//                   Delete account
-//                 </button>
-//               )}
-//               <div>
-//                 Latest activity:{" "}
-//                 {this.state.user.posts.map(post => (
-//                   <div key={post._id}>
-//                     <Post post={post} author={this.state.user.username} />
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           ) : (
-//             <div>User not found</div>
-//           )}
-//         </div>
-//       );
-//     }
-//   }
-// }
-
-// ViewUserProfilePage.contextType = UserContext;
-
 const ViewUserProfilePage = ({ history, match }) => {
   const { posts, dispatch } = useContext(PostsContext);
   const { user: loggedUser, userDispatch } = useContext(UserContext);
@@ -212,6 +116,18 @@ const ViewUserProfilePage = ({ history, match }) => {
                       confirmAction={handleRemoveUser}
                     >
                       <h2>Are you sure to remove your account PERMANENTLY?</h2>
+                      <button
+                        className="button button--delete"
+                        onClick={() => handleRemoveUser(true)}
+                      >
+                        <i className="fas fa-check"></i> Yes
+                      </button>
+                      <button
+                        className="button"
+                        onClick={() => handleRemoveUser(false)}
+                      >
+                        <i className="fas fa-times"></i> No
+                      </button>
                     </Modal>
                     <Link className="button" to="/account/edit">
                       <i className="fas fa-edit"></i> Change information

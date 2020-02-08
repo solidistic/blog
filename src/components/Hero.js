@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import getRandomBG from "../utils/randomBackground";
-import convertBufferToBase64 from "../utils/convertBufferToBase64";
+import imagePath from "../utils/imagePath";
 
 const Hero = ({ user, post }) => {
   let bgImage = undefined;
-  if (post && post.heroImg) bgImage = convertBufferToBase64(post.heroImg);
+  if (post && post.image)
+    bgImage = imagePath(post.image.name, "localhost", "8080");
 
   if (!post) {
     return (

@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/logout", auth, async (req, res) => {
+router.post("/logout", async (req, res) => {
   try {
     const user = await User.findById(req.cookies.id);
     user.tokens = user.tokens.filter(

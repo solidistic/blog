@@ -2,16 +2,30 @@ const express = require("express");
 const router = express.Router();
 const sharp = require("sharp");
 const multer = require("multer");
+const path = require("path");
 const Post = require("../../database/models/post");
 const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
 
-const upload = multer({ dest: "./uploads" });
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, path.join(__dirname, "..", "public", "images"));
+  },
+  filename: function(req, file, cb) {
+    cb(null, `${file.originalname}`);
+  }
+});
 
-// router.get("*", (req, res) => {
-//   res.sendFile(path.join(publicPath, "index.html"));
-// });
+const upload = multer({
+  storage,
+  limits: { fileSize: 1000000 },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/))
+      return cb(new Error("File must be an image"));
+    cb(undefined, true);
+  }
+});
 
 router.get("/all", async (req, res) => {
   try {
@@ -45,19 +59,28 @@ router.get("/:id", async (req, res) => {
 
 router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
   console.log("Create post", req.file);
-  let heroImg = undefined;
+  let image = undefined;
 
   try {
+    upload(req, res, err => {
+      if (err instanceof multer.MulterError) {
+        return new Error("File is not valid");
+      }
+    });
+
     if (req.file) {
-      const buffer = await sharp(req.file.path)
+      const buffer = await sharp(req.file)
         .resize(1000)
-        .png()
-        .toBuffer();
-      heroImg = { data: buffer, contentType: req.file.mimetype };
+        .png();
+      console.log("BUFFER", buffer);
+      image = {
+        name: `${req.file.originalname}`,
+        contentType: req.file.mimetype
+      };
     }
 
     const user = await User.findById(req.cookies.id);
-    const post = new Post({ author: user, heroImg, ...req.body });
+    const post = new Post({ author: user, image, ...req.body });
 
     await user.posts.push(post._id);
     await user.save();
@@ -80,12 +103,13 @@ router.patch(
   auth,
   upload.single("heroImage"),
   async (req, res) => {
-    let heroImg,
+    console.log("updating...");
+    let image,
       updates = undefined;
 
     if (req.file) {
-      heroImg = { data: req.file.path, contentType: req.file.mimetype };
-      updates = { heroImg, ...req.body };
+      image = { name: req.file.originalname, contentType: req.file.mimetype };
+      updates = { image, ...req.body };
     } else {
       updates = { ...req.body };
     }
@@ -94,7 +118,7 @@ router.patch(
       const post = await Post.findByIdAndUpdate(req.params.id, updates, {
         new: true
       });
-      console.log("POST11", post);
+
       if (!post) {
         throw new Error("No post with given id");
       }
