@@ -19,7 +19,7 @@ const Modal = ({ children, active, confirmAction }) => {
   return (
     <div className={toggleModal} style={modalPosition}>
       <div className="modal__content">
-        <div className="input-group__name">
+        <div className="input-group--vertical">
           <div>{children}</div>
           <div>
             <i

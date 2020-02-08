@@ -42,7 +42,7 @@ const Post = ({ post, author }) => {
   }, [post]);
 
   return (
-    <div className="input-group__name">
+    <div className="input-group--vertical">
       <div>{post.image && showImage(post.image)}</div>
       <div className="list-item__content">
         <Link to={`/posts/${post._id}`}>

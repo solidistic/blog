@@ -49,10 +49,10 @@
 }
 
 .list-item__content {
-  padding-left: 15px;
+  padding-left: $s-size;
 
-  @media (max-width: 960px) {
-    padding: 0;
+  @media (max-width: 600px) {
+    padding: $s-size 0;
   }
 }
 

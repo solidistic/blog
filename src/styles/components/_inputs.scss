@@ -1,5 +1,5 @@
 .input {
-  display: inline-block;
+  display: inline-flex;
   padding: $s-size;
   margin-bottom: $s-size;
   border-radius: 3px;
@@ -38,11 +38,6 @@
   &::placeholder {
     color: darken($font-primary-color, 15%);
   }
-}
-
-.input-group__name {
-  display: flex;
-  flex-direction: row;
 }
 
 .input__name:nth-child(1) {

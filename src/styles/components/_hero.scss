@@ -41,7 +41,7 @@
   // text-shadow: 3px 3px 0px $primary;
   margin-bottom: $s-size;
   
-  @media (max-width: 700px) {
+  @media (max-width: 600px) {
     font-size: $font-hero-mobile-title;
     margin: $l-size 0;
   }
@@ -61,4 +61,9 @@
 .hero-preview {
   border-radius: 5px;
   height: 200px;
+
+  @media (max-width: 600px) {
+    height: auto;
+    width: 100%;
+  }
 }

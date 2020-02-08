@@ -3,3 +3,12 @@
   flex-direction: column;
   width: 100%;
 }
+
+.input-group--vertical {
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}

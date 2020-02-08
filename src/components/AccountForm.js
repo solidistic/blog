@@ -68,7 +68,7 @@ class AccountForm extends React.Component {
               }));
             }}
           />
-          <div className="input-group__name">
+          <div className="input-group--vertical">
             <input
               className="input input__name"
               type="text"
