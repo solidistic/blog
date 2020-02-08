@@ -14,8 +14,10 @@ const parserSecret = "anothersecret";
 require("../database/mongoose");
 
 const buildPath = path.join(__dirname, "..", "..", "build");
+const imagesPath = path.join(__dirname, "public", "images");
 
 app.use(express.static(buildPath));
+app.use("/images", express.static(imagesPath));
 
 // npm packages
 app.use(bodyParser.urlencoded({ extended: false }));
