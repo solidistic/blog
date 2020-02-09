@@ -18,18 +18,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
     }
   }, [post]);
 
-  const showImageFromBuffer = buffer => {
-    return (
-      <img
-        className="hero-preview"
-        src={`data:${buffer.contentType};base64,${Buffer.from(
-          buffer.data
-        ).toString("base64")}`}
-        alt="Hero"
-      />
-    );
-  };
-
   const showImage = image => {
     return (
       <img
@@ -46,7 +34,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
     let createdAt = moment()
       .local()
-      .format("D.MM.YYYY HH:mm");
+      .format("DD.MM.YYYY HH:mm");
     let editedAt;
 
     if (!title || !body) setError("Title and body are required");
@@ -55,7 +43,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
         createdAt = post.createdAt;
         editedAt = moment()
           .local()
-          .format("D.MM.YYYY HH:mm");
+          .format("DD.MM.YYYY HH:mm");
         formData.append("editedAt", editedAt);
       }
 
@@ -70,7 +58,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
   };
 
   const checkFile = file => {
-    console.log(file);
     if (!file) return;
     if (file.size > 1000000) {
       fileInput.current.value = null;

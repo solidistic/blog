@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import Post from "./Post";
+import Card from "./Card";
 import PostsContext from "../context/posts-context";
 import postsSelector from "../selectors/posts";
 
@@ -22,7 +22,7 @@ const PostsList = () => {
       ) : (
         visiblePosts.map(post => (
           <div className="list-item" key={post._id}>
-            <Post post={post} />
+            <Card post={post} />
           </div>
         ))
       )}

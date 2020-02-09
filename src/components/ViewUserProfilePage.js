@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
-import Post from "./Post";
+import Card from "./Card";
 import UserContext from "../context/user-context";
 import PostsContext from "../context/posts-context";
 import { logout, startRemoveUser } from "../actions/user";
@@ -21,7 +21,6 @@ const ViewUserProfilePage = ({ history, match }) => {
   const getPostsFromUser = useCallback(
     userId => {
       return posts.filter(post => {
-        console.log(post.author._id, userId);
         return post.author._id === userId;
       });
     },
@@ -56,7 +55,6 @@ const ViewUserProfilePage = ({ history, match }) => {
     if (confirmRemoval) {
       try {
         const id = await startRemoveUser();
-        console.log("REMOVED USER ID", id);
         await dispatch(removeAllFromUser(id));
         userDispatch(logout());
         history.push("/");
@@ -70,6 +68,7 @@ const ViewUserProfilePage = ({ history, match }) => {
 
   if (!isLoaded) return <LoadingPage />;
   else {
+    const isOwner = loggedUser && loggedUser._id === user._id;
     return (
       <div className="content">
         <div className="content-container">
@@ -109,7 +108,7 @@ const ViewUserProfilePage = ({ history, match }) => {
                   </span>{" "}
                   {user.description}
                 </p>
-                {loggedUser && loggedUser._id === user._id && (
+                {isOwner && (
                   <div>
                     <Modal
                       active={modalActive}
@@ -142,11 +141,13 @@ const ViewUserProfilePage = ({ history, match }) => {
                 )}
               </div>
               <div>
-                <h2 className="content-container__title">Your latest posts:</h2>
+                <h2 className="content-container__title">
+                  Latest posts from {user.username}
+                </h2>
                 {userPosts && userPosts.length > 0 ? (
                   userPosts.map(post => (
                     <div className="list-item" key={post._id}>
-                      <Post post={post} author={user.username} />
+                      <Card post={post} author={user.username} />
                     </div>
                   ))
                 ) : (

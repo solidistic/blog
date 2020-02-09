@@ -1,5 +1,5 @@
 import React, { useContext, useState, useCallback } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PostsContext from "../context/posts-context";
 import { startRemoveComment } from "../actions/comments";
 import Comment from "./Comment";
@@ -57,7 +57,19 @@ const CommentList = ({ comments, user, match }) => {
           );
         })
       ) : (
-        <p>No comments yet, please leave yours now!</p>
+        <div>
+          {user ? (
+            <p>No comments yet, leave yours now!</p>
+          ) : (
+            <p>
+              No comments yet,{" "}
+              <Link className="link" to="/login">
+                login
+              </Link>{" "}
+              to leave yours!
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

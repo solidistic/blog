@@ -7,8 +7,12 @@
   border-bottom: 2px solid lighten($primary, 8%);
 
   &:hover {
-    background: lighten($primary, 5%);
-    padding-top: 20px;
+    background: lighten($primary, 2%);
+    padding-top: $s-size;
+  }
+
+  &:last-child() {
+    border: none;
   }
 
   @media (max-width: 960px) {
@@ -49,7 +53,10 @@
 }
 
 .list-item__content {
+  display: flex;
+  flex-direction: column;
   padding-left: $s-size;
+  justify-content: center;
 
   @media (max-width: 600px) {
     padding: $s-size 0;

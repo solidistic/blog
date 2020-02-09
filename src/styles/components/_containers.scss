@@ -35,7 +35,7 @@
 .content-container__title {
   font-size: $font-xl-size;
   color: $font-primary-color;
-  // text-transform: uppercase;
+  text-transform: capitalize;
   // padding-left: 10px;
   // border-left: 5px solid $font-sand;
   // border-radius: 3px;
@@ -52,4 +52,10 @@
   font-size: $font-s-size;
   font-weight: 500;
   color: $font-sand;
+}
+
+.content-container__body {
+  font-size: $font-m-size;
+  line-height: 1.2;
+  color: $font-primary-color;
 }

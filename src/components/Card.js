@@ -3,36 +3,50 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import showImage from "../utils/showImage";
 
+const useDescription = body => {
+  const descLength = 300;
+  if (body.length < descLength) return [body, descLength];
+  return [body.slice(0, descLength), descLength];
+};
+
 const Card = ({ post, author }) => {
   const [postMoment, setPostMoment] = useState("");
   const [editMoment, setEditMoment] = useState(undefined);
+  const [description, descLength] = useDescription(post.body);
 
   useEffect(() => {
-    moment.defaultFormat = "D.MM.YYYY HH:mm";
-    const daysFromPost = moment(post.createdAt, moment.defaultFormat).fromNow();
+    moment.defaultFormat = "DD.MM.YYYY";
+    const daysFromPost = moment(post.createdAt, moment.defaultFormat)
+      .local()
+      .fromNow();
+
     if (post.editedAt) {
       const daysFromEdit = moment(
         post.editedAt,
         moment.defaultFormat
       ).fromNow();
 
-      if (parseInt(daysFromEdit[0]) < 7 || isNaN(daysFromEdit)) {
+      if (parseInt(daysFromEdit[0]) < 7 || isNaN(parseInt(daysFromEdit))) {
         setEditMoment(daysFromEdit);
       } else {
         setEditMoment(post.daysFromEdit);
       }
     }
 
-    if (parseInt(daysFromPost[0]) < 7 || isNaN(daysFromPost))
-      return setPostMoment(daysFromPost);
-
-    setPostMoment(post.createdAt);
+    if (parseInt(daysFromPost[0]) < 7 || isNaN(parseInt(daysFromPost))) {
+      setPostMoment(daysFromPost);
+    } else {
+      setPostMoment(post.createdAt);
+    }
   }, [post]);
 
   return (
-    <div>
-      <div>
-        <h2 className="content-container__title">{post.title}</h2>
+    <div className="input-group--vertical">
+      <div>{post.image && showImage(post.image)}</div>
+      <div className="list-item__content">
+        <Link to={`/posts/${post._id}`}>
+          <h2 className="list-item__title">{post.title}</h2>
+        </Link>
         <p className="list-item__subtitle">
           {post.author ? (
             <>
@@ -50,9 +64,9 @@ const Card = ({ post, author }) => {
           {postMoment}
           {post.editedAt && <span> - Edited {editMoment}</span>}
         </p>
-        <div className="content-container__body">
-          <p>{post.body}</p>
-        </div>
+        <p className="list-item__body">
+          {post.body.length <= descLength ? post.body : `${description}...`}
+        </p>
         {post.editComments && <p>{post.editComments}</p>}
       </div>
     </div>

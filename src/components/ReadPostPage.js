@@ -54,7 +54,7 @@ const ReadPostPage = ({ match, history }) => {
           </Modal>
           <Post post={post} />
           {user && user._id === post.author._id && (
-            <div className="content-container__edit list-item__content">
+            <div className="content-container__edit">
               <Link className="button" to={`/edit/${post._id}`}>
                 <i className="fas fa-edit"></i> Edit post
               </Link>
@@ -66,15 +66,17 @@ const ReadPostPage = ({ match, history }) => {
               </button>
             </div>
           )}
-          <h2 className="content-container__title">Comments:</h2>
-          {post && (
-            <CommentList
-              comments={post.comments}
-              postId={post._id}
-              user={user}
-            />
-          )}
-          {user && <CommentForm id={post._id} />}
+          <div className="comments">
+            <h2 className="content-container__subtitle">Comments:</h2>
+            {post && (
+              <CommentList
+                comments={post.comments}
+                postId={post._id}
+                user={user}
+              />
+            )}
+            {user && <CommentForm id={post._id} />}
+          </div>
         </div>
       </div>
     </>
