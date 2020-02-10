@@ -42,7 +42,7 @@ const Card = ({ post, author }) => {
 
   return (
     <div className="input-group--vertical">
-      <div>{post.image && showImage(post.image)}</div>
+      <div>{post.image && showImage(post.image.name)}</div>
       <div className="list-item__content">
         <Link to={`/posts/${post._id}`}>
           <h2 className="list-item__title">{post.title}</h2>

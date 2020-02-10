@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import Modal from "./Modal";
+import Input from "./Input";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
@@ -9,6 +10,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [file, setFile] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [isModalActive, setIsModalActive] = useState(false);
+  const [heroSelection, setHeroSelection] = useState("None");
   const fileInput = useRef(null);
 
   useEffect(() => {
@@ -57,9 +59,27 @@ export const PostForm = ({ post, onSubmit, active }) => {
     }
   };
 
+  const handleInputSelection = selection => {
+    if (selection === "Local") {
+      return (
+        <input
+          className="input"
+          type="file"
+          name="heroImage"
+          ref={fileInput}
+          onChange={e => checkFile(e.target.files[0])}
+        />
+      );
+    } else if (selection === "URL") {
+      return <input className="input" type="text" ref={fileInput} />;
+    } else {
+      return null;
+    }
+  };
+
   const checkFile = file => {
     if (!file) return;
-    if (file.size > 1000000) {
+    if (file.size > 2000000) {
       fileInput.current.value = null;
       return alert("File is too large");
     } else if (!file.name.match(/\.(jpg|jpeg|png)$/)) {
@@ -78,7 +98,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
             confirmAction={() => setIsModalActive(false)}
           >
             <p>Current post image:</p>
-            {showImage(post.image)}
+            {showImage(post.image.name)}
           </Modal>
           <button className="button" onClick={() => setIsModalActive(true)}>
             View hero
@@ -94,15 +114,23 @@ export const PostForm = ({ post, onSubmit, active }) => {
           onChange={e => setTitle(e.target.value)}
         />
         <legend className="legend">
-          Optional hero image for you post (max. 1Mb):
+          Optional hero image for you post (max. 2Mb):
         </legend>
-        <input
-          className="input"
-          type="file"
-          name="heroImage"
-          ref={fileInput}
-          onChange={e => checkFile(e.target.files[0])}
-        />
+        <div className="input-group--vertical">
+          <select
+            className="input"
+            onChange={e => setHeroSelection(e.target.value)}
+          >
+            <option>None</option>
+            <option>Local</option>
+            <option>URL</option>
+          </select>
+          <Input
+            selection={heroSelection}
+            fileInput={fileInput}
+            checkFile={checkFile}
+          />
+        </div>
         <textarea
           className="input textarea"
           placeholder="Post body"

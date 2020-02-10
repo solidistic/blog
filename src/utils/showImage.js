@@ -1,10 +1,12 @@
 import React from "react";
 
-export default image => {
+export default (image, key, type = "hero") => {
+  const style = type === "hero" ? "hero-preview" : "gallery__image";
   return (
     <img
-      className="hero-preview"
-      src={`http://localhost:8080/images/${image.name}`}
+      key={key}
+      className={style}
+      src={`http://localhost:8080/images/${image}`}
       alt="testi"
     />
   );

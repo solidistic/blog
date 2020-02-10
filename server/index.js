@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -16,6 +17,7 @@ require("../database/mongoose");
 const buildPath = path.join(__dirname, "..", "..", "build");
 const imagesPath = path.join(__dirname, "public", "images");
 
+// Static
 app.use(express.static(buildPath));
 app.use("/images", express.static(imagesPath));
 
@@ -30,6 +32,12 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 app.use("/", authRoutes);
+app.get("/images/list", async (req, res) => {
+  fs.readdir(imagesPath, (err, files) => {
+    if (err) res.json({ error: "Unable to fetch files" });
+    res.json({ files });
+  });
+});
 
 app.on("error", e => console.log("Server error:", e));
 app.listen(port, host, () => {

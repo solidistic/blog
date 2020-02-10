@@ -9,6 +9,8 @@
 
 .hero__content {
   // background: $primary-transparent;
+  display: inherit;
+  flex-direction: column;
   max-width: 960px;
   padding: $l-size;
   border-radius: 10px;
@@ -19,7 +21,8 @@
   
   @media (max-width: 700px) {
     padding: 0;
-    // text-align: center;
+    align-items: center;
+    text-align: center;
   }
 }
 
@@ -60,7 +63,7 @@
 
 .hero-preview {
   border-radius: 5px;
-  height: 150px;
+  width: 220px;
 
   @media (max-width: 700px) {
     display: none;

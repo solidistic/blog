@@ -5,6 +5,9 @@ const api = axios.create({
   withCredentials: true
 });
 
+// Images
+export const getImages = () => api.get("/images/list");
+
 // Post
 export const savePost = post =>
   api
@@ -43,12 +46,13 @@ export const signup = (username, password) =>
   api.post("/signup", { username, password });
 
 export default {
+  editPost,
   savePost,
   saveComment,
-  getPost,
   removePost,
   removeComment,
-  editPost,
+  getPost,
+  getImages,
   getAllPosts,
   getUserById,
   createUser,

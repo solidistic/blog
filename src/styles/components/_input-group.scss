@@ -8,6 +8,10 @@
   display: flex;
   flex-direction: row;
 
+  .input:first-child() {
+    margin-right: $s-size;
+  }
+
   @media (max-width: 600px) {
     flex-direction: column;
   }

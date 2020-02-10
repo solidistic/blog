@@ -1,0 +1,11 @@
+.gallery__image {
+  cursor: pointer;
+  height: 150px;
+  border-radius: 4px;
+  margin: $s-size;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0px 0px 20px lighten($primary, 5%);
+  }
+}
