@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import moment from "moment";
 import Modal from "./Modal";
 import Input from "./Input";
+import Image from "./Image";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
@@ -19,16 +20,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
       setBody(post.body);
     }
   }, [post]);
-
-  const showImage = image => {
-    return (
-      <img
-        className="hero-preview"
-        src={`http://localhost:8080/images/${image.name}`}
-        alt="testi"
-      />
-    );
-  };
 
   const submitPost = e => {
     e.preventDefault();
@@ -59,24 +50,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
     }
   };
 
-  const handleInputSelection = selection => {
-    if (selection === "Local") {
-      return (
-        <input
-          className="input"
-          type="file"
-          name="heroImage"
-          ref={fileInput}
-          onChange={e => checkFile(e.target.files[0])}
-        />
-      );
-    } else if (selection === "URL") {
-      return <input className="input" type="text" ref={fileInput} />;
-    } else {
-      return null;
-    }
-  };
-
   const checkFile = file => {
     if (!file) return;
     if (file.size > 2000000) {
@@ -98,7 +71,11 @@ export const PostForm = ({ post, onSubmit, active }) => {
             confirmAction={() => setIsModalActive(false)}
           >
             <p>Current post image:</p>
-            {showImage(post.image.name)}
+            <Image
+              imageName={post.image.name}
+              type="hero"
+              style={{ height: 400 }}
+            />
           </Modal>
           <button className="button" onClick={() => setIsModalActive(true)}>
             View hero
@@ -124,6 +101,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
             <option>None</option>
             <option>Local</option>
             <option>URL</option>
+            <option>Gallery</option>
           </select>
           <Input
             selection={heroSelection}

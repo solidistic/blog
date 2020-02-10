@@ -40,6 +40,17 @@
   }
 }
 
+.input__file {
+  &::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+  &::after {
+    content: "max. 2Mb";
+    display: inline-block;
+    margin: 0;
+  }
+}
 .input__name:nth-child(1) {
   margin-right: $s-size;
 }

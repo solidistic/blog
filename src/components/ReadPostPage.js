@@ -19,7 +19,6 @@ const ReadPostPage = ({ match, history }) => {
   const [isModalActive, setModalActive] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect");
     const postData = posts.find(post => post._id === match.params.id);
     setPost(postData);
     if (postData) setIsLoaded(true);

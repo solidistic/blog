@@ -2,7 +2,6 @@ import React from "react";
 
 const Image = ({
   imageName,
-  key,
   type = "hero",
   path = "http://localhost:8080/images/",
   ...props

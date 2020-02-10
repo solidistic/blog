@@ -5,7 +5,7 @@ const Input = ({ selection = "None", fileInput, checkFile }) => {
   if (selection === "Local") {
     return (
       <input
-        className="input"
+        className="input input__file"
         type="file"
         name="heroImage"
         ref={fileInput}
@@ -13,7 +13,14 @@ const Input = ({ selection = "None", fileInput, checkFile }) => {
       />
     );
   } else if (selection === "URL") {
-    return <input className="input" type="text" ref={fileInput} />;
+    return (
+      <input
+        className="input"
+        placeholder="e.g. https://www.yourdomain.com/forest.jpg"
+        type="text"
+        ref={fileInput}
+      />
+    );
   } else {
     return (
       <input className="input" disabled placeholder="Using default image" />
