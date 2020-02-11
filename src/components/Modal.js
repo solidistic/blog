@@ -11,6 +11,7 @@ const Modal = ({ children, active, confirmAction }) => {
   };
 
   useEffect(() => {
+    console.log("modal");
     document.body.classList.toggle("noscroll", active);
   }, [active]);
 

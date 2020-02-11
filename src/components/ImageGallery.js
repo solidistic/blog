@@ -4,7 +4,7 @@ import { useState } from "react";
 import api from "../api";
 import Image from "./Image";
 
-const ImageGallery = ({ input }) => {
+const ImageGallery = ({ input, currentImageName }) => {
   const [images, setImages] = useState(undefined);
   const [error, setError] = useState(undefined);
 
@@ -19,15 +19,20 @@ const ImageGallery = ({ input }) => {
   }, [images]);
 
   return (
-    <div className="content-container">
+    <div className="content-container gallery">
       {images &&
         images.map((image, index) => {
+          let activeImage = false;
+          if (currentImageName && currentImageName === image)
+            activeImage = true;
+          console.log(currentImageName, image);
           return (
             <Image
-              imageName={image}
               key={index}
+              imageName={image}
               type="gallery"
               onClick={() => console.log("click")}
+              active={activeImage}
             />
           );
         })}

@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import moment from "moment";
 import Modal from "./Modal";
 import Input from "./Input";
+import ImageGallery from "./ImageGallery";
 import Image from "./Image";
 
 export const PostForm = ({ post, onSubmit, active }) => {
@@ -64,24 +65,16 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
   return (
     <div className="input-group">
-      {post && post.image && (
-        <div>
-          <Modal
-            active={isModalActive}
-            confirmAction={() => setIsModalActive(false)}
-          >
-            <p>Current post image:</p>
-            <Image
-              imageName={post.image.name}
-              type="hero"
-              style={{ height: 400 }}
-            />
-          </Modal>
-          <button className="button" onClick={() => setIsModalActive(true)}>
-            View hero
-          </button>
-        </div>
-      )}
+      <Modal
+        active={isModalActive}
+        confirmAction={() => setIsModalActive(false)}
+      >
+        {post && post.image ? (
+          <ImageGallery currentImageName={post.image.name} />
+        ) : (
+          <ImageGallery />
+        )}
+      </Modal>
       <form onSubmit={submitPost}>
         {error && <p>{error}</p>}
         <input
@@ -107,6 +100,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
             selection={heroSelection}
             fileInput={fileInput}
             checkFile={checkFile}
+            setIsModalActive={setIsModalActive}
           />
         </div>
         <textarea

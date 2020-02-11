@@ -57,6 +57,7 @@
     margin: 0;
   }
 }
+
 .input__name:nth-child(1) {
   margin-right: $s-size;
 }
@@ -71,5 +72,5 @@
 }
 
 .select {
-  flex-grow: 1;
+  width: 20%;
 }

@@ -1,6 +1,11 @@
 import React from "react";
 
-const Input = ({ selection = "None", fileInput, checkFile }) => {
+const Input = ({
+  selection = "None",
+  fileInput,
+  checkFile,
+  setIsModalActive
+}) => {
   console.log("input", selection);
   if (selection === "Local") {
     return (
@@ -20,6 +25,16 @@ const Input = ({ selection = "None", fileInput, checkFile }) => {
         type="text"
         ref={fileInput}
       />
+    );
+  } else if (selection === "Gallery") {
+    return (
+      <button
+        className="button button--fixed"
+        type="button"
+        onClick={() => setIsModalActive(true)}
+      >
+        Open Gallery
+      </button>
     );
   } else {
     return (
