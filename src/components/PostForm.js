@@ -95,7 +95,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
         </legend>
         <div className="input-group--vertical">
           <select
-            className="input"
+            className="input select"
             onChange={e => setHeroSelection(e.target.value)}
           >
             <option>None</option>

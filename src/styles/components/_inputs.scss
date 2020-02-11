@@ -5,6 +5,7 @@
   border-radius: 3px;
   border: none;
   width: 100%;
+  height: 50px;
   background: lighten($primary, 5%);
   color: $font-sand;
   font-size: $font-s-size;
@@ -41,13 +42,18 @@
 }
 
 .input__file {
+  flex-grow: 5;
   &::-webkit-file-upload-button {
     visibility: hidden;
   }
 
-  &::after {
+  &::before {
     content: "max. 2Mb";
-    display: inline-block;
+    width: fit-content;
+    height: 100%;
+    background: blue;
+    padding-top: 2px;
+    border-right: 5px solid red;
     margin: 0;
   }
 }
@@ -62,4 +68,8 @@
 .legend {
   font-size: $font-s-size;
   margin-bottom: $s-size;
+}
+
+.select {
+  flex-grow: 1;
 }
