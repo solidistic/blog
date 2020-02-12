@@ -1,5 +1,5 @@
 .input {
-  display: inline-flex;
+  display: flex;
   padding: $s-size;
   margin-bottom: $s-size;
   border-radius: 3px;
@@ -42,7 +42,6 @@
 }
 
 .input__file {
-  flex-grow: 5;
   &::-webkit-file-upload-button {
     visibility: hidden;
   }
@@ -72,5 +71,5 @@
 }
 
 .select {
-  width: 20%;
+  width: fit-content;
 }

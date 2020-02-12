@@ -11,16 +11,15 @@ const Modal = ({ children, active, confirmAction }) => {
   };
 
   useEffect(() => {
-    console.log("modal");
+    // console.log("modal");
     document.body.classList.toggle("noscroll", active);
   }, [active]);
 
   return (
     <div className={toggleModal} style={modalPosition}>
       <div className="modal__content">
-        <div className="input-group--vertical">
-          <div>{children}</div>
-          <div>
+        <div className="">
+          <div className="modal__close">
             <i
               className="fas fa-times comment__icon"
               onClick={() => {
@@ -29,6 +28,7 @@ const Modal = ({ children, active, confirmAction }) => {
               }}
             ></i>
           </div>
+          <div>{children}</div>
         </div>
       </div>
     </div>

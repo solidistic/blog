@@ -110,16 +110,16 @@ router.patch(
   auth,
   upload.single("heroImage"),
   async (req, res) => {
-    console.log("updating...");
+    console.log("updating...", req.file, req.body);
     let image,
       updates = undefined;
 
     if (req.file) {
       image = { name: req.file.originalname, contentType: req.file.mimetype };
-      updates = { image, ...req.body };
-    } else {
-      updates = { ...req.body };
+    } else if (req.body.heroImage) {
+      image = { name: req.body.heroImage };
     }
+    updates = { image, ...req.body };
 
     try {
       const post = await Post.findByIdAndUpdate(req.params.id, updates, {

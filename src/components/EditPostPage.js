@@ -6,7 +6,7 @@ import { startEditPost } from "../actions/posts";
 
 const EditPostPage = ({ match, history }) => {
   const { posts, dispatch } = useContext(PostsContext);
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(undefined);
 
   useEffect(() => {
     const postData = posts.find(post => post._id === match.params.id);
@@ -23,7 +23,7 @@ const EditPostPage = ({ match, history }) => {
     <div className="content">
       <div className="content-container input-group">
         <h1 className="content-container__title">Edit Post</h1>
-        <PostForm onSubmit={editPost} post={post} />
+        {post && <PostForm onSubmit={editPost} post={post} />}
       </div>
     </div>
   );

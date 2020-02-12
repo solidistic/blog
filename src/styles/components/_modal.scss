@@ -8,7 +8,6 @@
   z-index: 1;
   width: 100vw;
   height: 100vh;
-  padding: $l-size;
   background: $primary-transparent;
 }
 
@@ -16,7 +15,13 @@
   background: darken($primary, 5%);
   max-width: fit-content;
   padding: $l-size;
-  border-radius: 5px;
+  border-radius: 3px;
+}
+
+.modal__close {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 $s-size 5px 0;
 }
 
 .modal__display--none {

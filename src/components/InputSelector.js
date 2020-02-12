@@ -1,12 +1,13 @@
 import React from "react";
 
-const Input = ({
+const InputSelector = ({
   selection = "None",
   fileInput,
   checkFile,
-  setIsModalActive
+  setIsModalActive,
+  file,
+  ...props
 }) => {
-  console.log("input", selection);
   if (selection === "Local") {
     return (
       <input
@@ -20,7 +21,7 @@ const Input = ({
   } else if (selection === "URL") {
     return (
       <input
-        className="input"
+        className="input input__file"
         placeholder="e.g. https://www.yourdomain.com/forest.jpg"
         type="text"
         ref={fileInput}
@@ -28,13 +29,23 @@ const Input = ({
     );
   } else if (selection === "Gallery") {
     return (
-      <button
-        className="button button--fixed"
-        type="button"
-        onClick={() => setIsModalActive(true)}
-      >
-        Open Gallery
-      </button>
+      <div className="input-group--vertical">
+        <button
+          className="button button--fixed"
+          type="button"
+          onClick={() => setIsModalActive(true)}
+        >
+          Open Gallery
+        </button>
+        <input
+          className="input input__file"
+          name="heroImage"
+          disabled
+          placeholder="Choose an image"
+          onChange={() => console.log("muuttuuko")}
+          {...props}
+        />
+      </div>
     );
   } else {
     return (
@@ -43,4 +54,4 @@ const Input = ({
   }
 };
 
-export default Input;
+export default InputSelector;

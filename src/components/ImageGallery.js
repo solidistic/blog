@@ -4,7 +4,7 @@ import { useState } from "react";
 import api from "../api";
 import Image from "./Image";
 
-const ImageGallery = ({ input, currentImageName }) => {
+const ImageGallery = ({ currentHeroImage, startSetFile }) => {
   const [images, setImages] = useState(undefined);
   const [error, setError] = useState(undefined);
 
@@ -14,28 +14,38 @@ const ImageGallery = ({ input, currentImageName }) => {
       if (res.status !== 200) return setError("Unable to fetch images");
       setImages(res.data.files);
     };
-    console.log(images);
     if (!images) fetchImages();
   }, [images]);
 
   return (
-    <div className="content-container gallery">
-      {images &&
-        images.map((image, index) => {
-          let activeImage = false;
-          if (currentImageName && currentImageName === image)
-            activeImage = true;
-          console.log(currentImageName, image);
-          return (
-            <Image
-              key={index}
-              imageName={image}
-              type="gallery"
-              onClick={() => console.log("click")}
-              active={activeImage}
-            />
-          );
-        })}
+    <div className="gallery">
+      <div className="gallery__preview">
+        <Image
+          imageName={currentHeroImage}
+          className="gallery__image gallery__image--big"
+        />
+      </div>
+      <div className="gallery__list">
+        {images &&
+          images.map((image, index) => {
+            let styles = undefined;
+            if (currentHeroImage && currentHeroImage === image) {
+              styles =
+                "gallery__image gallery__image--current gallery__image--list";
+            } else styles = "gallery__image gallery__image--list";
+            return (
+              <Image
+                key={index}
+                imageName={image}
+                className={styles}
+                onClick={() => {
+                  console.log("clicked image");
+                  startSetFile(image);
+                }}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

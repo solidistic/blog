@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import Modal from "./Modal";
-import Input from "./Input";
+import InputSelector from "./InputSelector";
 import ImageGallery from "./ImageGallery";
-import Image from "./Image";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
@@ -12,7 +11,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [file, setFile] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [isModalActive, setIsModalActive] = useState(false);
-  const [heroSelection, setHeroSelection] = useState("None");
+  const [heroSelectedFrom, setHeroSelectedFrom] = useState("None");
   const fileInput = useRef(null);
 
   useEffect(() => {
@@ -52,6 +51,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   };
 
   const checkFile = file => {
+    console.log("checkfile", file);
     if (!file) return;
     if (file.size > 2000000) {
       fileInput.current.value = null;
@@ -63,14 +63,24 @@ export const PostForm = ({ post, onSubmit, active }) => {
     setFile(file);
   };
 
+  const startSetFile = file => {
+    console.log("callind startsetFile", typeof file);
+    if (typeof file === "object") return checkFile(file);
+    else if (typeof file === "string") setFile(file);
+  };
+
   return (
     <div className="input-group">
       <Modal
         active={isModalActive}
         confirmAction={() => setIsModalActive(false)}
       >
-        {post && post.image ? (
-          <ImageGallery currentImageName={post.image.name} />
+        {/* <h2>Images gallery</h2> */}
+        {post ? (
+          <ImageGallery
+            currentHeroImage={file || post.image.name}
+            startSetFile={startSetFile}
+          />
         ) : (
           <ImageGallery />
         )}
@@ -89,18 +99,21 @@ export const PostForm = ({ post, onSubmit, active }) => {
         <div className="input-group--vertical">
           <select
             className="input select"
-            onChange={e => setHeroSelection(e.target.value)}
+            onChange={e => setHeroSelectedFrom(e.target.value)}
           >
             <option>None</option>
             <option>Local</option>
             <option>URL</option>
             <option>Gallery</option>
           </select>
-          <Input
-            selection={heroSelection}
+          <InputSelector
+            selection={heroSelectedFrom}
             fileInput={fileInput}
-            checkFile={checkFile}
+            checkFile={startSetFile}
             setIsModalActive={setIsModalActive}
+            file={file}
+            defaultValue={post.image.name}
+            value={file}
           />
         </div>
         <textarea
