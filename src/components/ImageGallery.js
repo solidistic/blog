@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import api from "../api";
+import LoadingPage from "./LoadingPage";
 import Image from "./Image";
 
 const ImageGallery = ({ currentHeroImage, startSetFile }) => {
@@ -17,37 +18,40 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
     if (!images) fetchImages();
   }, [images]);
 
-  return (
-    <div className="gallery">
-      <div className="gallery__preview">
-        <Image
-          imageName={currentHeroImage}
-          className="gallery__image gallery__image--big"
-        />
+  if (!images) return <LoadingPage />;
+  else {
+    return (
+      <div className="gallery">
+        <div className="gallery__preview">
+          <Image
+            imageName={currentHeroImage}
+            className="gallery__image gallery__image--big"
+          />
+        </div>
+        <div className="gallery__list">
+          {images &&
+            images.map((image, index) => {
+              let styles = undefined;
+              if (currentHeroImage && currentHeroImage === image) {
+                styles =
+                  "gallery__image gallery__image--current gallery__image--list";
+              } else styles = "gallery__image gallery__image--list";
+              return (
+                <Image
+                  key={index}
+                  imageName={image}
+                  className={styles}
+                  onClick={() => {
+                    console.log("clicked image");
+                    startSetFile(image);
+                  }}
+                />
+              );
+            })}
+        </div>
       </div>
-      <div className="gallery__list">
-        {images &&
-          images.map((image, index) => {
-            let styles = undefined;
-            if (currentHeroImage && currentHeroImage === image) {
-              styles =
-                "gallery__image gallery__image--current gallery__image--list";
-            } else styles = "gallery__image gallery__image--list";
-            return (
-              <Image
-                key={index}
-                imageName={image}
-                className={styles}
-                onClick={() => {
-                  console.log("clicked image");
-                  startSetFile(image);
-                }}
-              />
-            );
-          })}
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default ImageGallery;

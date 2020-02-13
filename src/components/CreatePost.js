@@ -6,10 +6,10 @@ import PostsContext from "../context/posts-context";
 const CreatePost = ({ history }) => {
   const { dispatch } = useContext(PostsContext);
   const [error, setError] = useState("");
-  const [buttonDisabled, setButtonActivity] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const createPost = post => {
-    setButtonActivity(true);
+    setButtonDisabled(true);
     startAddPost(post)
       .then(addPost => {
         if (!addPost) throw new Error();  
@@ -22,7 +22,7 @@ const CreatePost = ({ history }) => {
       })
       .catch(e => {
         setError("Unable to create a new post, please try again.");
-        setButtonActivity(false);
+        setButtonDisabled(false);
       });
   };
 

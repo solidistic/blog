@@ -8,11 +8,12 @@ import ImageGallery from "./ImageGallery";
 export const PostForm = ({ post, onSubmit, active }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [file, setFile] = useState(undefined);
-  const [error, setError] = useState(undefined);
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
   const [heroSelectedFrom, setHeroSelectedFrom] = useState("None");
   const fileInput = useRef(null);
+  const hasHeroImage = post && post.image && post.image.name;
 
   useEffect(() => {
     if (post) {
@@ -40,7 +41,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
         formData.append("editedAt", editedAt);
       }
 
-      formData.append("heroImage", file);
+      if (file) formData.append("heroImage", file);
       formData.append("title", title);
       formData.append("body", body);
       formData.append("createdAt", createdAt);
@@ -78,7 +79,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
         {/* <h2>Images gallery</h2> */}
         {post ? (
           <ImageGallery
-            currentHeroImage={file || post.image.name}
+            currentHeroImage={file}
             startSetFile={startSetFile}
           />
         ) : (
@@ -112,8 +113,8 @@ export const PostForm = ({ post, onSubmit, active }) => {
             checkFile={startSetFile}
             setIsModalActive={setIsModalActive}
             file={file}
-            defaultValue={post.image.name}
-            value={file}
+            // defaultValue={hasHeroImage ? post.image.name : "No image selected"}
+            value={file || "No image chosen"}
           />
         </div>
         <textarea

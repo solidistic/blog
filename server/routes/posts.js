@@ -84,6 +84,8 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
         name: `${req.file.originalname}`,
         contentType: req.file.mimetype
       };
+    } else if (req.body.image) {
+      image = { name: req.body.heroImage };
     }
 
     const user = await User.findById(req.cookies.id);
