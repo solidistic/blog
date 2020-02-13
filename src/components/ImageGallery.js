@@ -24,14 +24,15 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
       <div className="gallery">
         <div className="gallery__preview">
           <Image
-            imageName={currentHeroImage}
+            imageName={currentHeroImage || images[0]}
             className="gallery__image gallery__image--big"
           />
         </div>
         <div className="gallery__list">
           {images &&
             images.map((image, index) => {
-              let styles = undefined;
+              let styles;
+              if (!image) return null;
               if (currentHeroImage && currentHeroImage === image) {
                 styles =
                   "gallery__image gallery__image--current gallery__image--list";
@@ -42,7 +43,6 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
                   imageName={image}
                   className={styles}
                   onClick={() => {
-                    console.log("clicked image");
                     startSetFile(image);
                   }}
                 />

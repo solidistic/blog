@@ -6,14 +6,7 @@ const Image = ({
   path = "http://localhost:8080/images/",
   ...props
 }) => {
-
-  return (
-    <img
-      src={path + imageName}
-      alt={imageName}
-      {...props}
-    />
-  );
+  return <img src={path + imageName} alt={imageName} {...props} />;
 };
 
 export default Image;
