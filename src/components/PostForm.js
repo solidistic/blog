@@ -66,26 +66,23 @@ export const PostForm = ({ post, onSubmit, active }) => {
   };
 
   const startSetFile = file => {
-    console.log("callind startsetFile", typeof file);
     if (typeof file === "object") return checkFile(file);
     else if (typeof file === "string") setFile(file);
   };
 
   return (
     <div className="input-group">
-      <Modal
-        active={isModalActive}
-        confirmAction={() => setIsModalActive(false)}
-      >
-        <ErrorBoundary>
-          {/* <h2>Images gallery</h2> */}
-          {post ? (
-            <ImageGallery currentHeroImage={file} startSetFile={startSetFile} />
-          ) : (
-            <ImageGallery />
-          )}
-        </ErrorBoundary>
-      </Modal>
+      <ErrorBoundary>
+        <Modal
+          active={isModalActive}
+          confirmAction={() => setIsModalActive(false)}
+        >
+          <ImageGallery currentHeroImage={file} startSetFile={startSetFile} />
+          <button className="button" onClick={() => setIsModalActive(false)}>
+            Save & Close
+          </button>
+        </Modal>
+      </ErrorBoundary>
       <form onSubmit={submitPost}>
         {error && <p>{error}</p>}
         <input
@@ -112,7 +109,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
             fileInput={fileInput}
             checkFile={startSetFile}
             setIsModalActive={setIsModalActive}
-            // defaultValue={hasHeroImage ? post.image.name : "No image selected"}
             value={file || "No image chosen"}
           />
         </div>

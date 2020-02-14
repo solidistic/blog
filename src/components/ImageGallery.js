@@ -10,13 +10,14 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
+    console.log("useEFfetc imagegallery");
     const fetchImages = async () => {
       const res = await api.getImages();
       if (res.status !== 200) return setError("Unable to fetch images");
       setImages(res.data.files);
     };
-    if (!images) fetchImages();
-  }, [images]);
+    fetchImages();
+  }, []);
 
   if (!images) return <LoadingPage />;
   else {

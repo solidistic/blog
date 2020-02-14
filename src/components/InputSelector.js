@@ -41,7 +41,6 @@ const InputSelector = ({
             className="input input__file"
             name="heroImage"
             disabled
-            onChange={() => console.log("muuttuuko")}
             {...props}
           />
         </div>

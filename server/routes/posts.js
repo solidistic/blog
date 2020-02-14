@@ -60,7 +60,6 @@ router.get("/:id", async (req, res) => {
 router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
   console.log("Create post", req.file);
   console.log("Body", req.body);
-  console.log("id", req.cookies.id);
   let image = undefined;
 
   try {
@@ -81,15 +80,14 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
       //   .png();
       // console.log("BUFFER", buffer);
       image = {
-        name: `${req.file.originalname}`,
+        name: req.file.originalname,
         contentType: req.file.mimetype
       };
-    } else if (req.body.image) {
+    } else if (req.body.heroImage) {
       image = { name: req.body.heroImage };
     }
 
     const user = await User.findById(req.cookies.id);
-    console.log("here", user);
     const post = new Post({ author: user, image, ...req.body });
     await user.posts.push(post._id);
     await user.save();

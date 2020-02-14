@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import showImage from "../utils/showImage";
 
 const Card = ({ post, author }) => {
   const [postMoment, setPostMoment] = useState("");
