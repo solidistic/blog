@@ -5,7 +5,6 @@ const InputSelector = ({
   fileInput,
   checkFile,
   setIsModalActive,
-  file,
   ...props
 }) => {
   switch (selection) {
@@ -42,7 +41,6 @@ const InputSelector = ({
             className="input input__file"
             name="heroImage"
             disabled
-            placeholder="Choose an image"
             onChange={() => console.log("muuttuuko")}
             {...props}
           />

@@ -1,31 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasError: true
-    };
-  }
+  state = { error: null, errorInfo: null };
 
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error) {
-    console.log("Error boundary triggered");
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    });
   }
 
   render() {
-    if (this.state.error) {
+    if (this.state.errorInfo) {
       return (
         <div>
-          <h1>Oops, something went wrong!</h1>
-          <Link to="/" >Back to dashboard</Link>
+          <h2>Something went wrong.</h2>
+          <details style={{ whiteSpace: "pre-wrap" }}>
+            {this.state.error && this.state.error.toString()}
+            <br />
+            {this.state.errorInfo.componentStack}
+          </details>
         </div>
       );
     }
+
     return this.props.children;
   }
 }

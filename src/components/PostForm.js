@@ -4,16 +4,17 @@ import moment from "moment";
 import Modal from "./Modal";
 import InputSelector from "./InputSelector";
 import ImageGallery from "./ImageGallery";
+import ErrorBoundary from "./ErrorPage";
 
 export const PostForm = ({ post, onSubmit, active }) => {
+  const hasHeroImage = post && post.image && post.image.name;
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(hasHeroImage ? post.image.name : null);
   const [error, setError] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
   const [heroSelectedFrom, setHeroSelectedFrom] = useState("None");
   const fileInput = useRef(null);
-  const hasHeroImage = post && post.image && post.image.name;
 
   useEffect(() => {
     if (post) {
@@ -76,15 +77,14 @@ export const PostForm = ({ post, onSubmit, active }) => {
         active={isModalActive}
         confirmAction={() => setIsModalActive(false)}
       >
-        {/* <h2>Images gallery</h2> */}
-        {post ? (
-          <ImageGallery
-            currentHeroImage={file}
-            startSetFile={startSetFile}
-          />
-        ) : (
-          <ImageGallery />
-        )}
+        <ErrorBoundary>
+          {/* <h2>Images gallery</h2> */}
+          {post ? (
+            <ImageGallery currentHeroImage={file} startSetFile={startSetFile} />
+          ) : (
+            <ImageGallery />
+          )}
+        </ErrorBoundary>
       </Modal>
       <form onSubmit={submitPost}>
         {error && <p>{error}</p>}
@@ -112,7 +112,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
             fileInput={fileInput}
             checkFile={startSetFile}
             setIsModalActive={setIsModalActive}
-            file={file}
             // defaultValue={hasHeroImage ? post.image.name : "No image selected"}
             value={file || "No image chosen"}
           />
