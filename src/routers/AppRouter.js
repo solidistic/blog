@@ -15,7 +15,6 @@ import EditAccountPage from "../components/EditAccountPage";
 // import Playground from "../playground/Playground";
 import Footer from "../components/Footer";
 import ImageGallery from "../components/ImageGallery";
-import Playground from "../playground/Playground";
 
 export const history = createBrowserHistory();
 
@@ -38,7 +37,7 @@ const AppRouter = () => {
           <PrivateRoute path="/account/edit" component={EditAccountPage} />
           <Route path="/signup" component={CreateAccountPage} />
           <Route path="/login" component={LoginPage} />
-          <Route path="/playground" component={Playground} />
+          <Route path="/playground" component={ImageGallery} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
         <Footer />

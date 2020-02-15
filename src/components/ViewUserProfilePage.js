@@ -28,8 +28,6 @@ const ViewUserProfilePage = ({ history, match }) => {
   );
 
   useEffect(() => {
-    console.log("useEffect");
-
     const id =
       history.location.pathname === "/account" && loggedUser._id
         ? loggedUser._id

@@ -1,7 +1,7 @@
 import React from "react";
 
 const InputSelector = ({
-  selection = "None",
+  selection = "Gallery",
   fileInput,
   checkFile,
   setIsModalActive,

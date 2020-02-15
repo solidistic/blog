@@ -13,8 +13,10 @@
 
 .modal__content {
   background: darken($primary, 5%);
-  max-width: fit-content;
   padding: $l-size;
+  height: fit-content;
+  width: fit-content;
+  max-width: 90vw;
   border-radius: 3px;
 }
 

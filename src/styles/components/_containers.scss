@@ -18,6 +18,12 @@
   background-attachment: fixed;
 }
 
+.content-container--centered {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .content-container__information {
   background: lighten($primary, 5%);
   color: $font-primary-color;

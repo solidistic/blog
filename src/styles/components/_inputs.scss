@@ -50,10 +50,13 @@
     content: "max. 2Mb";
     width: fit-content;
     height: 100%;
-    background: blue;
     padding-top: 2px;
     border-right: 5px solid red;
     margin: 0;
+  }
+
+  &::after {
+    content: "Browse...";
   }
 }
 

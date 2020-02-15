@@ -13,7 +13,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [file, setFile] = useState(hasHeroImage ? post.image.name : null);
   const [error, setError] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
-  const [heroSelectedFrom, setHeroSelectedFrom] = useState("None");
+  const [heroSelectedFrom, setHeroSelectedFrom] = useState("Gallery");
   const fileInput = useRef(null);
 
   useEffect(() => {
@@ -73,15 +73,30 @@ export const PostForm = ({ post, onSubmit, active }) => {
   return (
     <div className="input-group">
       <ErrorBoundary>
-        <Modal
-          active={isModalActive}
-          confirmAction={() => setIsModalActive(false)}
-        >
-          <ImageGallery currentHeroImage={file} startSetFile={startSetFile} />
-          <button className="button" onClick={() => setIsModalActive(false)}>
-            Save & Close
-          </button>
-        </Modal>
+        {heroSelectedFrom === "Gallery" && (
+          <Modal
+            active={isModalActive}
+            confirmAction={() => setIsModalActive(false)}
+          >
+            <ImageGallery startSetFile={startSetFile} />
+            <div className="content-container--centered">
+              <button
+                className="button"
+                onClick={() => {
+                  setIsModalActive(false);
+                }}
+              >
+                Save & Close
+              </button>
+              <button
+                className="button"
+                onClick={() => setIsModalActive(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
       </ErrorBoundary>
       <form onSubmit={submitPost}>
         {error && <p>{error}</p>}
@@ -97,12 +112,13 @@ export const PostForm = ({ post, onSubmit, active }) => {
         <div className="input-group--vertical">
           <select
             className="input select"
+            value={heroSelectedFrom}
             onChange={e => setHeroSelectedFrom(e.target.value)}
           >
-            <option>None</option>
+            <option>Gallery</option>
             <option>Local</option>
             <option>URL</option>
-            <option>Gallery</option>
+            <option>None</option>
           </select>
           <InputSelector
             selection={heroSelectedFrom}
@@ -126,4 +142,4 @@ export const PostForm = ({ post, onSubmit, active }) => {
   );
 };
 
-export default withRouter(PostForm);
+export default React.memo(withRouter(PostForm));
