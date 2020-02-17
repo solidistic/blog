@@ -25,7 +25,14 @@ textarea {
 body {
   margin: 0;
   background: #312925;
+  // color: $font-primary-color;
+}
+
+pre {
   color: $font-primary-color;
+  background: darken($primary, 4%);
+  padding: 20px;
+  border-radius: 5px;
 }
 
 button {

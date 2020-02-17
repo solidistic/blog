@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
+import md from "../utils/markdown-config/config";
 import Modal from "./Modal";
 import InputSelector from "./InputSelector";
 import ImageGallery from "./ImageGallery";
@@ -138,6 +139,8 @@ export const PostForm = ({ post, onSubmit, active }) => {
           Publish
         </button>
       </form>
+      <div dangerouslySetInnerHTML={{ __html: md.render(body) }} />
+      <div>{md.render(body)}</div>
     </div>
   );
 };
