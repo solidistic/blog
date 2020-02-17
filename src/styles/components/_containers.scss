@@ -20,8 +20,9 @@
 
 .content-container--centered {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 }
 
 .content-container__information {

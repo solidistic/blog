@@ -17,13 +17,14 @@
   height: fit-content;
   width: fit-content;
   max-width: 90vw;
+  max-height: 90vh;
   border-radius: 3px;
 }
 
 .modal__close {
   display: flex;
   justify-content: flex-end;
-  padding: 0 $s-size 5px 0;
+  padding: 0 $s-size $s-size 0;
 }
 
 .modal__display--none {

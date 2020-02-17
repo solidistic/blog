@@ -21,7 +21,7 @@ const LoginForm = ({ history }) => {
   };
 
   return (
-    <div className="content-container--centered">
+    <>
       {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>
         <input
@@ -38,7 +38,7 @@ const LoginForm = ({ history }) => {
         />
         <button className="button">Login</button>
       </form>
-    </div>
+    </>
   );
 };
 

@@ -5,11 +5,14 @@ import "./styles/styles.scss";
 import BlogApp from "./components/BlogApp";
 
 /* TODO:
-  - Siirrä focus lisättyyn kommenttiin kun se lisätään
-  - Tyylittely
-  - Production (heroku?)
-  - Cookie parser signaus kaikkiin evästeisiin, HTTPS tarvitaan?
-  - Muuta komponentit, jotka tarvitsevat dataa ennen renderöintä, class komponenteiksi
+  # Siirrä focus lisättyyn kommenttiin kun se lisätään
+  # Production (heroku?)
+  # Cookie parser signaus kaikkiin evästeisiin, HTTPS tarvitaan?
+  # Muuta komponentit, jotka tarvitsevat dataa ennen renderöintä, class komponenteiksi
+
+  # Markdown postauksiin
+  # Parempi käyttäjä profiilisivu
+  # Gallerian tapa noutaa kuva nimet renderöinnin jälkeen
 */
 
 ReactDOM.render(<BlogApp />, document.getElementById("root"));
