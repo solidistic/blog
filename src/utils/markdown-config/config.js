@@ -11,18 +11,21 @@ hljs.configure({
   languages: ["javascript", "html"]
 });
 
-const md = new Remarkable({
+const md = new Remarkable("full", {
+  html: false,
+  breaks: true,
+  linkify: true,
   highlight: function(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
         console.log(lang);
         return hljs.highlight(lang, str).value;
-      } catch (err) {}
+      } catch (error) {}
     }
 
     try {
       return hljs.highlightAuto(str).value;
-    } catch (err) {}
+    } catch (error) {}
 
     return "";
   }

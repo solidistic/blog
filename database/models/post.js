@@ -5,12 +5,16 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    required: true
+  },
   body: {
     type: String,
     required: true
   },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  image: { name: String, contentType: String },
+  image: { name: String },
   createdAt: Object,
   editedAt: Object,
   likes: Number,

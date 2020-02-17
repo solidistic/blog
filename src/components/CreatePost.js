@@ -12,7 +12,7 @@ const CreatePost = ({ history }) => {
     setButtonDisabled(true);
     startAddPost(post)
       .then(addPost => {
-        if (!addPost) throw new Error();  
+        if (!addPost && addPost.res.status !== 200) throw new Error();
         console.log("ADDPOST createpost", addPost);
         return addPost;
       })
