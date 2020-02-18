@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-import md from "../utils/markdown-config/config";
+import md from "../utils/markdown/config";
 import Modal from "./Modal";
 import InputSelector from "./InputSelector";
 import ImageGallery from "./ImageGallery";
 import ErrorBoundary from "./ErrorPage";
 import useEventListener from "../hooks/useEventListener";
+import { getCursorLocation } from "../utils/markdown/helper";
+import MarkdownHelper from "./MarkdownHelper";
+import { text } from "body-parser";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const hasHeroImage = post && post.image && post.image.name;
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [description, setDescription] = useState("");
   const [file, setFile] = useState(hasHeroImage ? post.image.name : null);
   const [error, setError] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
@@ -23,6 +27,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
     if (post) {
       setTitle(post.title);
       setBody(post.body);
+      setDescription(post.description);
     }
   }, [post]);
 
@@ -49,13 +54,14 @@ export const PostForm = ({ post, onSubmit, active }) => {
       formData.append("title", title);
       formData.append("body", body);
       formData.append("createdAt", createdAt);
+      formData.append("description", description);
 
       // onSubmit({ title, body, createdAt, editedAt });
       onSubmit(formData);
     }
   };
 
-  const checkFile = file => {
+  const checkFile = useCallback(file => {
     console.log("checkfile", file);
     if (!file) return;
     if (file.size > 2000000) {
@@ -66,23 +72,30 @@ export const PostForm = ({ post, onSubmit, active }) => {
       return alert("File must be an image");
     }
     setFile(file);
-  };
+  }, []);
 
-  const startSetFile = file => {
-    if (typeof file === "object") return checkFile(file);
-    else if (typeof file === "string") setFile(file);
-  };
+  const startSetFile = useCallback(
+    file => {
+      if (typeof file === "object") return checkFile(file);
+      else if (typeof file === "string") setFile(file);
+    },
+    [checkFile]
+  );
 
   const modifyKeyActions = useCallback(e => {
     console.log(e.keyCode);
 
-    const initSelectionStart = textarea.current.selectionStart;
-    const initSelectionEnd = textarea.current.selectionEnd;
+    const [initSelectionStart, initSelectionEnd] = getCursorLocation(textarea);
     const textBegin = e.target.value.substring(0, initSelectionStart);
     const textEnd = e.target.value.substring(
       initSelectionEnd,
       textarea.current.value.length
     );
+
+    console.log(e.target.value[initSelectionStart - 1]);
+    if (e.target.value[initSelectionStart - 1] !== "\n")
+      console.log("Previous char is not space");
+    else console.log("THERE IS SPACE");
 
     // TAB
     if (e.keyCode === 9) {
@@ -102,7 +115,12 @@ export const PostForm = ({ post, onSubmit, active }) => {
       textarea.current.selectionEnd = initSelectionEnd + value.length - 1;
     }
   }, []);
-  useEventListener("keydown", modifyKeyActions);
+
+  useEventListener(
+    "keydown",
+    modifyKeyActions,
+    document.getElementById("post-body")
+  );
 
   return (
     <div className="input-group">
@@ -138,7 +156,14 @@ export const PostForm = ({ post, onSubmit, active }) => {
           className="input"
           placeholder="Title"
           defaultValue={title}
+          maxLength="200"
           onChange={e => setTitle(e.target.value)}
+        />
+        <textarea
+          className="input"
+          placeholder="Description (max. 200 characters)"
+          defaultValue={description}
+          onChange={e => setDescription(e.target.value)}
         />
         <legend className="legend">
           Optional hero image for you post (max. 2Mb):
@@ -151,7 +176,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
           >
             <option>Gallery</option>
             <option>Local</option>
-            <option>URL</option>
             <option>None</option>
           </select>
           <InputSelector
@@ -162,7 +186,9 @@ export const PostForm = ({ post, onSubmit, active }) => {
             value={file || "No image chosen"}
           />
         </div>
+        <MarkdownHelper inputRef={textarea} />
         <textarea
+          id="post-body"
           className="input textarea"
           placeholder="Post body"
           ref={textarea}

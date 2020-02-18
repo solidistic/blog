@@ -18,15 +18,6 @@ const InputSelector = ({
           onChange={e => checkFile(e.target.files[0])}
         />
       );
-    case "URL":
-      return (
-        <input
-          className="input input__file"
-          placeholder="e.g. https://www.yourdomain.com/forest.jpg"
-          type="text"
-          ref={fileInput}
-        />
-      );
     case "Gallery":
       return (
         <div className="input-group--vertical">

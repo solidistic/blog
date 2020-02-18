@@ -1,6 +1,7 @@
 .button {
   background: $secondary;
   color: $font-secondary-color;
+  cursor: pointer;
   padding: $s-size;
   margin: 0 $s-size 0 0;
   width: fit-content;
@@ -66,4 +67,9 @@
   @media (max-width: 960px) {
     width: 100%;
   }
+}
+
+.button--gray {
+  color: $secondary;
+  background: lighten($primary, 5%);
 }

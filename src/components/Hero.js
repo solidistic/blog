@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import getRandomBG from "../utils/randomBackground";
-import imagePath from "../utils/imagePath";
+import imagePath from "../utils/images/imagePath";
 
 const Hero = ({ user, post }) => {
   let bgImage = undefined;

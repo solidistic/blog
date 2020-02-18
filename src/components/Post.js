@@ -8,8 +8,9 @@ const Post = ({ post, author }) => {
   const [editMoment, setEditMoment] = useState(undefined);
 
   useEffect(() => {
-    moment.defaultFormat = "D.MM.YYYY HH:mm";
+    moment.defaultFormat = "DD.MM.YYYY HH:mm";
     const daysFromPost = moment(post.createdAt, moment.defaultFormat).fromNow();
+    
     if (post.editedAt) {
       const daysFromEdit = moment(
         post.editedAt,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import showImage from "../utils/showImage";
+import showImage from "../utils/images/showImage";
 
 const useDescription = body => {
   const descLength = 300;
@@ -15,10 +15,8 @@ const Card = ({ post, author }) => {
   const [description, descLength] = useDescription(post.body);
 
   useEffect(() => {
-    moment.defaultFormat = "DD.MM.YYYY";
-    const daysFromPost = moment(post.createdAt, moment.defaultFormat)
-      .local()
-      .fromNow();
+    moment.defaultFormat = "DD.MM.YYYY HH:mm";
+    const daysFromPost = moment(post.createdAt, moment.defaultFormat).fromNow();
 
     if (post.editedAt) {
       const daysFromEdit = moment(
@@ -26,18 +24,17 @@ const Card = ({ post, author }) => {
         moment.defaultFormat
       ).fromNow();
 
-      if (parseInt(daysFromEdit[0]) < 7 || isNaN(parseInt(daysFromEdit))) {
+      if (parseInt(daysFromEdit[0]) < 7 || isNaN(daysFromEdit)) {
         setEditMoment(daysFromEdit);
       } else {
-        setEditMoment(post.daysFromEdit);
+        setEditMoment(post.editedAt);
       }
     }
 
-    if (parseInt(daysFromPost[0]) < 7 || isNaN(parseInt(daysFromPost))) {
-      setPostMoment(daysFromPost);
-    } else {
-      setPostMoment(post.createdAt);
-    }
+    if (parseInt(daysFromPost[0]) < 7 || isNaN(daysFromPost))
+      return setPostMoment(daysFromPost);
+
+    setPostMoment(post.createdAt);
   }, [post]);
 
   return (
@@ -65,7 +62,8 @@ const Card = ({ post, author }) => {
           {post.editedAt && <span> - Edited {editMoment}</span>}
         </p>
         <p className="list-item__body">
-          {post.body.length <= descLength ? post.body : `${description}...`}
+          {post.description ||
+            (post.body.length <= descLength ? post.body : `${description}...`)}
         </p>
         {post.editComments && <p>{post.editComments}</p>}
       </div>

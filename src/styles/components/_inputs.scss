@@ -68,6 +68,11 @@
   height: 250px;
 }
 
+.textarea__helper {
+  padding: 0 $s-size;
+  margin-bottom: $s-size;
+}
+
 .legend {
   color: $font-primary-color;
   font-size: $font-s-size;
@@ -77,3 +82,4 @@
 .select {
   width: fit-content;
 }
+
