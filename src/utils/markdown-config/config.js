@@ -14,11 +14,9 @@ hljs.configure({
 const md = new Remarkable("full", {
   html: false,
   breaks: true,
-  linkify: true,
   highlight: function(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        console.log(lang);
         return hljs.highlight(lang, str).value;
       } catch (error) {}
     }

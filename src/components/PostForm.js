@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import md from "../utils/markdown-config/config";
@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import InputSelector from "./InputSelector";
 import ImageGallery from "./ImageGallery";
 import ErrorBoundary from "./ErrorPage";
+import useEventListener from "../hooks/useEventListener";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const hasHeroImage = post && post.image && post.image.name;
@@ -16,6 +17,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [isModalActive, setIsModalActive] = useState(false);
   const [heroSelectedFrom, setHeroSelectedFrom] = useState("Gallery");
   const fileInput = useRef(null);
+  const textarea = useRef(null);
 
   useEffect(() => {
     if (post) {
@@ -70,6 +72,37 @@ export const PostForm = ({ post, onSubmit, active }) => {
     if (typeof file === "object") return checkFile(file);
     else if (typeof file === "string") setFile(file);
   };
+
+  const modifyKeyActions = useCallback(e => {
+    console.log(e.keyCode);
+
+    const initSelectionStart = textarea.current.selectionStart;
+    const initSelectionEnd = textarea.current.selectionEnd;
+    const textBegin = e.target.value.substring(0, initSelectionStart);
+    const textEnd = e.target.value.substring(
+      initSelectionEnd,
+      textarea.current.value.length
+    );
+
+    // TAB
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      const indent = "  ";
+      e.target.value = textBegin + indent + textEnd;
+      textarea.current.selectionStart = initSelectionStart + indent.length;
+      textarea.current.selectionEnd = initSelectionEnd + indent.length;
+    }
+
+    // {
+    if (e.key === "{") {
+      e.preventDefault();
+      const value = "{}";
+      e.target.value = textBegin + value + textEnd;
+      textarea.current.selectionStart = initSelectionStart + value.length - 1;
+      textarea.current.selectionEnd = initSelectionEnd + value.length - 1;
+    }
+  }, []);
+  useEventListener("keydown", modifyKeyActions);
 
   return (
     <div className="input-group">
@@ -132,8 +165,11 @@ export const PostForm = ({ post, onSubmit, active }) => {
         <textarea
           className="input textarea"
           placeholder="Post body"
+          ref={textarea}
           defaultValue={body}
-          onChange={e => setBody(e.target.value)}
+          onChange={e => {
+            setBody(e.target.value);
+          }}
         />
         <button type="submit" className="button button--wide" disabled={active}>
           Publish
