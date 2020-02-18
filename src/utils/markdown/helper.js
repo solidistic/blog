@@ -3,10 +3,12 @@ const getValueForType = type => {
   switch (type) {
     case "header":
       return "#\u0020";
-    case "codeBlock":
+    case "block":
       return "```\n\n```";
     case "link":
       return '[Link text](http://www.google.com\u0020"Title text")';
+    case "image":
+      return "![Minion](https://octodex.github.com/images/minion.png)";
     default:
       return new Error("Invalid element");
   }
@@ -27,6 +29,7 @@ export const insertToTextarea = (elemRef, type, cursorAfter = "END") => {
     previousChar &&
     previousChar !== "\n"
   ) {
+    // check if user is creating subtitle
     if (
       type === "header" &&
       previousChar === "\u0020" &&
@@ -35,7 +38,10 @@ export const insertToTextarea = (elemRef, type, cursorAfter = "END") => {
       value = getValueForType(type);
       initSelectionStart = initSelectionStart - 1;
       initSelectionEnd = initSelectionEnd - 1;
-    } else value = `\n${getValueForType(type)}`;
+    } else {
+      // break line if other conditions are not valid
+      value = `\n${getValueForType(type)}`;
+    }
   } else value = getValueForType(type);
 
   if (!value) return;

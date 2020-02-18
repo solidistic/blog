@@ -92,11 +92,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
       textarea.current.value.length
     );
 
-    console.log(e.target.value[initSelectionStart - 1]);
-    if (e.target.value[initSelectionStart - 1] !== "\n")
-      console.log("Previous char is not space");
-    else console.log("THERE IS SPACE");
-
     // TAB
     if (e.keyCode === 9) {
       e.preventDefault();
@@ -202,7 +197,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
         </button>
       </form>
       <div dangerouslySetInnerHTML={{ __html: md.render(body) }} />
-      <div>{md.render(body)}</div>
     </div>
   );
 };

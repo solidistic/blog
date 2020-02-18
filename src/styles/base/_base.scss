@@ -4,6 +4,11 @@
   animation-duration: 0.4s;
   animation-iteration-count: 1;
   scroll-behavior: smooth;
+
+  &::selection {
+    background: lighten($secondary, 5%);
+    color: $primary;
+  }
 }
 
 *:focus {
