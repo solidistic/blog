@@ -42,32 +42,36 @@
 }
 
 .input__file {
+  cursor: pointer;
+  transition: all 0.3s ease;
+
   &::-webkit-file-upload-button {
     visibility: hidden;
   }
-
-  &::before {
-    content: "max. 2Mb";
-    width: fit-content;
-    height: 100%;
-    padding-top: 2px;
-    margin: 0;
-  }
-
+  
+  &::before,
   &::after {
     align-items: center;
     box-sizing: border-box;
     background: lighten($primary, 10%);
-    border-left: 1px solid lighten($primary, 10%);
-    content: "Browse...";
-    cursor: pointer;
     display: flex;
-    float: right;
     justify-content: center;
-    position: relative;
     margin: -15px -15px 0 0;
     height: 50px;
     width: 100px;
+  }
+
+  &::before {
+    content: "2Mb max";
+    float: left;
+    margin-left: -15px;
+  }
+
+  &::after {
+    background: lighten($primary, 10%);
+    border-left: 1px solid lighten($primary, 10%);
+    content: "Browse...";
+    float: right;
   }
 
   &:hover {
