@@ -1,11 +1,9 @@
 .input {
-  display: flex;
   padding: $s-size;
   margin-bottom: $s-size;
   border-radius: 3px;
   border: none;
   width: 100%;
-  min-width: fit-content;
   height: 50px;
   background: lighten($primary, 5%);
   color: $font-sand;
@@ -53,12 +51,29 @@
     width: fit-content;
     height: 100%;
     padding-top: 2px;
-    border-right: 5px solid red;
     margin: 0;
   }
 
   &::after {
+    align-items: center;
+    box-sizing: border-box;
+    background: lighten($primary, 10%);
+    border-left: 1px solid lighten($primary, 10%);
     content: "Browse...";
+    cursor: pointer;
+    display: flex;
+    float: right;
+    justify-content: center;
+    position: relative;
+    margin: -15px -15px 0 0;
+    height: 50px;
+    width: 100px;
+  }
+
+  &:hover {
+    &::after {
+      background: lighten($primary, 12%);
+    }
   }
 }
 

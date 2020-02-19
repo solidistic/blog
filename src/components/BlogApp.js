@@ -8,7 +8,6 @@ import { populatePosts } from "../actions/posts";
 import UserContext from "../context/user-context";
 import { startLogin } from "../actions/user";
 import LoadingPage from "./LoadingPage";
-import ErrorBoundary from "./ErrorPage";
 
 const BlogApp = () => {
   const [posts, dispatch] = useReducer(postsReducer, []);
@@ -41,13 +40,11 @@ const BlogApp = () => {
 
   if (!dataFetched) return <LoadingPage />;
   return (
-    // <ErrorBoundary>
     <UserContext.Provider value={{ user, userDispatch }}>
       <PostsContext.Provider value={{ posts, dispatch }}>
         <AppRouter />
       </PostsContext.Provider>
     </UserContext.Provider>
-    // </ErrorBoundary>
   );
 };
 

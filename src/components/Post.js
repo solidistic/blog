@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import md from "../utils/markdown-config/config";
+import md from "../utils/markdown/config";
 import { Link } from "react-router-dom";
 
 const Post = ({ post, author }) => {
@@ -10,21 +10,21 @@ const Post = ({ post, author }) => {
   useEffect(() => {
     moment.defaultFormat = "DD.MM.YYYY HH:mm";
     const daysFromPost = moment(post.createdAt, moment.defaultFormat).fromNow();
-    
+
     if (post.editedAt) {
       const daysFromEdit = moment(
         post.editedAt,
         moment.defaultFormat
       ).fromNow();
 
-      if (parseInt(daysFromEdit[0]) < 7 || isNaN(daysFromEdit)) {
+      if (parseInt(daysFromEdit[0]) < 7 || isNaN(parseInt(daysFromEdit))) {
         setEditMoment(daysFromEdit);
       } else {
         setEditMoment(post.daysFromEdit);
       }
     }
 
-    if (parseInt(daysFromPost[0]) < 7 || isNaN(daysFromPost))
+    if (parseInt(daysFromPost[0]) < 7 || isNaN(parseInt(daysFromPost)))
       return setPostMoment(daysFromPost);
 
     setPostMoment(post.createdAt);
