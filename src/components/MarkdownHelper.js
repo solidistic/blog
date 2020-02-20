@@ -5,7 +5,7 @@ import { insertToTextarea } from "../utils/markdown/helper";
   name    | Markdown input
   ------------------------
   block   | ```\n\n``
-  header  | #\u0020"
+  header  | #\u0020
   link    | [Link text](http://www.google.com\u0020"Title text")
   image   | ![Minion](https://octodex.github.com/images/minion.png)
 */

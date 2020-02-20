@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import PasswordValidator from "./PasswordValidator";
 
 class AccountForm extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class AccountForm extends React.Component {
         password: null
       },
       repeatedPassword: null,
+      passwordsMatch: false,
       error: null,
       disableInput: this.props.user ? true : false
     };
@@ -24,15 +26,43 @@ class AccountForm extends React.Component {
     console.log(this.props.location.pathname === "/signup");
     console.log(this.state.user.password === this.state.repeatedPassword);
     if (
-      this.props.location.pathname !== "/signup" &&
-      this.state.user.password === this.state.repeatedPassword
+      this.props.location.pathname === "/signup" &&
+      !this.state.passwordsMatch
     ) {
       return console.log("Passwords doesn't match");
     } else {
       console.log("passed");
-      this.props.handleSubmit(this.state.user);
+      // this.props.handleSubmit(this.state.user);
     }
   };
+
+  showPasswordMessage = () => {
+    return <div>LOL!</div>;
+  };
+
+  // check if given password matches twice
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("updated");
+  //   if (
+  //     this.state.repeatedPassword === this.state.user.password &&
+  //     this.state.repeatedPassword !== prevState.repeatedPassword
+  //   ) {
+  //     console.log("match");
+  //     // passwords match
+  //     this.setState(() => ({
+  //       passwordsMatch: true
+  //     }));
+  //   } else if (
+  //     this.state.repeatedPassword !== this.state.user.password &&
+  //     this.state.repeatedPassword !== prevState.repeatedPassword
+  //   ) {
+  //     console.log("no match");
+  //     // passwords doesn't match
+  //     this.setState(() => ({
+  //       passwordsMatch: false
+  //     }));
+  //   }
+  // }
 
   render() {
     return (
@@ -107,11 +137,18 @@ class AccountForm extends React.Component {
               }));
             }}
           />
-          <legend className="legend">
-            {!this.props.user
-              ? "Your password:"
-              : "Password needed to confirm changes:"}
-          </legend>
+          {this.props.user ? (
+            <legend className="legend">
+              Password needed to confirm changes:
+            </legend>
+          ) : (
+            <div>
+              <PasswordValidator
+                password={this.state.user.password}
+                repeatedPassword={this.state.repeatedPassword}
+              />
+            </div>
+          )}
           <input
             className="input"
             type="password"
