@@ -23,8 +23,6 @@ class AccountForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.props.location.pathname === "/signup");
-    console.log(this.state.user.password === this.state.repeatedPassword);
     if (
       this.props.location.pathname === "/signup" &&
       !this.state.passwordsMatch
@@ -32,37 +30,21 @@ class AccountForm extends React.Component {
       return console.log("Passwords doesn't match");
     } else {
       console.log("passed");
-      // this.props.handleSubmit(this.state.user);
+      this.props.handleSubmit(this.state.user);
     }
   };
 
-  showPasswordMessage = () => {
-    return <div>LOL!</div>;
+  passwordsMatch = match => {
+    console.log("accountform passwords match function");
+    if (match)
+      this.setState(() => ({
+        passwordsMatch: true
+      }));
+    else
+      this.setState(() => ({
+        passwordsMatch: false
+      }));
   };
-
-  // check if given password matches twice
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("updated");
-  //   if (
-  //     this.state.repeatedPassword === this.state.user.password &&
-  //     this.state.repeatedPassword !== prevState.repeatedPassword
-  //   ) {
-  //     console.log("match");
-  //     // passwords match
-  //     this.setState(() => ({
-  //       passwordsMatch: true
-  //     }));
-  //   } else if (
-  //     this.state.repeatedPassword !== this.state.user.password &&
-  //     this.state.repeatedPassword !== prevState.repeatedPassword
-  //   ) {
-  //     console.log("no match");
-  //     // passwords doesn't match
-  //     this.setState(() => ({
-  //       passwordsMatch: false
-  //     }));
-  //   }
-  // }
 
   render() {
     return (
@@ -146,6 +128,7 @@ class AccountForm extends React.Component {
               <PasswordValidator
                 password={this.state.user.password}
                 repeatedPassword={this.state.repeatedPassword}
+                passwordsMatch={this.passwordsMatch}
               />
             </div>
           )}

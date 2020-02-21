@@ -1,9 +1,11 @@
 .message__error {
   color: $alert;
+  font-size: $font-m-size;
   font-weight: 600;
 }
 
 .message__success {
   color: $valid-green;
+  font-size: $font-m-size;
   font-weight: 600;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const PasswordValidator = ({ password, repeatedPassword }) => {
-  const [message, setMessage] = useState("");
+const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
+  const [message, setMessage] = useState({ type: null, text: "" });
   const [barLength, setBarLength] = useState(1);
   const [security, setSecurity] = useState({
     level: 0,
@@ -92,12 +92,18 @@ const PasswordValidator = ({ password, repeatedPassword }) => {
   }, [password, security]);
 
   useEffect(() => {
-    if (password && password.length < 6) setMessage("Password is too short");
-    else if (password && password.length >= 6) {
-      if (password !== repeatedPassword) setMessage("Passwords doesn't match");
-      else if (password === repeatedPassword) setMessage("Passwords match");
+    if (password && password.length < 6) {
+      setMessage({ type: "error", text: "Password is too short" });
+    } else if (password && password.length >= 6) {
+      if (password !== repeatedPassword) {
+        setMessage({ type: "error", text: "Passwords doesn't match" });
+        passwordsMatch(false);
+      } else if (password === repeatedPassword) {
+        setMessage({ type: "success", text: "Passwords match" });
+        if (security.level >= 3) passwordsMatch(true);
+      }
     }
-  }, [password, repeatedPassword]);
+  }, [password, repeatedPassword, passwordsMatch, security.level]);
 
   useEffect(() => {
     console.log("SecureLevel", security);
@@ -112,12 +118,15 @@ const PasswordValidator = ({ password, repeatedPassword }) => {
   return (
     <div>
       <div className="validator">
-        <p>Your password must fullfill atleast three (3) of the requirements</p>
-        <p>{message}</p>
+        <p
+          className={
+            message.type === "error" ? "message__error" : "message__success"
+          }
+        >
+          {message.text}
+        </p>
         <ul>
-          <li
-            className={security.digit ? "validator__message--fulfilled" : ""}
-          >
+          <li className={security.digit ? "validator__message--fulfilled" : ""}>
             Atleast one digit
           </li>
           <li
@@ -141,15 +150,21 @@ const PasswordValidator = ({ password, repeatedPassword }) => {
           >
             Atleast one special character
           </li>
-          <li
-            className={security.long ? "validator__message--fulfilled" : ""}
-          >
+          <li className={security.long ? "validator__message--fulfilled" : ""}>
             12 or more characters
           </li>
         </ul>
         <div className="validator__background">
-          <div className="validator__bar" style={{ width: barLength, }}></div>
+          <div
+            className={
+              message.type === "error"
+                ? "validator__bar validator__bar--low"
+                : "validator__bar validator__bar--high"
+            }
+            style={{ width: barLength }}
+          ></div>
         </div>
+        <p>Your password must fullfill atleast three (3) of the requirements</p>
       </div>
     </div>
   );
