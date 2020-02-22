@@ -5,89 +5,55 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
   const [barLength, setBarLength] = useState(1);
   const [security, setSecurity] = useState({
     level: 0,
-    digit: false,
-    upperCase: false,
-    lowerCase: false,
-    specialChar: false,
-    long: false
+    digit: { found: false, regex: /\d/ },
+    upperCase: { found: false, regex: /[A-Z]/ },
+    lowerCase: { found: false, regex: /[a-z]/ },
+    specialChar: { found: false, regex: /\W+/ },
+    long: { found: false, req: 12 }
   });
 
   // check how secure password is
   useEffect(() => {
     if (!password) return;
 
-    // any digit
-    if (!security.digit && password.search(/\d/) !== -1) {
-      setSecurity({
-        ...security,
-        level: security.level + 1,
-        digit: true
-      });
-    } else if (security.digit && password.search(/\d/) === -1) {
-      setSecurity({
-        ...security,
-        level: security.level - 1,
-        digit: false
-      });
-    }
+    for (let [key, value] of Object.entries(security)) {
+      console.log(key, value);
+      if (key === "level") continue;
 
-    // lower case letter
-    if (!security.lowerCase && password.search(/[a-z]/) !== -1) {
-      setSecurity({
-        ...security,
-        level: security.level + 1,
-        lowerCase: true
-      });
-    } else if (security.lowerCase && password.search(/[a-z]/) === -1) {
-      setSecurity({
-        ...security,
-        level: security.level - 1,
-        lowerCase: false
-      });
-    }
-    // upper case letter
-    if (!security.upperCase && password.search(/[A-Z]/) !== -1) {
-      setSecurity({
-        ...security,
-        level: security.level + 1,
-        upperCase: true
-      });
-    } else if (security.upperCase && password.search(/[A-Z]/) === -1) {
-      setSecurity({
-        ...security,
-        level: security.level - 1,
-        upperCase: false
-      });
-    }
+      if (key === "long") {
+        console.log("checking for pw length");
+        return () => {
+          if (!value.found && password.length >= 12) {
+            console.log("pw length GREATER than 12");
+            return setSecurity({
+              ...security,
+              level: security.level + 1,
+              [key]: { ...security[key], found: true }
+            });
+          } else if (value.found && password.length < 12) {
+            console.log("pw length LESS than 12");
+            return setSecurity({
+              ...security,
+              level: security.level - 1,
+              [key]: { ...security[key], found: false }
+            });
+          }
+        };
+      }
 
-    // special char
-    if (!security.specialChar && password.search(/\W+/) !== -1) {
-      setSecurity({
-        ...security,
-        level: security.level + 1,
-        specialChar: true
-      });
-    } else if (security.specialChar && password.search(/\W+/) === -1) {
-      setSecurity({
-        ...security,
-        level: security.level - 1,
-        specialChar: false
-      });
-    }
-
-    // long pass
-    if (!security.long && password.length >= 12) {
-      setSecurity({
-        ...security,
-        level: security.level + 1,
-        long: true
-      });
-    } else if (security.long && password.length < 12) {
-      setSecurity({
-        ...security,
-        level: security.level - 1,
-        long: false
-      });
+      if (!value.found && password.search(value.regex) !== -1) {
+        setSecurity({
+          ...security,
+          level: security.level + 1,
+          [key]: { ...security[key], found: true }
+        });
+      } else if (value.found && password.search(value.regex) === -1) {
+        setSecurity({
+          ...security,
+          level: security.level - 1,
+          [key]: { ...security[key], found: false }
+        });
+      }
     }
   }, [password, security]);
 
@@ -106,13 +72,8 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
   }, [password, repeatedPassword, passwordsMatch, security.level]);
 
   useEffect(() => {
-    console.log("SecureLevel", security);
-    setBarLength(security.level * 100);
+    setBarLength((security.level / 5) * 100);
   }, [security]);
-
-  useEffect(() => {
-    console.log(barLength);
-  }, [barLength]);
 
   if (!password) return null;
   return (
@@ -126,31 +87,39 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
           {message.text}
         </p>
         <ul>
-          <li className={security.digit ? "validator__message--fulfilled" : ""}>
+          <li
+            className={
+              security.digit.found ? "validator__message--fulfilled" : ""
+            }
+          >
             Atleast one digit
           </li>
           <li
             className={
-              security.lowerCase ? "validator__message--fulfilled" : ""
+              security.lowerCase.found ? "validator__message--fulfilled" : ""
             }
           >
             Atleast one lowercase letter
           </li>
           <li
             className={
-              security.upperCase ? "validator__message--fulfilled" : ""
+              security.upperCase.found ? "validator__message--fulfilled" : ""
             }
           >
             Atleast one uppercase letter
           </li>
           <li
             className={
-              security.specialChar ? "validator__message--fulfilled" : ""
+              security.specialChar.found ? "validator__message--fulfilled" : ""
             }
           >
             Atleast one special character
           </li>
-          <li className={security.long ? "validator__message--fulfilled" : ""}>
+          <li
+            className={
+              security.long.found ? "validator__message--fulfilled" : ""
+            }
+          >
             12 or more characters
           </li>
         </ul>
@@ -161,7 +130,7 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
                 ? "validator__bar validator__bar--low"
                 : "validator__bar validator__bar--high"
             }
-            style={{ width: barLength }}
+            style={{ width: `${barLength}%` }}
           ></div>
         </div>
         <p>Your password must fullfill atleast three (3) of the requirements</p>
