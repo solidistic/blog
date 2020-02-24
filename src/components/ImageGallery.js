@@ -47,8 +47,8 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
             className="gallery__image gallery__image--big"
           />
         </div>
-        <div className="input-group--vertical gallery__list">
-          <button className="button" onClick={scrollLeft}>
+        <div className="content-container--vertical gallery__list">
+          <button className="button button--gray" onClick={scrollLeft}>
             {"<"}
           </button>
           <div className="gallery__list--images" ref={galleryList}>
@@ -74,7 +74,7 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
                 );
               })}
           </div>
-          <button className="button" onClick={scrollRight}>
+          <button className="button button--left-margin button--gray" onClick={scrollRight}>
             {">"}
           </button>
         </div>

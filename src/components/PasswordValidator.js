@@ -17,21 +17,17 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
     if (!password) return;
 
     for (let [key, value] of Object.entries(security)) {
-      console.log(key, value);
       if (key === "level") continue;
 
       if (key === "long") {
-        console.log("checking for pw length");
         return () => {
           if (!value.found && password.length >= 12) {
-            console.log("pw length GREATER than 12");
             return setSecurity({
               ...security,
               level: security.level + 1,
               [key]: { ...security[key], found: true }
             });
           } else if (value.found && password.length < 12) {
-            console.log("pw length LESS than 12");
             return setSecurity({
               ...security,
               level: security.level - 1,

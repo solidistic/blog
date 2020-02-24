@@ -76,3 +76,8 @@
   color: $secondary;
   background: lighten($primary, 5%);
 }
+
+.button--left-margin {
+  margin-left: $s-size;
+  margin-right: 0;
+}

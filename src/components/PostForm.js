@@ -126,7 +126,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
             confirmAction={() => setIsModalActive(false)}
           >
             <ImageGallery startSetFile={startSetFile} />
-            <div className="content-container--centered">
+            <div className="content-container--vertical content-container--centered">
               <button
                 className="button"
                 onClick={() => {

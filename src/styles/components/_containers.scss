@@ -26,6 +26,11 @@
   align-items: center;
 }
 
+.content-container--vertical {
+  display: flex;
+  flex-direction: row;
+}
+
 .content-container__information {
   background: lighten($primary, 5%);
   color: $font-primary-color;
