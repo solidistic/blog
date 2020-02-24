@@ -32,29 +32,26 @@ const Post = ({ post, author }) => {
 
   return (
     <div>
-      <div>
-        <h2 className="content-container__title">{post.title}</h2>
-        <p className="list-item__subtitle">
-          {post.author ? (
-            <>
-              <Link
-                className="list-item__subtitle--link"
-                to={`/users/${post.author._id}`}
-              >
-                {post.author.username || author}
-              </Link>{" "}
-              posted this
-            </>
-          ) : (
-            <>Posted by anonymous</>
-          )}{" "}
-          {postMoment}
-          {post.editedAt && <span> - Edited {editMoment}</span>}
-        </p>
-        <div className="content-container__body">
-          <div dangerouslySetInnerHTML={{ __html: md.render(post.body) }} />
-        </div>
-        {post.editComments && <p>{post.editComments}</p>}
+      <h2 className="content-container__title">{post.title}</h2>
+      <p className="list-item__subtitle">
+        {post.author ? (
+          <>
+            <Link
+              className="list-item__subtitle--link"
+              to={`/users/${post.author._id}`}
+            >
+              {post.author.username || author}
+            </Link>{" "}
+            posted this
+          </>
+        ) : (
+          <>Posted by anonymous</>
+        )}{" "}
+        {postMoment}
+        {post.editedAt && <span> - Edited {editMoment}</span>}
+      </p>
+      <div className="content-container__markdown">
+        <div dangerouslySetInnerHTML={{ __html: md.render(post.body) }} />
       </div>
     </div>
   );

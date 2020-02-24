@@ -19,8 +19,8 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
       console.log("fetching images");
       const res = await api.getImages();
       if (res.status !== 200) return new Error("Unable to fetch images");
-      setImages(res.data.files);
       setCurrentImage(res.data.files[0]);
+      setImages(res.data.files);
     };
     if (!images) fetchImages();
 

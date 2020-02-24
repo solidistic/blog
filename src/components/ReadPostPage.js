@@ -39,19 +39,21 @@ const ReadPostPage = ({ match, history }) => {
       <Hero post={post} />
       <div className="content">
         <div className="content-container">
-          <Modal confirmAction={handleRemove} active={isModalActive}>
-            <h2>Delete post "{post.title}"?</h2>
-            <button
-              className="button button--delete"
-              onClick={() => handleRemove(true)}
-            >
-              <i className="fas fa-check"></i> Yes
-            </button>
-            <button className="button" onClick={() => handleRemove(false)}>
-              <i className="fas fa-times"></i> No
-            </button>
-          </Modal>
-          <Post post={post} />
+          <div className="content-container__body">
+            <Modal confirmAction={handleRemove} active={isModalActive}>
+              <h2>Delete post "{post.title}"?</h2>
+              <button
+                className="button button--delete"
+                onClick={() => handleRemove(true)}
+              >
+                <i className="fas fa-check"></i> Yes
+              </button>
+              <button className="button" onClick={() => handleRemove(false)}>
+                <i className="fas fa-times"></i> No
+              </button>
+            </Modal>
+            <Post post={post} />
+          </div>
           {user && user._id === post.author._id && (
             <div className="content-container__edit">
               <Link className="button" to={`/edit/${post._id}`}>

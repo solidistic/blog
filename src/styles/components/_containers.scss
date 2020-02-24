@@ -48,10 +48,7 @@
 .content-container__title {
   font-size: $font-xl-size;
   text-transform: capitalize;
-  // color: $font-primary-color;
-  // padding-left: 10px;
-  // border-left: 5px solid $font-sand;
-  // border-radius: 3px;
+  margin-bottom: 5px;
 }
 
 .content-container__subtitle {
@@ -67,8 +64,16 @@
   color: $font-sand;
 }
 
-.content-container__body {
+.content-container__markdown {
   font-size: $font-m-size;
   line-height: 1.2;
   color: $font-primary-color;
+
+  a {
+    @extend .link;
+  }
+}
+
+.content-container__body {
+  margin-bottom: $xl-size;
 }

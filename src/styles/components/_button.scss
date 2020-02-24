@@ -56,10 +56,10 @@
 }
 
 .button--delete {
-  background: $alert;
+  background: $alert-secondary;
   color: $font-secondary-color;
   &:hover {
-    background: lighten($alert, 5%);
+    background: lighten($alert-secondary, 5%);
   }
 }
 
