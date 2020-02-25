@@ -34,6 +34,10 @@ app.use("/users", userRoutes);
 app.use("/", authRoutes);
 app.use("/images", imagesRoutes);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(path.join(buildPath, "index.html")));
+});
+
 app.on("error", e => console.log("Server error:", e));
 app.listen(port, host, () => {
   console.log(`Server is up and running on http://${host}:${port}`);
