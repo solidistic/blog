@@ -1,12 +1,16 @@
 import axios from "axios";
 
+const url = process.env.PORT
+  ? `https://${process.env.HOST}:${process.env.PORT}/`
+  : "http://localhost:8080/";
+
 const api = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: url,
   withCredentials: true
 });
 
 // Images
-export const getImages = () => api.get("/images/list");
+export const getImages = () => api.get("/images/all");
 
 // Post
 export const savePost = post =>

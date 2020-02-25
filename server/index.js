@@ -1,5 +1,4 @@
 const path = require("path");
-const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -8,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const postRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
+const imagesRoutes = require("./routes/images");
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || "0.0.0.0";
@@ -32,12 +32,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 app.use("/", authRoutes);
-app.get("/images/list", async (req, res) => {
-  fs.readdir(imagesPath, (err, files) => {
-    if (err) res.json({ error: "Unable to fetch files" });
-    res.json({ files });
-  });
-});
+app.use("/images", imagesRoutes);
 
 app.on("error", e => console.log("Server error:", e));
 app.listen(port, host, () => {

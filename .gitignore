@@ -9,6 +9,9 @@
 /coverage
 /src/playground
 
+# development
+/config
+
 # production
 /build
 

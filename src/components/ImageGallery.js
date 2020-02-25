@@ -11,6 +11,7 @@ import Image from "./Image";
 const ImageGallery = ({ currentHeroImage, startSetFile }) => {
   const [images, setImages] = useState(null);
   const [currentImage, setCurrentImage] = useState(null);
+  const [url, setUrl] = useState(null);
   const galleryList = useRef(null);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
       const res = await api.getImages();
       if (res.status !== 200) return new Error("Unable to fetch images");
       setCurrentImage(res.data.files[0]);
+      setUrl(res.data.url);
       setImages(res.data.files);
     };
     if (!images) fetchImages();
@@ -37,13 +39,14 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
     galleryList.current.scrollBy(200, 0);
   };
 
-  if (!images) return <LoadingPage />;
+  if (!images && !url) return <LoadingPage />;
   else {
     return (
       <div className="gallery">
         <div className="gallery__preview">
           <Image
             imageName={currentHeroImage || currentImage}
+            url={url}
             className="gallery__image gallery__image--big"
           />
         </div>
@@ -65,6 +68,7 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
                   <Image
                     key={index}
                     imageName={image}
+                    url={url}
                     className={styles}
                     onClick={() => {
                       setCurrentImage(image);
@@ -74,7 +78,10 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
                 );
               })}
           </div>
-          <button className="button button--left-margin button--gray" onClick={scrollRight}>
+          <button
+            className="button button--left-margin button--gray"
+            onClick={scrollRight}
+          >
             {">"}
           </button>
         </div>
