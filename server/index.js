@@ -14,7 +14,7 @@ const host = process.env.HOST || "0.0.0.0";
 const parserSecret = "anothersecret";
 require("../database/mongoose");
 
-const buildPath = path.join(__dirname, "..", "..", "build");
+const buildPath = path.join(__dirname, "..", "build");
 const imagesPath = path.join(__dirname, "public", "images");
 
 // Static

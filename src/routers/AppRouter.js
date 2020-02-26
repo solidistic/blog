@@ -12,7 +12,7 @@ import ViewUserProfilePage from "../components/ViewUserProfilePage";
 import Header from "../components/Header";
 import CreateAccountPage from "../components/CreateAccountPage";
 import EditAccountPage from "../components/EditAccountPage";
-import Playground from "../playground/Playground";
+// import Playground from "../playground/Playground";
 import Footer from "../components/Footer";
 
 export const history = createBrowserHistory();
@@ -36,7 +36,7 @@ const AppRouter = () => {
           <PrivateRoute path="/account/edit" component={EditAccountPage} />
           <Route path="/signup" component={CreateAccountPage} />
           <Route path="/login" component={LoginPage} />
-          <Route path="/playground" component={Playground} />
+          {/* <Route path="/playground" component={Playground} /> */}
           <Route path="*" component={NotFoundPage} />
         </Switch>
         <Footer />
