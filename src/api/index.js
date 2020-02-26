@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const url = process.env.PORT
-  ? `https://${process.env.HOST}:${process.env.PORT}/`
+  ? `https://solidistic-blog.herokuapp.com:${process.env.PORT}/`
   : "http://localhost:8080/";
 
 const api = axios.create({

@@ -17,6 +17,10 @@ require("../database/mongoose");
 const buildPath = path.join(__dirname, "..", "build");
 const imagesPath = path.join(__dirname, "public", "images");
 
+const origin = process.env.PORT
+  ? `https://solidistic-blog.herokuapp.com`
+  : "http://localhost:3000";
+
 // Static
 app.use(express.static(buildPath));
 app.use("/images", express.static(imagesPath));
@@ -26,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin }));
 
 // Routes
 app.use("/posts", postRoutes);
