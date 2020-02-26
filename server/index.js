@@ -17,7 +17,7 @@ require("../database/mongoose");
 const buildPath = path.join(__dirname, "..", "build");
 const imagesPath = path.join(__dirname, "public", "images");
 
-const origin = process.env.PORT
+const origin = process.env.NODE_ENV === "production"
   ? `https://solidistic-blog.herokuapp.com`
   : "http://localhost:3000";
 
