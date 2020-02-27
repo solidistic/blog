@@ -7,11 +7,8 @@ import BlogApp from "./components/BlogApp";
 
 /* TODO:
   # Siirrä focus lisättyyn kommenttiin kun se lisätään
-  # Production (heroku?)
   # Cookie parser signaus kaikkiin evästeisiin, HTTPS tarvitaan?
   # Muuta komponentit, jotka tarvitsevat dataa ennen renderöintä, class komponenteiksi
-
-  # Markdown postauksiin
   # Parempi käyttäjä profiilisivu
   # Gallerian tapa noutaa kuva nimet renderöinnin jälkeen
 */

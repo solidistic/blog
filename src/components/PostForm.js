@@ -9,7 +9,6 @@ import ErrorBoundary from "./ErrorPage";
 import useEventListener from "../hooks/useEventListener";
 import { getCursorLocation } from "../utils/markdown/helper";
 import MarkdownHelper from "./MarkdownHelper";
-import { text } from "body-parser";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const hasHeroImage = post && post.image && post.image.name;
@@ -83,8 +82,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
   );
 
   const modifyKeyActions = useCallback(e => {
-    console.log(e.keyCode);
-
     const [initSelectionStart, initSelectionEnd] = getCursorLocation(textarea);
     const textBegin = e.target.value.substring(0, initSelectionStart);
     const textEnd = e.target.value.substring(
