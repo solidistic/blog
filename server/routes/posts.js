@@ -7,6 +7,7 @@ const Post = require("../../database/models/post");
 const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
+const AWS_S3 = require("../storage/aws-s3");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -16,6 +17,13 @@ const storage = multer.diskStorage({
     cb(null, `${file.originalname}`);
   }
 });
+
+// in progress...
+// const storage = AWS_S3({
+//   destination: function (req, file, cb) {
+//     cb(null, `/images/${file.originalname}`);
+//   }
+// });
 
 const upload = multer({
   storage,
@@ -78,7 +86,6 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
       // const buffer = await sharp(req.file)
       //   .resize(1000)
       //   .png();
-      // console.log("BUFFER", buffer);
       image = {
         name: req.file.originalname,
         contentType: req.file.mimetype

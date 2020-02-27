@@ -61,7 +61,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
   };
 
   const checkFile = useCallback(file => {
-    console.log("checkfile", file);
     if (!file) return;
     if (file.size > 2000000) {
       fileInput.current.value = null;
