@@ -11,15 +11,16 @@ const imagesRoutes = require("./routes/images");
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || "0.0.0.0";
-const parserSecret = "anothersecret";
+const parserSecret = process.env.COOKIE_PARSER_SECRET;
 require("../database/mongoose");
 
 const buildPath = path.join(__dirname, "..", "build");
 const imagesPath = path.join(__dirname, "public", "images");
 
-const origin = process.env.NODE_ENV === "production"
-  ? `https://solidistic-blog.herokuapp.com`
-  : "http://localhost:3000";
+const origin =
+  process.env.NODE_ENV === "production"
+    ? `https://solidistic-blog.herokuapp.com`
+    : "http://localhost:3000";
 
 // Static
 app.use(express.static(buildPath));
@@ -33,13 +34,13 @@ app.use(helmet());
 app.use(cors({ credentials: true, origin }));
 
 // Routes
-app.use("/posts", postRoutes);
-app.use("/users", userRoutes);
-app.use("/", authRoutes);
-app.use("/images", imagesRoutes);
+app.use("/backend/posts", postRoutes);
+app.use("/backend/users", userRoutes);
+app.use("/backend/", authRoutes);
+app.use("/backend/images", imagesRoutes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(path.join(buildPath, "index.html")));
+  res.sendFile(path.join(buildPath, "index.html"));
 });
 
 app.on("error", e => console.log("Server error:", e));

@@ -6,7 +6,7 @@ export default (image, key, type = "hero") => {
     <img
       key={key}
       className={style}
-      src={`http://localhost:8080/images/${image}`}
+      src={`https://solidistic-blog.s3.eu-north-1.amazonaws.com/images/${image}`}
       alt="testi"
     />
   );

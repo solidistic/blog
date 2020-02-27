@@ -1,3 +1,3 @@
-export default (name, host, port) => {
-  return `http://${host}:${port}/images/${name}`;
+export default (name, url) => {
+  return `https://${url}/images/${name}`;
 };

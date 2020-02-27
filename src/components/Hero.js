@@ -6,7 +6,7 @@ import imagePath from "../utils/images/imagePath";
 const Hero = ({ user, post }) => {
   let bgImage = undefined;
   if (post && post.image)
-    bgImage = imagePath(post.image.name, "localhost", "8080");
+    bgImage = imagePath(post.image.name, "solidistic-blog.s3.eu-north-1.amazonaws.com");
 
   if (!post) {
     return (
