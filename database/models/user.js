@@ -77,12 +77,22 @@ userSchema.methods.createToken = async function(password) {
 
     return token;
   } else {
-    throw new Error("Unable to create token, check your password");
+    throw new Error("Unable to create token");
   }
 };
 
 userSchema.methods.comparePasswords = async function(password) {
   return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.validateToken = async function(token) {
+  let valid = [false, undefined];
+  jwt.verify(token, tokenSecret, (error, decoded) => {
+    if (error) valid = [false, error.message];
+    if (decoded._id.toString() === this._id.toString())
+      valid = [true, "Valid token"];
+  });
+  return valid;
 };
 
 const User = mongoose.model("User", userSchema);

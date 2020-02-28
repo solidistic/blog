@@ -71,8 +71,6 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
   let image = undefined;
 
   try {
-    // Ei toimi läppärillä?!
-
     // upload(req, res, err => {
     //   if (err instanceof multer.MulterError) {
     //     console.log("running here", err);
@@ -83,9 +81,6 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
     // });
 
     if (req.file) {
-      // const buffer = await sharp(req.file)
-      //   .resize(1000)
-      //   .png();
       image = {
         name: req.file.originalname,
         contentType: req.file.mimetype
@@ -94,10 +89,9 @@ router.post("/create", auth, upload.single("heroImage"), async (req, res) => {
       image = { name: req.body.heroImage };
     }
 
-    const user = await User.findById(req.cookies.id);
-    const post = new Post({ author: user, image, ...req.body });
-    await user.posts.push(post._id);
-    await user.save();
+    const post = new Post({ author: req.user, image, ...req.body });
+    await req.user.posts.push(post._id);
+    await req.user.save();
 
     const postData = await post.save();
     res.status(200).json({
@@ -168,23 +162,17 @@ router.delete("/remove/:id", auth, async (req, res) => {
 router.post("/comments/create", auth, async (req, res, next) => {
   console.log("Adding comment", req.body);
   try {
-    const postedBy = await User.findById(req.cookies.id);
     const post = await Post.findById(req.body.id);
-    const comment = new Comment({ post, postedBy, ...req.body.comment });
-
-    // console.log(postedBy === null, post === null);
-    // console.log("POSTED BY:", postedBy);
-    // console.log("POST:", post);
-    // console.log("NEW COMMENT:", comment);
-
-    // if (!post || !postedBy) throw new Error("Can't find post or user");
+    const comment = new Comment({
+      post,
+      postedBy: req.user,
+      ...req.body.comment
+    });
 
     post.comments.push(comment._id);
-    postedBy.comments.push(comment._id);
+    req.user.comments.push(comment._id);
 
-    Promise.all([post.save(), postedBy.save(), comment.save()]);
-    // .then(() => console.log("PROMISE ALL DONE"))
-    // .catch(e => console.log("PROMISE ALL ERROR", e));
+    Promise.all([post.save(), req.user.save(), comment.save()]);
 
     res.status(200).json({ message: "Comment added", comment });
   } catch (error) {
@@ -196,14 +184,13 @@ router.post("/comments/create", auth, async (req, res, next) => {
 
 router.patch("/comments/remove", auth, async (req, res) => {
   try {
-    const postedBy = await User.findById(req.cookies.id);
     const post = await Post.findById(req.body.postId);
     const removedComment = await Comment.findByIdAndRemove(req.body.commentId);
 
-    postedBy.comments.pull(removedComment._id);
+    req.user.comments.pull(removedComment._id);
     post.comments.pull(removedComment._id);
 
-    Promise.all([post.save(), postedBy.save()]);
+    Promise.all([post.save(), req.user.save()]);
 
     res.status(200).json({ message: "Comment removed", removedComment });
   } catch (error) {

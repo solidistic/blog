@@ -1,0 +1,23 @@
+.account__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: $s-size;
+  font-size: $font-l-size;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.account__information {
+  padding-left: 55px;
+
+  @media (max-width: $mobile-breakpoint) {
+    padding: 0;
+  }
+}
+
+.account__owner-panel {
+  margin-top: $l-size;
+}

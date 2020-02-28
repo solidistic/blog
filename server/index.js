@@ -11,7 +11,7 @@ const imagesRoutes = require("./routes/images");
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || "0.0.0.0";
-const parserSecret = process.env.COOKIE_PARSER_SECRET;
+const parserSecret = process.env.COOKIE_SECRET || "justfordevelopment";
 require("../database/mongoose");
 
 const buildPath = path.join(__dirname, "..", "build");
@@ -29,7 +29,7 @@ app.use("/images", express.static(imagesPath));
 // npm packages
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(cookieParser(parserSecret));
 app.use(helmet());
 app.use(cors({ credentials: true, origin }));
 

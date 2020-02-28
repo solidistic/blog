@@ -1,5 +1,7 @@
 import axios from "axios";
 
+axios.defaults.timeout = 10000;
+
 const url =
   process.env.NODE_ENV === "production"
     ? `https://solidistic-blog.herokuapp.com/`
@@ -35,7 +37,8 @@ export const removeComment = ({ commentId, postId }) =>
   api.patch("/backend/posts/comments/remove", { commentId, postId });
 
 // User
-export const getUserById = id => api.get(`/backend/users/${id}`);
+export const getUserById = id =>
+  api.get(`/backend/users/${id}`).catch(e => e);
 export const removeUser = () => api.post("/backend/users/remove");
 export const createUser = user => api.post("/backend/signup", { user });
 export const updateUser = (id, updates, password) =>

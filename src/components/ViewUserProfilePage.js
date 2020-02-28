@@ -8,6 +8,7 @@ import { logout, startRemoveUser } from "../actions/user";
 import { removeAllFromUser } from "../actions/posts";
 import LoadingPage from "./LoadingPage";
 import Modal from "./Modal";
+import NotFoundPage from "./NotFoundPage";
 
 const ViewUserProfilePage = ({ history, match }) => {
   const { posts, dispatch } = useContext(PostsContext);
@@ -35,8 +36,7 @@ const ViewUserProfilePage = ({ history, match }) => {
 
     const loadUser = async () => {
       const res = await api.getUserById(id);
-      console.log(res);
-      if (res.status !== 200) {
+      if (res instanceof Error) {
         setError(true);
         return setIsLoaded(true);
       }
@@ -73,46 +73,46 @@ const ViewUserProfilePage = ({ history, match }) => {
           {!error ? (
             <div>
               <div className="content-container__information">
-                <img
-                  src="./images/default_avatar.jpeg"
-                  alt="profile"
-                  style={{ height: 100, borderRadius: "30%" }}
-                />
-                <h3 className="content-container__subtitle">
-                  Account information
-                </h3>
-                <p>
-                  <span className="content-container__subtitle--secondary">
-                    Username:
-                  </span>{" "}
-                  {user.username}
-                </p>
-                <p>
-                  <span className="content-container__subtitle--secondary">
-                    First name:
-                  </span>{" "}
-                  {user.firstName}
-                </p>
-                <p>
-                  <span className="content-container__subtitle--secondary">
-                    Last name:
-                  </span>{" "}
-                  {user.lastName}
-                </p>
-                <p>
-                  <span className="content-container__subtitle--secondary">
-                    Email:
-                  </span>{" "}
-                  {user.email}
-                </p>
-                <p>
-                  <span className="content-container__subtitle--secondary">
-                    Description:
-                  </span>{" "}
-                  {user.description}
-                </p>
+                <div className="input-group--vertical">
+                  <>
+                    <img
+                      src="/images/user.svg"
+                      alt="profile"
+                      style={{ height: 40, borderRadius: "30%" }}
+                    />
+                  </>
+                  <div className="account__title">
+                    <h3>{user.username}</h3>
+                  </div>
+                </div>
+                <div className="account__information">
+                  <p>
+                    <span className="content-container__subtitle--secondary">
+                      First name:
+                    </span>{" "}
+                    {user.firstName}
+                  </p>
+                  <p>
+                    <span className="content-container__subtitle--secondary">
+                      Last name:
+                    </span>{" "}
+                    {user.lastName}
+                  </p>
+                  <p>
+                    <span className="content-container__subtitle--secondary">
+                      Email:
+                    </span>{" "}
+                    {user.email}
+                  </p>
+                  <p>
+                    <span className="content-container__subtitle--secondary">
+                      Description:
+                    </span>{" "}
+                    {user.description}
+                  </p>
+                </div>
                 {isOwner && (
-                  <div>
+                  <div className="account__owner-panel">
                     <Modal
                       active={modalActive}
                       confirmAction={handleRemoveUser}
@@ -159,7 +159,7 @@ const ViewUserProfilePage = ({ history, match }) => {
               </div>
             </div>
           ) : (
-            <div>User not found</div>
+            <NotFoundPage message="User not found" />
           )}
         </div>
       </div>
