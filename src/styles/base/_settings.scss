@@ -11,10 +11,11 @@ $l-size: 1.9rem;
 $xl-size: 2.5rem;
 
 // font sizes
-$font-s-size: 0.9rem;
-$font-m-size: 1.1rem;
+$font-xs-size: 0.9rem;
+$font-s-size: 1rem;
+$font-m-size: 1.2rem;
 $font-l-size: 1.4rem;
-$font-xl-size: 1.9rem;
+$font-xl-size: 1.8rem;
 $font-hero-title: 3rem;
 $font-hero-mobile-title: 2rem;
 $font-hero-subtitle: 2.3rem;
@@ -34,3 +35,8 @@ $valid-yellow: #d3d335;
 
 $hero-primary: #ec7f2542;
 $hero-secondary: #ffb2249f;
+
+// breakpoints
+$mobile-breakpoint: 500px;
+$tablet-breakpoint: 600px;
+$desktop-breakpoint: 1000px;

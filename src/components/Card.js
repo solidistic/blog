@@ -41,7 +41,7 @@ const Card = ({ post, author }) => {
 
   return (
     <div className="input-group--vertical">
-      <div>
+      <div className="content-container--centered">
         {post.image
           ? showImage(post.image.name)
           : showImage(getRandomDefaultImage(), true)}
