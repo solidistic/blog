@@ -1,13 +1,9 @@
 import React from "react";
 
-export default (image, key, type = "hero") => {
+export default (image, local = false,  type = "hero") => {
   const style = type === "hero" ? "hero-preview" : "gallery__image";
-  return (
-    <img
-      key={key}
-      className={style}
-      src={`https://solidistic-blog.s3.eu-north-1.amazonaws.com/images/${image}`}
-      alt="testi"
-    />
-  );
+  const path = local
+    ? ""
+    : "https://solidistic-blog.s3.eu-north-1.amazonaws.com/images/";
+  return <img className={style} src={path + image} alt="testi" />;
 };

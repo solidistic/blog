@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import Image from "./Image";
 import showImage from "../utils/images/showImage";
+import getRandomDefaultImage from "../utils/random-default-image";
 
 const useDescription = body => {
   const descLength = 300;
@@ -24,14 +26,14 @@ const Card = ({ post, author }) => {
         moment.defaultFormat
       ).fromNow();
 
-      if (parseInt(daysFromEdit[0]) < 7 || isNaN(daysFromEdit)) {
+      if (parseInt(daysFromEdit[0]) < 7 || isNaN(parseInt(daysFromEdit))) {
         setEditMoment(daysFromEdit);
       } else {
         setEditMoment(post.editedAt);
       }
     }
 
-    if (parseInt(daysFromPost[0]) < 7 || isNaN(daysFromPost))
+    if (parseInt(daysFromPost[0]) < 7 || isNaN(parseInt(daysFromPost)))
       return setPostMoment(daysFromPost);
 
     setPostMoment(post.createdAt);
@@ -39,7 +41,11 @@ const Card = ({ post, author }) => {
 
   return (
     <div className="input-group--vertical">
-      <div>{post.image && showImage(post.image.name)}</div>
+      <div>
+        {post.image
+          ? showImage(post.image.name)
+          : showImage(getRandomDefaultImage(), true)}
+      </div>
       <div className="list-item__content">
         <Link to={`/posts/${post._id}`}>
           <h2 className="list-item__title">{post.title}</h2>

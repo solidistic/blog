@@ -1,19 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import getRandomBG from "../utils/randomBackground";
+import getRandomDefaultImage from "../utils/random-default-image";
 import imagePath from "../utils/images/imagePath";
 
 const Hero = ({ user, post }) => {
   let bgImage = undefined;
   if (post && post.image)
-    bgImage = imagePath(post.image.name, "solidistic-blog.s3.eu-north-1.amazonaws.com");
+    bgImage = imagePath(
+      post.image.name,
+      "solidistic-blog.s3.eu-north-1.amazonaws.com"
+    );
 
   if (!post) {
     return (
       <div
         className="content-container hero"
         style={{
-          backgroundImage: `linear-gradient(30deg, #534a46ad, #312925ad), url(${getRandomBG()})`
+          backgroundImage: `linear-gradient(30deg, #534a46ad, #312925ad), url(${getRandomDefaultImage()})`
         }}
       >
         <div className="hero__content">
@@ -55,7 +58,7 @@ const Hero = ({ user, post }) => {
         className="content-container hero"
         style={{
           backgroundImage: `linear-gradient(#312925a2, #312925a2), url(${bgImage ||
-            getRandomBG()})`
+            getRandomDefaultImage()})`
         }}
       >
         <div className="hero__content">
