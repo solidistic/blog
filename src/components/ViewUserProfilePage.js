@@ -47,7 +47,7 @@ const ViewUserProfilePage = ({ history, match }) => {
     };
 
     if (!isLoaded) loadUser();
-  }, [match.params.id, loggedUser, history, user, isLoaded, getPostsFromUser]);
+  }, [match.params.id, loggedUser, history, isLoaded, getPostsFromUser]);
 
   const handleRemoveUser = async confirmRemoval => {
     if (confirmRemoval) {
@@ -73,6 +73,11 @@ const ViewUserProfilePage = ({ history, match }) => {
           {!error ? (
             <div>
               <div className="content-container__information">
+                <img
+                  src="./images/default_avatar.jpeg"
+                  alt="profile"
+                  style={{ height: 100, borderRadius: "30%" }}
+                />
                 <h3 className="content-container__subtitle">
                   Account information
                 </h3>
