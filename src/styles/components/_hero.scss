@@ -44,7 +44,7 @@
   // text-shadow: 3px 3px 0px $primary;
   margin-bottom: $s-size;
   
-  @media (max-width: 500px) {
+  @media (max-width: $mobile-breakpoint) {
     font-size: $font-hero-mobile-title;
     margin: $l-size 0;
   }

@@ -32,11 +32,11 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
   }, [images]);
 
   const scrollLeft = () => {
-    galleryList.current.scrollBy(-200, 0);
+    galleryList.current.scrollBy(-150, 0);
   };
 
   const scrollRight = () => {
-    galleryList.current.scrollBy(200, 0);
+    galleryList.current.scrollBy(150, 0);
   };
 
   if (!images && !url) return <LoadingPage />;

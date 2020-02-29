@@ -3,8 +3,13 @@
   display: flex;
   flex: 1;
   flex-direction: row;
+  font-size: $font-m-size;
   padding: $l-size;
   justify-content: center;
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $font-s-size;
+  }
 }
 
 .footer__content {

@@ -15,4 +15,8 @@
     color: white;
     text-shadow: 2px 2px 0 darken($font-secondary-color, 10%);
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $font-xs-size;
+  }
 }

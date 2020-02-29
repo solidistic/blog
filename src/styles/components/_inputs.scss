@@ -1,13 +1,13 @@
 .input {
   padding: $s-size;
   margin-bottom: $s-size;
-  border-radius: 3px;
+  border-radius: 5px;
   border: none;
   width: 100%;
   height: 50px;
   background: lighten($primary, 5%);
   color: $font-sand;
-  font-size: $font-s-size;
+  font-size: $font-xs-size;
   transition: border 0.3s ease-in-out;
 
   &:focus {
@@ -38,6 +38,10 @@
 
   &::placeholder {
     color: darken($font-primary-color, 15%);
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    height: 45px;
   }
 }
 

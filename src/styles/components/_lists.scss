@@ -35,6 +35,10 @@
     // transform: translateX(5px);
     // text-shadow: 1px 1px 0px $secondary;
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $font-m-size;
+  }
 }
 
 .list-item__subtitle {
@@ -42,6 +46,10 @@
   color: $font-sand;
   font-size: $font-s-size;
   font-style: italic;
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $font-s-size;
+  }
 }
 
 .list-item__subtitle--link {
@@ -52,6 +60,10 @@
   margin: $xs-size 0;
   color: $font-primary-color;
   word-break: break-word;
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $font-s-size;
+  }
 }
 
 .list-item__content {
@@ -59,9 +71,9 @@
   flex-direction: column;
   padding-left: $s-size;
   justify-content: center;
-  
+
   @media (max-width: $mobile-breakpoint) {
-    padding: $s-size 0;
+    padding: 0;
   }
 }
 
