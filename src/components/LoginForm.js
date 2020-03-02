@@ -2,8 +2,11 @@ import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from "../context/user-context";
 import { startLogin } from "../actions/user";
+import { addPost } from "../actions/posts";
+import PostsContext from "../context/posts-context";
 
 const LoginForm = ({ history }) => {
+  const { dispatch } = useContext(PostsContext);
   const { userDispatch } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +15,14 @@ const LoginForm = ({ history }) => {
   const handleLogin = async e => {
     e.preventDefault();
     try {
-      userDispatch(await startLogin({ username, password }));
+      const [action, privatePosts] = await startLogin({ username, password });
+      console.log(privatePosts);
+      userDispatch(action);
+      if (privatePosts && privatePosts.length > 0) {
+        privatePosts.forEach(post => {
+          dispatch(addPost(post));
+        });
+      }
       history.push("/");
     } catch (e) {
       console.error(e);

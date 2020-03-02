@@ -35,7 +35,7 @@ const ViewUserProfilePage = ({ history, match }) => {
         ? loggedUser._id
         : match.params.id;
 
-    if (id === loggedUser._id) setIsOwner(true);
+    if (loggedUser && id === loggedUser._id) setIsOwner(true);
 
     const loadUser = async () => {
       const userData = await api.getUserById(id);

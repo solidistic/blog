@@ -33,7 +33,9 @@ const BlogApp = () => {
         if (res.status === 200) {
           const { username, password } = res.data.user;
           const privatePosts = res.data.privatePosts.posts;
-          startLogin({ username, password }).then(login => userDispatch(login));
+          startLogin({ username, password }).then(([login, __]) =>
+            userDispatch(login)
+          );
           return privatePosts;
         }
       })
