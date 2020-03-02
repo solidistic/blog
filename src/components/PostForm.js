@@ -16,6 +16,9 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [body, setBody] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(hasHeroImage ? post.image.name : null);
+  const [postType, setPostType] = useState(
+    post && post.isPublic ? "Public" : "Private"
+  );
   const [error, setError] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
   const [heroSelectedFrom, setHeroSelectedFrom] = useState("Gallery");
@@ -33,6 +36,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const submitPost = e => {
     e.preventDefault();
     const formData = new FormData();
+    const isPublic = postType === "Public";
 
     let createdAt = moment()
       .local()
@@ -54,8 +58,8 @@ export const PostForm = ({ post, onSubmit, active }) => {
       formData.append("body", body);
       formData.append("createdAt", createdAt);
       formData.append("description", description);
+      formData.append("isPublic", isPublic);
 
-      // onSubmit({ title, body, createdAt, editedAt });
       onSubmit(formData);
     }
   };
@@ -143,13 +147,23 @@ export const PostForm = ({ post, onSubmit, active }) => {
       </ErrorBoundary>
       <form onSubmit={submitPost}>
         {error && <p>{error}</p>}
-        <input
-          className="input"
-          placeholder="Title"
-          defaultValue={title}
-          maxLength="200"
-          onChange={e => setTitle(e.target.value)}
-        />
+        <div className="input-group--vertical">
+          <input
+            className="input"
+            placeholder="Title"
+            defaultValue={title}
+            maxLength="200"
+            onChange={e => setTitle(e.target.value)}
+          />
+          <select
+            className="input select"
+            defaultValue={postType}
+            onChange={e => setPostType(e.target.value)}
+          >
+            <option>Private</option>
+            <option>Public</option>
+          </select>
+        </div>
         <textarea
           className="input"
           placeholder="Description (max. 200 characters)"
@@ -189,7 +203,7 @@ export const PostForm = ({ post, onSubmit, active }) => {
           }}
         />
         <button type="submit" className="button button--wide" disabled={active}>
-          Publish
+          {postType === "Private" ? "Save" : "Publish"}
         </button>
       </form>
       <div dangerouslySetInnerHTML={{ __html: md.render(body) }} />

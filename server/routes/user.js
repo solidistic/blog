@@ -8,7 +8,7 @@ const auth = require("../middleware/auth");
 router.get("/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
-    if (!user) throw new Error("Account doesn't exist");
+    if (!user) throw new Error();
 
     // OTA SELVÄÄ:
     // pitäisi toimiä myös spread operaattorilla:
@@ -30,10 +30,7 @@ router.get("/:userId", async (req, res) => {
 
 router.post("/remove", auth, async (req, res) => {
   try {
-    const user = await User.findByIdAndRemove(req.cookies.id);
-    console.log("REMOVED USER", user);
-
-    user.posts.forEach(async post => {
+    req.user.posts.forEach(async post => {
       try {
         await Post.findByIdAndRemove(post._id);
         console.log("Removed: ", post);
@@ -42,7 +39,7 @@ router.post("/remove", auth, async (req, res) => {
       }
     });
 
-    user.comments.forEach(async comment => {
+    req.user.comments.forEach(async comment => {
       try {
         await Comment.findByIdAndRemove(comment._id);
         console.log("Removed: ", comment);
@@ -55,18 +52,17 @@ router.post("/remove", auth, async (req, res) => {
       .status(200)
       .clearCookie("jwt_token")
       .clearCookie("id")
-      .json({ message: "Account removed", id: user._id });
+      .json({ message: "Account removed", id: req.user._id });
   } catch (e) {
     res.status(500).json({ message: "Unable to remove account" });
   }
 });
 
-router.patch("/update", async (req, res) => {
+router.patch("/update", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.body.id);
-    const correctPassword = await user.comparePasswords(req.body.password);
+    const correctPassword = await req.user.comparePasswords(req.body.password);
 
-    if (!user || !correctPassword) throw new Error("Unable to update user");
+    if (!req.user || !correctPassword) throw new Error();
 
     const updatedUser = await User.findByIdAndUpdate(
       req.body.id,
@@ -74,7 +70,10 @@ router.patch("/update", async (req, res) => {
       {
         new: true
       }
-    );
+    ).populate({
+      path: "posts",
+      match: { isPublic: false }
+    });
     console.log(updatedUser);
     res.status(200).json({ user: updatedUser });
   } catch (error) {

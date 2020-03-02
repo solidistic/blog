@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import Post from "./Post";
@@ -7,6 +7,7 @@ import UserContext from "../context/user-context";
 import CommentList from "./CommentsList";
 import CommentForm from "./CommentForm";
 import LoadingPage from "./LoadingPage";
+import NotFoundPage from "./NotFoundPage";
 import Modal from "./Modal";
 import Hero from "./Hero";
 import { startRemovePost } from "../actions/posts";
@@ -16,13 +17,36 @@ const ReadPostPage = ({ match, history }) => {
   const { user } = useContext(UserContext);
   const [post, setPost] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
   const [isModalActive, setModalActive] = useState(false);
 
+  const findPost = useCallback(() => {
+    let postData = null;
+
+    // search post from public posts
+    postData = posts.find(post => post._id === match.params.id);
+
+    // search from private posts
+    if (!postData && user)
+      postData = user.posts.find(post => post._id === match.params.id);
+
+    if (postData) {
+      setPost(postData);
+      setIsLoaded(true);
+    }
+  }, [match.params.id, posts, user]);
+
   useEffect(() => {
-    const postData = posts.find(post => post._id === match.params.id);
-    setPost(postData);
-    if (postData) setIsLoaded(true);
-  }, [match.params.id, posts, post]);
+    findPost();
+    const postSearchTimeout = setTimeout(() => {
+      if (!post) {
+        setError("Unable to fetch post");
+        setIsLoaded(true);
+      }
+    }, 5000);
+
+    return () => clearTimeout(postSearchTimeout);
+  }, [isLoaded, findPost, user, post]);
 
   const handleRemove = async confirmRemoval => {
     if (confirmRemoval) {
@@ -34,6 +58,7 @@ const ReadPostPage = ({ match, history }) => {
   };
 
   if (!isLoaded) return <LoadingPage />;
+  if (error) return <NotFoundPage message={error} />;
   return (
     <>
       <Hero post={post} />

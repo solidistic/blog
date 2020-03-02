@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import Image from "./Image";
 import showImage from "../utils/images/showImage";
 import getRandomDefaultImage from "../utils/random-default-image";
 

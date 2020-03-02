@@ -37,7 +37,7 @@ const upload = multer({
 
 router.get("/all", async (req, res) => {
   try {
-    const data = await Post.find({})
+    const data = await Post.find({ isPublic: true })
       .populate("author", "username")
       .populate("comments")
       .populate({

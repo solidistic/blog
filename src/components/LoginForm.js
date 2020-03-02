@@ -22,7 +22,7 @@ const LoginForm = ({ history }) => {
 
   return (
     <>
-      {error && <p>{error}</p>}
+      {error && <p className="message__error">{error}</p>}
       <form onSubmit={handleLogin}>
         <input
           className="input"

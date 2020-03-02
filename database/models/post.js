@@ -18,6 +18,7 @@ const postSchema = new mongoose.Schema({
   createdAt: Object,
   editedAt: Object,
   likes: Number,
+  isPublic: Boolean,
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
 });
 

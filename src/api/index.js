@@ -27,6 +27,7 @@ export const editPost = (_id, updates) =>
     headers: { "Content-type": "multipart/form-data" }
   });
 export const getAllPosts = () => api.get("/backend/posts/all");
+export const getPrivatePosts = id => api.get(`/backend/private/${id}`);
 
 // Comments
 export const saveComment = ({ id, ...comment }) =>
@@ -37,8 +38,7 @@ export const removeComment = ({ commentId, postId }) =>
   api.patch("/backend/posts/comments/remove", { commentId, postId });
 
 // User
-export const getUserById = id =>
-  api.get(`/backend/users/${id}`).catch(e => e);
+export const getUserById = id => api.get(`/backend/users/${id}`).catch(e => e);
 export const removeUser = () => api.post("/backend/users/remove");
 export const createUser = user => api.post("/backend/signup", { user });
 export const updateUser = (id, updates, password) =>
@@ -61,6 +61,7 @@ export default {
   getImages,
   getAllPosts,
   getUserById,
+  getPrivatePosts,
   createUser,
   removeUser,
   updateUser,

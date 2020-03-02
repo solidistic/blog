@@ -8,7 +8,7 @@ export const login = user => ({
 export const startLogin = async ({ username, password }) => {
   const res = await api.login(username, password);
   console.log(res);
-  const { password: pw, ...user } = res.data.user;
+  const { password: pw, tokens, ...user } = res.data.user;
 
   if (res.status !== 200) return null;
 

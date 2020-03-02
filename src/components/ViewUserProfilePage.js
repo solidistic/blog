@@ -16,6 +16,7 @@ const ViewUserProfilePage = ({ history, match }) => {
   const [user, setCurrentUser] = useState(null);
   const [userPosts, setUserPosts] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isOwner, setIsOwner] = useState(undefined);
   const [error, setError] = useState(false);
   const [modalActive, setModalActive] = useState(false);
 
@@ -34,14 +35,17 @@ const ViewUserProfilePage = ({ history, match }) => {
         ? loggedUser._id
         : match.params.id;
 
+    if (id === loggedUser._id) setIsOwner(true);
+
     const loadUser = async () => {
-      const res = await api.getUserById(id);
-      if (res instanceof Error) {
+      const userData = await api.getUserById(id);
+      if (userData instanceof Error) {
         setError(true);
         return setIsLoaded(true);
       }
+
       const postsData = getPostsFromUser(id);
-      setCurrentUser(res.data);
+      setCurrentUser(userData.data);
       setUserPosts(postsData);
       setIsLoaded(true);
     };
@@ -66,7 +70,6 @@ const ViewUserProfilePage = ({ history, match }) => {
 
   if (!isLoaded) return <LoadingPage />;
   else {
-    const isOwner = loggedUser && loggedUser._id === user._id;
     return (
       <div className="content">
         <div className="content-container">
@@ -144,6 +147,17 @@ const ViewUserProfilePage = ({ history, match }) => {
                 )}
               </div>
               <div>
+                {isOwner &&
+                  loggedUser &&
+                  loggedUser.posts.length > 0 &&
+                  loggedUser.posts.map(post => {
+                    console.log(post);
+                    return (
+                      <div className="list-item" key={post._id}>
+                        <Card post={post} author={user.username} />
+                      </div>
+                    );
+                  })}
                 <h2 className="content-container__title">
                   Latest posts from {user.username}
                 </h2>

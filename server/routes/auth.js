@@ -11,14 +11,20 @@ router.post("/login", async (req, res) => {
     signed: true,
     secure: process.env.NODE_ENV === "production"
   };
+  const querySelector = "-comments";
 
   try {
     if (req.signedCookies.id && req.signedCookies.jwt_token) {
-      user = await User.findById(req.signedCookies.id);
+      user = await User.findById(req.signedCookies.id, querySelector).populate({
+        path: "posts",
+        match: { isPublic: false }
+      });
       token = req.signedCookies.jwt_token;
-    } else {
-      user = await User.findByName(req.body.username);
+    } else if (req.body) {
+      user = await User.findByName(req.body.username, querySelector);
       token = await user.createToken(req.body.password);
+    } else {
+      throw new Error();
     }
 
     if (!user) throw new Error("User not found");
@@ -29,6 +35,7 @@ router.post("/login", async (req, res) => {
       .cookie("id", user._id, secureCookie)
       .json({ message: "Logged in successfully ", user });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: "Unable to login", error: e });
   }
 });
@@ -55,7 +62,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/logout", async (req, res) => {
+router.post("/logout", auth, async (req, res) => {
   try {
     const user = await User.findById(req.signedCookies.id);
     user.tokens = user.tokens.filter(

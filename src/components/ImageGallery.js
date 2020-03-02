@@ -15,7 +15,7 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
   const galleryList = useRef(null);
 
   useEffect(() => {
-    console.log("useEFfetc imagegallery");
+    // console.log("useEFfetc imagegallery");
     const fetchImages = async () => {
       console.log("fetching images");
       const res = await api.getImages();
@@ -26,9 +26,9 @@ const ImageGallery = ({ currentHeroImage, startSetFile }) => {
     };
     if (!images) fetchImages();
 
-    return () => {
-      console.log("unmounting gallery");
-    };
+    // return () => {
+    //   console.log("unmounting gallery");
+    // };
   }, [images]);
 
   const scrollLeft = () => {

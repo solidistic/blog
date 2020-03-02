@@ -2,7 +2,6 @@
 
 - [ ] Siirrä focus lisättyyn kommenttiin kun se lisätään
 - [x] Cookie parser signaus kaikkiin evästeisiin, HTTPS tarvitaan?
-- [ ] Muuta komponentit, jotka tarvitsevat dataa ennen renderöintä, class komponenteiksi
 - [ ] Parempi käyttäjäprofiilisivu
 - [ ] Gallerian tapa noutaa kuva nimet renderöinnin jälkeen
 - [ ] Piilota navigointi palkki kun selataan ainakin pienemmillä resoluutioilla, palauta kun selataan "ylöspäin"
