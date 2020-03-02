@@ -11,14 +11,11 @@ router.post("/login", async (req, res) => {
     signed: true,
     secure: process.env.NODE_ENV === "production"
   };
-  const querySelector = "-comments";
+  const querySelector = "-posts -comments";
 
   try {
     if (req.signedCookies.id && req.signedCookies.jwt_token) {
-      user = await User.findById(req.signedCookies.id, querySelector).populate({
-        path: "posts",
-        match: { isPublic: false }
-      });
+      user = await User.findById(req.signedCookies.id, querySelector);
       token = req.signedCookies.jwt_token;
     } else if (req.body) {
       user = await User.findByName(req.body.username, querySelector);
@@ -29,11 +26,29 @@ router.post("/login", async (req, res) => {
 
     if (!user) throw new Error("User not found");
 
+    const privatePosts = await User.findById(
+      req.signedCookies.id,
+      "posts comments"
+    )
+      .populate({
+        path: "posts",
+        match: { isPublic: false },
+        populate: { path: "author", select: "username" }
+      })
+      .populate({
+        path: "posts",
+        match: { isPublic: false },
+        populate: {
+          path: "comments",
+          populate: { path: "postedBy", select: "username" }
+        }
+      });
+
     res
       .status(200)
       .cookie("jwt_token", token, secureCookie)
       .cookie("id", user._id, secureCookie)
-      .json({ message: "Logged in successfully ", user });
+      .json({ message: "Logged in successfully ", user, privatePosts });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: "Unable to login", error: e });

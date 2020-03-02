@@ -147,26 +147,31 @@ const ViewUserProfilePage = ({ history, match }) => {
                 )}
               </div>
               <div>
-                {isOwner &&
-                  loggedUser &&
-                  loggedUser.posts.length > 0 &&
-                  loggedUser.posts.map(post => {
-                    console.log(post);
-                    return (
-                      <div className="list-item" key={post._id}>
-                        <Card post={post} author={user.username} />
-                      </div>
-                    );
-                  })}
-                <h2 className="content-container__title">
-                  Latest posts from {user.username}
-                </h2>
+                {isOwner && userPosts && (
+                  <div>
+                    <h2>Your private posts</h2>
+                    {userPosts.map(post => {
+                      if (!post.isPublic)
+                        return (
+                          <div className="list-item" key={post._id}>
+                            <Card post={post} author={user.username} />
+                          </div>
+                        );
+                      return null;
+                    })}
+                  </div>
+                )}
+                <h2>Latest posts from {user.username}</h2>
                 {userPosts && userPosts.length > 0 ? (
-                  userPosts.map(post => (
-                    <div className="list-item" key={post._id}>
-                      <Card post={post} author={user.username} />
-                    </div>
-                  ))
+                  userPosts.map(post => {
+                    if (post.isPublic)
+                      return (
+                        <div className="list-item" key={post._id}>
+                          <Card post={post} author={user.username} />
+                        </div>
+                      );
+                    return null;
+                  })
                 ) : (
                   <p>No posts yet</p>
                 )}

@@ -4,7 +4,7 @@ import PostsContext from "../context/posts-context";
 import postsReducer from "../reducers/posts";
 import userReducer from "../reducers/user";
 import api from "../api/index";
-import { populatePosts } from "../actions/posts";
+import { populatePosts, addPost } from "../actions/posts";
 import UserContext from "../context/user-context";
 import { startLogin } from "../actions/user";
 import LoadingPage from "./LoadingPage";
@@ -32,7 +32,16 @@ const BlogApp = () => {
       .then(res => {
         if (res.status === 200) {
           const { username, password } = res.data.user;
+          const privatePosts = res.data.privatePosts.posts;
           startLogin({ username, password }).then(login => userDispatch(login));
+          return privatePosts;
+        }
+      })
+      .then(privatePosts => {
+        if (privatePosts.length > 0) {
+          privatePosts.forEach(post => {
+            dispatch(addPost(post));
+          });
         }
       })
       .catch(e => console.error(e));

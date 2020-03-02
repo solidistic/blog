@@ -61,10 +61,7 @@ userSchema.pre("save", async function(next) {
 });
 
 userSchema.statics.findByName = async function(username, querySelector) {
-  return await this.findOne({ username: username }, querySelector).populate({
-    path: "posts",
-    match: { isPublic: false }
-  });
+  return await this.findOne({ username: username }, querySelector);
 };
 
 userSchema.methods.createToken = async function(password) {

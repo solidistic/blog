@@ -5,18 +5,29 @@ import postsSelector from "../selectors/posts";
 
 const PostsList = () => {
   const { posts } = useContext(PostsContext);
-  const [visiblePosts, setVisiblePosts] = useState(posts);
+  const [publicPosts, setPublicPosts] = useState(posts);
+  const [visiblePosts, setVisiblePosts] = useState(publicPosts);
 
   useEffect(() => {
-    setVisiblePosts(postsSelector(posts, ""));
+    const temp = posts.filter(post => post.isPublic === true);
+    setPublicPosts(temp);
   }, [posts]);
 
+  useEffect(() => {
+    setVisiblePosts(postsSelector(publicPosts, ""));
+  }, [publicPosts]);
+
   const handleSearch = e => {
-    setVisiblePosts(postsSelector(posts, e.target.value));
+    setVisiblePosts(postsSelector(publicPosts, e.target.value));
   };
+
   return (
     <div id="latest">
-      <input className="input input--small" placeholder="Find posts" onChange={handleSearch} />
+      <input
+        className="input input--small"
+        placeholder="Find posts"
+        onChange={handleSearch}
+      />
       {visiblePosts.length === 0 ? (
         <p>No posts found</p>
       ) : (

@@ -21,20 +21,13 @@ const ReadPostPage = ({ match, history }) => {
   const [isModalActive, setModalActive] = useState(false);
 
   const findPost = useCallback(() => {
-    let postData = null;
-
-    // search post from public posts
-    postData = posts.find(post => post._id === match.params.id);
-
-    // search from private posts
-    if (!postData && user)
-      postData = user.posts.find(post => post._id === match.params.id);
+    const postData = posts.find(post => post._id === match.params.id);
 
     if (postData) {
       setPost(postData);
       setIsLoaded(true);
     }
-  }, [match.params.id, posts, user]);
+  }, [match.params.id, posts]);
 
   useEffect(() => {
     findPost();
@@ -94,13 +87,12 @@ const ReadPostPage = ({ match, history }) => {
           )}
           <div className="comments">
             <h2 className="content-container__subtitle">Comments:</h2>
-            {post && (
-              <CommentList
-                comments={post.comments}
-                postId={post._id}
-                user={user}
-              />
-            )}
+            <CommentList
+              comments={post.comments}
+              postId={post._id}
+              user={user}
+            />
+
             {user && <CommentForm id={post._id} />}
           </div>
         </div>
