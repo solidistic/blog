@@ -7,7 +7,6 @@ export const login = user => ({
 
 export const startLogin = async ({ username, password }) => {
   const res = await api.login(username, password);
-  console.log(res);
   const { password: pw, tokens, ...user } = res.data.user;
   const privatePosts = res.data.privatePosts.posts;
 
@@ -22,7 +21,6 @@ export const logout = () => ({
 
 export const startRemoveUser = async user => {
   const res = await api.removeUser();
-  console.log("START REMOVE USER RESPONSE", res);
   if (res.status !== 200) throw new Error();
   return res.data.id;
 };
