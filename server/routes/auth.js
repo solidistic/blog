@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
     if (!user) throw new Error("User not found");
 
     const privatePosts = await User.findById(
-      req.signedCookies.id,
+      req.signedCookies.id || user._id,
       "posts comments"
     )
       .populate({
@@ -43,6 +43,7 @@ router.post("/login", async (req, res) => {
           populate: { path: "postedBy", select: "username" }
         }
       });
+    console.log(privatePosts);
 
     res
       .status(200)

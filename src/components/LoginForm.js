@@ -16,7 +16,7 @@ const LoginForm = ({ history }) => {
     e.preventDefault();
     try {
       const [action, privatePosts] = await startLogin({ username, password });
-      console.log(privatePosts);
+      console.log("privatePosts", privatePosts);
       userDispatch(action);
       if (privatePosts && privatePosts.length > 0) {
         privatePosts.forEach(post => {

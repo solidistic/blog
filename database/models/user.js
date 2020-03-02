@@ -11,8 +11,8 @@ const userSchema = mongoose.Schema({
     required: [true, "You must provide an username"],
     unique: [true, "Username is already in use"]
   },
-  firstName: String,
-  lastName: String,
+  firstName: { type: String, isPublic: Boolean },
+  lastName: { type: String, isPublic: Boolean },
   email: {
     type: String,
     required: [true, "Email is required"],
@@ -21,7 +21,8 @@ const userSchema = mongoose.Schema({
       validator: function(email) {
         return validator.isEmail(email);
       }
-    }
+    },
+    isPublic: Boolean
   },
   password: {
     type: String,
