@@ -40,7 +40,8 @@ export const removeComment = ({ commentId, postId }) =>
 // User
 export const getUserById = id => api.get(`/backend/users/${id}`).catch(e => e);
 export const removeUser = () => api.post("/backend/users/remove");
-export const createUser = user => api.post("/backend/signup", { user });
+export const createUser = (user, isPublic) =>
+  api.post("/backend/signup", { user, isPublic });
 export const updateUser = (id, updates, password) =>
   api.patch("/backend/users/update", { id, updates, password });
 

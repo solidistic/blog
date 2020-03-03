@@ -8,9 +8,18 @@ class AccountForm extends React.Component {
     this.state = {
       user: {
         username: this.props.user ? this.props.user.username : null,
-        firstName: this.props.user ? this.props.user.firstName : null,
-        lastName: this.props.user ? this.props.user.lastName : null,
-        email: this.props.user ? this.props.user.email : null,
+        firstName: {
+          value: this.props.user ? this.props.user.firstName.value : null,
+          isPublic: this.props.user ? this.props.user.firstName.isPublic : true
+        },
+        lastName: {
+          value: this.props.user ? this.props.user.lastName.value : null,
+          isPublic: this.props.user ? this.props.user.lastName.isPublic : true
+        },
+        email: {
+          value: this.props.user ? this.props.user.email.value : null,
+          isPublic: this.props.user ? this.props.user.email.isPublic : true
+        },
         description: this.props.user ? this.props.user.description : null,
         password: null
       },
@@ -29,7 +38,7 @@ class AccountForm extends React.Component {
     ) {
       return console.log("Passwords doesn't match");
     } else {
-      console.log("passed");
+      console.log("passed", this.state.user);
       this.props.handleSubmit(this.state.user);
     }
   };
@@ -71,7 +80,7 @@ class AccountForm extends React.Component {
             className="input"
             type="text"
             placeholder="* Email"
-            defaultValue={this.state.user.email}
+            defaultValue={this.state.user.email.value}
             required
             onChange={e => {
               const email = e.target.value;
@@ -84,8 +93,8 @@ class AccountForm extends React.Component {
             <input
               className="input input__name"
               type="text"
-              placeholder="First Name"
-              defaultValue={this.state.user.firstName}
+              placeholder="Forename"
+              defaultValue={this.state.user.firstName.value}
               onChange={e => {
                 const firstName = e.target.value;
                 this.setState(state => ({
@@ -96,8 +105,8 @@ class AccountForm extends React.Component {
             <input
               className="input input__name"
               type="text"
-              placeholder="Last Name"
-              defaultValue={this.state.user.lastName}
+              placeholder="Surname"
+              defaultValue={this.state.user.lastName.value}
               onChange={e => {
                 const lastName = e.target.value;
                 this.setState(state => ({
@@ -119,6 +128,63 @@ class AccountForm extends React.Component {
               }));
             }}
           />
+          <div className="form__checkboxes">
+            <legend className="legend">Public information</legend>
+            <label>
+              <input
+                className="checkbox"
+                type="checkbox"
+                defaultChecked={this.state.user.email.isPublic}
+                onChange={e => {
+                  const email = e.target.checked;
+                  this.setState(state => ({
+                    user: {
+                      ...state.user,
+                      email: { ...state.user.email, isPublic: email }
+                    }
+                  }));
+                }}
+              />
+              <span className="label">Email</span>
+            </label>
+            <label>
+              <input
+                className="checkbox"
+                type="checkbox"
+                defaultChecked={this.state.user.firstName.isPublic}
+                onChange={e => {
+                  const firstName = e.target.checked;
+                  this.setState(state => ({
+                    user: {
+                      ...state.user,
+                      firstName: {
+                        ...state.user.firstName,
+                        isPublic: firstName
+                      }
+                    }
+                  }));
+                }}
+              />
+              <span className="label">Forename</span>
+            </label>
+            <label>
+              <input
+                className="checkbox"
+                type="checkbox"
+                defaultChecked={this.state.user.lastName.isPublic}
+                onChange={e => {
+                  const lastName = e.target.checked;
+                  this.setState(state => ({
+                    user: {
+                      ...state.user,
+                      lastName: { ...state.user.lastName, isPublic: lastName }
+                    }
+                  }));
+                }}
+              />
+              <span className="label">Surname</span>
+            </label>
+          </div>
           {this.props.user ? (
             <legend className="legend">
               Password needed to confirm changes:

@@ -3,15 +3,15 @@ import Card from "./Card";
 import PostsContext from "../context/posts-context";
 import postsSelector from "../selectors/posts";
 
-const PostsList = () => {
+const PostsList = ({ isPublic = true, showSearchBar = true }) => {
   const { posts } = useContext(PostsContext);
   const [publicPosts, setPublicPosts] = useState(posts);
   const [visiblePosts, setVisiblePosts] = useState(publicPosts);
 
   useEffect(() => {
-    const temp = posts.filter(post => post.isPublic === true);
+    const temp = posts.filter(post => post.isPublic === isPublic);
     setPublicPosts(temp);
-  }, [posts]);
+  }, [posts, isPublic]);
 
   useEffect(() => {
     setVisiblePosts(postsSelector(publicPosts, ""));
@@ -23,11 +23,13 @@ const PostsList = () => {
 
   return (
     <div id="latest">
-      <input
-        className="input input--small"
-        placeholder="Find posts"
-        onChange={handleSearch}
-      />
+      {showSearchBar && (
+        <input
+          className="input input--small input__search"
+          placeholder="Find posts"
+          onChange={handleSearch}
+        />
+      )}
       {visiblePosts.length === 0 ? (
         <p>No posts found</p>
       ) : (

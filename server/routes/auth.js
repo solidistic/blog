@@ -24,6 +24,7 @@ router.post("/login", async (req, res) => {
       throw new Error();
     }
 
+    console.log(user);
     if (!user) throw new Error("User not found");
 
     const privatePosts = await User.findById(
@@ -60,7 +61,6 @@ router.post("/signup", async (req, res) => {
   console.log("SIGNUP", req.body);
   try {
     const user = new User(req.body.user);
-    // await user.createToken();
     const account = await user.save();
     res
       .status(201)

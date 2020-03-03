@@ -89,30 +89,38 @@ const ViewUserProfilePage = ({ history, match }) => {
                   </div>
                 </div>
                 <div className="account__information">
-                  <p>
-                    <span className="content-container__subtitle--secondary">
-                      First name:
-                    </span>{" "}
-                    {user.firstName}
-                  </p>
-                  <p>
-                    <span className="content-container__subtitle--secondary">
-                      Last name:
-                    </span>{" "}
-                    {user.lastName}
-                  </p>
-                  <p>
-                    <span className="content-container__subtitle--secondary">
-                      Email:
-                    </span>{" "}
-                    {user.email}
-                  </p>
-                  <p>
-                    <span className="content-container__subtitle--secondary">
-                      Description:
-                    </span>{" "}
-                    {user.description}
-                  </p>
+                  {user.firstName.isPublic && (
+                    <p>
+                      <span className="content-container__subtitle--secondary">
+                        First name:
+                      </span>{" "}
+                      {user.firstName.value}
+                    </p>
+                  )}
+                  {user.lastName.isPublic && (
+                    <p>
+                      <span className="content-container__subtitle--secondary">
+                        Last name:
+                      </span>{" "}
+                      {user.lastName.value}
+                    </p>
+                  )}
+                  {user.email.isPublic && (
+                    <p>
+                      <span className="content-container__subtitle--secondary">
+                        Email:
+                      </span>{" "}
+                      {user.email.value}
+                    </p>
+                  )}
+                  {user.description && (
+                    <p>
+                      <span className="content-container__subtitle--secondary">
+                        Description:
+                      </span>{" "}
+                      {user.description}
+                    </p>
+                  )}
                 </div>
                 {isOwner && (
                   <div className="account__owner-panel">

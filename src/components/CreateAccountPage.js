@@ -3,9 +3,9 @@ import AccountForm from "./AccountForm";
 import api from "../api";
 
 const CreateAccount = ({ history }) => {
-  const createAccount = async user => {
+  const createAccount = async (user, isPublic) => {
     console.log("CREATE ACCOUNT", user);
-    const res = await api.createUser(user);
+    const res = await api.createUser(user, isPublic);
     console.log(res);
     if (res.status === 201) history.push("/");
   };

@@ -11,18 +11,20 @@ const userSchema = mongoose.Schema({
     required: [true, "You must provide an username"],
     unique: [true, "Username is already in use"]
   },
-  firstName: { type: String, isPublic: Boolean },
-  lastName: { type: String, isPublic: Boolean },
+  firstName: { value: { type: String }, isPublic: { type: Boolean } },
+  lastName: { value: { type: String }, isPublic: { type: Boolean } },
   email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: [true, "Email is already in use"],
-    validate: {
-      validator: function(email) {
-        return validator.isEmail(email);
+    value: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: [true, "Email is already in use"],
+      validate: {
+        validator: function(email) {
+          return validator.isEmail(email);
+        }
       }
     },
-    isPublic: Boolean
+    isPublic: { type: Boolean }
   },
   password: {
     type: String,
@@ -67,6 +69,7 @@ userSchema.statics.findByName = async function(username, querySelector) {
 
 userSchema.methods.createToken = async function(password) {
   const pwMatch = await bcrypt.compare(password, this.password);
+  
   if (pwMatch) {
     const token = await jwt.sign({ _id: this._id.toString() }, tokenSecret, {
       expiresIn: "1h"
