@@ -9,7 +9,7 @@ export const startAddComment = async commentData => {
   try {
     const res = await api.saveComment(commentData);
     console.log("SAVE COMMENT RESPONSE", res);
-    if (res.status !== 200) throw new Error(res.error);
+    if (res.status !== 200) throw new Error(res.data.message);
     return addComment(res.data.comment);
   } catch (error) {
     return { error };

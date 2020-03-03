@@ -6,30 +6,32 @@ import PostsContext from "../context/posts-context";
 const CommentForm = ({ id }) => {
   const { dispatch } = useContext(PostsContext);
   const [body, setBody] = useState("");
-  const [active, setActivity] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
 
   const addComment = async e => {
     e.preventDefault();
+
     try {
       if (body.length === 0) return setError("You must provide a comment");
-      setActivity(true);
+      setDisabled(true);
       const createdAt = moment().format("D.MM.YYYY - hh:mm");
       const res = await startAddComment({ body, createdAt, id });
       console.log(res);
-      if (res.error) throw new Error();
+      if (res.error) throw new Error(res.error.message);
       dispatch(res);
     } catch (e) {
       console.log(e);
-      setError("Unable to create a new comment");
+      setError(e.toString());
     }
+
     setBody("");
-    setActivity(false);
+    setDisabled(false);
   };
 
   return (
     <>
-      {error && <p>{error}</p>}
+      {error && <p className="message__error">{error}</p>}
       <form onSubmit={addComment}>
         <input
           className="input"
@@ -37,7 +39,7 @@ const CommentForm = ({ id }) => {
           placeholder="Comment..."
           onChange={e => setBody(e.target.value)}
         />
-        <button className="button" disabled={active} type="submit">
+        <button className="button" disabled={disabled} type="submit">
           Comment
         </button>
       </form>

@@ -4,7 +4,7 @@
 - [x] Cookie parser signaus kaikkiin evästeisiin, HTTPS tarvitaan?
 - [ ] Parempi käyttäjäprofiilisivu
 - [ ] Gallerian tapa noutaa kuva nimet renderöinnin jälkeen
-- [ ] Piilota navigointi palkki kun selataan ainakin pienemmillä resoluutioilla, palauta kun selataan "ylöspäin"
+- [x] Piilota navigointi palkki kun selataan ainakin pienemmillä resoluutioilla, palauta kun selataan "ylöspäin"
 - [ ] Paikallisen kuvan tallennus AWS S3 buckettiin
 - [x] Blog postaus yksityinen / julkinen
 - [x] Vaihtoehto valita mitä tietoja näytetään muille

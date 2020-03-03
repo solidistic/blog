@@ -31,9 +31,7 @@ export const getPrivatePosts = id => api.get(`/backend/private/${id}`);
 
 // Comments
 export const saveComment = ({ id, ...comment }) =>
-  api
-    .post("/backend/posts/comments/create", { comment, id })
-    .catch(e => console.log("AXIOS", e));
+  api.post("/backend/posts/comments/create", { comment, id }).catch(e => e.response);
 export const removeComment = ({ commentId, postId }) =>
   api.patch("/backend/posts/comments/remove", { commentId, postId });
 
