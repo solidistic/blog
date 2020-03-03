@@ -48,7 +48,7 @@
   font-style: italic;
 
   @media (max-width: $mobile-breakpoint) {
-    font-size: $font-s-size;
+    font-size: $font-xs-size;
   }
 }
 
@@ -57,6 +57,7 @@
 }
 
 .list-item__body {
+  font-size: $font-s-size;
   margin: $xs-size 0;
   color: $font-primary-color;
   word-break: break-word;

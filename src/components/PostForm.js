@@ -96,11 +96,11 @@ export const PostForm = ({ post, onSubmit, active }) => {
   }, [title, description, body]);
 
   useEffect(() => {
-    const autosaver = setInterval(() => {
+    const autosaver = setTimeout(() => {
       autoSave();
-    }, 60000);
+    }, 10000);
 
-    return () => clearInterval(autosaver);
+    return () => clearTimeout(autosaver);
   }, [autoSave]);
 
   const modifyKeyActions = useCallback(e => {

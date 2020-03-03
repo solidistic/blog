@@ -8,7 +8,7 @@ const EditAccountPage = ({ history }) => {
   const { user, userDispatch } = useContext(UserContext);
   const [error, setError] = useState("");
 
-  const handleSubmit = async ({ password, ...updates }) => {
+  const handleSubmit = async ({ password, ...updates }, isPublic) => {
     const action = await startUpdateUser(user._id, updates, password);
 
     if (action instanceof Error)
