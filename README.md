@@ -13,4 +13,4 @@
 - [ ] Tykkäys painike postauksille
 - [ ] Linkitä facebook / twitter / github
 - [ ] Mahdollisuus jakaa helposti sosiaaliseen mediaan
-- [ ] Poista yksityiset postaukset kun logataan ulos
+- [x] Poista yksityiset postaukset kun logataan ulos

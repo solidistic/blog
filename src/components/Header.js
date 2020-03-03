@@ -3,9 +3,12 @@ import { NavLink } from "react-router-dom";
 import UserContext from "../context/user-context";
 import api from "../api";
 import { logout } from "../actions/user";
+import { removePost } from "../actions/posts";
+import PostsContext from "../context/posts-context";
 
 const Header = () => {
   const { user, userDispatch } = useContext(UserContext);
+  const { posts, dispatch } = useContext(PostsContext);
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const header = useRef(null);
 
@@ -28,7 +31,16 @@ const Header = () => {
   }, [lastScrollPos]);
 
   const handleLogout = () => {
-    api.logout().then(() => userDispatch(logout()));
+    api
+      .logout()
+      .then(() => {
+        posts.forEach(post => {
+          if (post.author._id === user._id && !post.isPublic) {
+            dispatch(removePost(post));
+          }
+        });
+      })
+      .then(() => userDispatch(logout()));
   };
 
   return (

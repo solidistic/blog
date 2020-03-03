@@ -25,10 +25,13 @@ export const removeAllFromUser = id => ({
   id
 });
 
-export const removePost = ({ _id: id }) => ({
-  type: "REMOVE_POST",
-  id
-});
+export const removePost = ({ _id: id }) => {
+  console.log("removing post", id);
+  return {
+    type: "REMOVE_POST",
+    id
+  };
+};
 
 export const startRemovePost = async post => {
   try {
