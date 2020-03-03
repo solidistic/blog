@@ -12,9 +12,11 @@ import MarkdownHelper from "./MarkdownHelper";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const hasHeroImage = post && post.image && post.image.name;
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(sessionStorage.getItem("title") || "");
+  const [body, setBody] = useState(sessionStorage.getItem("body") || "");
+  const [description, setDescription] = useState(
+    sessionStorage.getItem("description") || ""
+  );
   const [file, setFile] = useState(hasHeroImage ? post.image.name : null);
   const [postType, setPostType] = useState(
     post && post.isPublic ? "Public" : "Private"
@@ -60,6 +62,8 @@ export const PostForm = ({ post, onSubmit, active }) => {
       formData.append("description", description);
       formData.append("isPublic", isPublic);
 
+      sessionStorage.clear();
+
       onSubmit(formData);
     }
   };
@@ -83,6 +87,21 @@ export const PostForm = ({ post, onSubmit, active }) => {
     },
     [checkFile]
   );
+
+  const autoSave = useCallback(() => {
+    console.log("Auto saving...");
+    sessionStorage.setItem("title", title);
+    sessionStorage.setItem("description", description);
+    sessionStorage.setItem("body", body);
+  }, [title, description, body]);
+
+  useEffect(() => {
+    const autosaver = setInterval(() => {
+      autoSave();
+    }, 60000);
+
+    return () => clearInterval(autosaver);
+  }, [autoSave]);
 
   const modifyKeyActions = useCallback(e => {
     const [initSelectionStart, initSelectionEnd] = getCursorLocation(textarea);

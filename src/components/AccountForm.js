@@ -85,7 +85,10 @@ class AccountForm extends React.Component {
             onChange={e => {
               const email = e.target.value;
               this.setState(state => ({
-                user: { ...state.user, email }
+                user: {
+                  ...state.user,
+                  email: { ...state.user.email, value: email }
+                }
               }));
             }}
           />
@@ -98,7 +101,10 @@ class AccountForm extends React.Component {
               onChange={e => {
                 const firstName = e.target.value;
                 this.setState(state => ({
-                  user: { ...state.user, firstName }
+                  user: {
+                    ...state.user,
+                    firstName: { ...state.user.firstName, value: firstName }
+                  }
                 }));
               }}
             />
@@ -110,7 +116,10 @@ class AccountForm extends React.Component {
               onChange={e => {
                 const lastName = e.target.value;
                 this.setState(state => ({
-                  user: { ...state.user, lastName }
+                  user: {
+                    ...state.user,
+                    lastName: { ...state.user.lastName, value: lastName }
+                  }
                 }));
               }}
             />
@@ -140,7 +149,7 @@ class AccountForm extends React.Component {
                   this.setState(state => ({
                     user: {
                       ...state.user,
-                      email: { ...state.user.email, isPublic: email }
+                      email: { value: state.user.email.value, isPublic: email }
                     }
                   }));
                 }}
@@ -158,7 +167,7 @@ class AccountForm extends React.Component {
                     user: {
                       ...state.user,
                       firstName: {
-                        ...state.user.firstName,
+                        value: state.user.firstName.value,
                         isPublic: firstName
                       }
                     }
@@ -177,7 +186,10 @@ class AccountForm extends React.Component {
                   this.setState(state => ({
                     user: {
                       ...state.user,
-                      lastName: { ...state.user.lastName, isPublic: lastName }
+                      lastName: {
+                        value: state.user.lastName.value,
+                        isPublic: lastName
+                      }
                     }
                   }));
                 }}
