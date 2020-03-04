@@ -15,7 +15,7 @@ const CommentForm = ({ id }) => {
     try {
       if (body.length === 0) return setError("You must provide a comment");
       setDisabled(true);
-      const createdAt = moment().format("D.MM.YYYY - hh:mm");
+      const createdAt = moment().format("DD.MM.YYYY - hh:mm");
       const res = await startAddComment({ body, createdAt, id });
       console.log(res);
       if (res.error) throw new Error(res.error.message);
