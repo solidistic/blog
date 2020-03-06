@@ -23,9 +23,9 @@ const Hero = ({ user, post }) => {
           {user ? (
             <>
               <h1 className="hero__title">
-                Welcome to BlogPortal, {user.username}!
+                Glad to have you here, {user.username}!
               </h1>
-              <p className="hero__subtitle">Web Development for life</p>
+              <p className="hero__subtitle">What you want to do next?</p>
               <div className="hero__button-group">
                 <Link className="button button--big" to="/create">
                   Share your thoughts
@@ -38,7 +38,7 @@ const Hero = ({ user, post }) => {
           ) : (
             <>
               <h1 className="hero__title">Welcome to BlogPortal!</h1>
-              <p className="hero__subtitle">Web Development for life</p>
+              <p className="hero__subtitle">Blogging made easy. Start writing and share instantly with others!</p>
               <div className="hero__button-group">
                 <Link className="button button--big" to="/signup">
                   Signup

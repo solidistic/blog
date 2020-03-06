@@ -16,12 +16,12 @@
 
 .gallery__list {
   display: flex;
-  // background: red;
   flex-wrap: nowrap;
   flex-grow: 2;
   align-items: center;
   overflow: hidden;
   width: 100%;
+  max-width: 700px;
   height: 100px;
 
   &:nth-child() {
@@ -47,7 +47,7 @@
   margin: 0;
   width: 80vh;
 
-  @media (max-width: 700px) {
+  @media (max-width: $tablet-breakpoint) {
     width: 100%;
   }
 }

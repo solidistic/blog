@@ -19,6 +19,10 @@
   @media (max-width: 960px) {
     padding: $s-size 0;
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    border-bottom: none;
+  }
 }
 
 .list-item__title {

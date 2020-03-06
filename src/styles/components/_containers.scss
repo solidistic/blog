@@ -85,6 +85,10 @@
   a {
     @extend .link;
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $font-s-size;
+  }
 }
 
 .content-container__body {

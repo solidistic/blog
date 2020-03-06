@@ -31,7 +31,7 @@ const CreatePost = ({ history }) => {
     <div className="content">
       <div className="content-container input-group">
         <h2>Create a post</h2>
-        {error && <p>{error}</p>}
+        {error && <p className="message__error">{error}</p>}
         <PostForm onSubmit={createPost} active={buttonDisabled} />
       </div>
     </div>

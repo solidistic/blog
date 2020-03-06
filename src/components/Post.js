@@ -52,7 +52,7 @@ const Post = ({ post, author, user }) => {
         <h2 className="content-container__title">{post.title}</h2>
         <div className="post-container__likes">
           {error && <p className="message__error">{error}</p>}
-          <p className="post__likes">{post.likes.count}</p>
+          <p className="post__likes">{post.likes.count || 0}</p>
           {user && post.likes.users.includes(user._id) ? (
             <img
               className="post__heart"

@@ -45,8 +45,11 @@ export const PostForm = ({ post, onSubmit, active }) => {
       .format("DD.MM.YYYY HH:mm");
     let editedAt;
 
-    if (!title || !body) setError("Title and body are required");
-    else {
+    if (!title || !body) {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      setError("You need to fill all the fields");
+    } else {
       if (post) {
         createdAt = post.createdAt;
         editedAt = moment()
@@ -163,7 +166,11 @@ export const PostForm = ({ post, onSubmit, active }) => {
         )}
       </ErrorBoundary>
       <form onSubmit={submitPost}>
-        {error && <p>{error}</p>}
+        {error && (
+          <p className="message__error">
+            {error}
+          </p>
+        )}
         <div className="input-group--vertical">
           <input
             className="input"

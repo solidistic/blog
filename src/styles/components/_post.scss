@@ -1,7 +1,7 @@
 .post-container__title {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap-reverse;
+  flex-wrap: nowrap;
   justify-content: space-between;
 }
 
@@ -18,9 +18,9 @@
   font-weight: 500;
   margin: $s-size;
   
-  @media (max-width: $mobile-breakpoint) {
-    margin: 0 $s-size 0 0;
-  }
+  // @media (max-width: $mobile-breakpoint) {
+  //   margin: 0 $s-size 0 0;
+  // }
 }
 
 .post__heart {
