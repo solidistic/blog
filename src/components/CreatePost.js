@@ -18,6 +18,7 @@ const CreatePost = ({ history }) => {
       })
       .then(addPost => {
         dispatch(addPost);
+        localStorage.clear();
         history.push(`/posts/${addPost.post._id}`);
       })
       .catch(e => {

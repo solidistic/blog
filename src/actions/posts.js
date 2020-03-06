@@ -15,8 +15,8 @@ export const startAddPost = async (post = {}) => {
     const res = await api.savePost(post);
     if (res.status !== 200) throw new Error("Unable to save post to database");
     return addPost(res.data.post);
-  } catch (e) {
-    console.log("Error in posts actions", e);
+  } catch (error) {
+    console.log("Error in posts actions", error);
   }
 };
 
@@ -34,8 +34,8 @@ export const startRemovePost = async post => {
   try {
     await api.removePost(post._id);
     return removePost(post);
-  } catch (e) {
-    console.log("Error in startRemovePost action", e);
+  } catch (error) {
+    console.log("Error in startRemovePost action", error);
   }
 };
 
@@ -51,7 +51,23 @@ export const startEditPost = async (id, updates) => {
     console.log("STARTEDITPOST", res);
     const { author, createdAt, comments, ...updatedPost } = res.data.post;
     return editPost(id, updatedPost);
-  } catch (e) {
-    console.log("Error in startEditPost action", e);
+  } catch (error) {
+    console.log("Error in startEditPost action", error);
+  }
+};
+
+export const toggleLike = (postId, userId) => ({
+  type: "TOGGLE_LIKE",
+  postId,
+  userId
+});
+
+export const startToggleLike = async (postId, userId) => {
+  try {
+    const res = await api.toggleLike(postId, userId);
+    if (res instanceof Error) throw new Error();
+    return toggleLike(postId, userId);
+  } catch (error) {
+    console.log("Error liking post", error);
   }
 };

@@ -9,7 +9,10 @@
 - [x] Vaihtoehto valita mitä tietoja näytetään muille
 - [x] Tallenna kirjoittamisvaiheessa olevaa sisältöä muutaman minuutin välein (session / localstorage / db)
 - [x] Painikkeiden leveydet / tyylit mobiiliresoluutioilla
-- [ ] Tykkäys painike postauksille
+- [x] Tykkäys painike postauksille
 - [ ] Linkitä facebook / twitter / github
 - [ ] Mahdollisuus jakaa helposti sosiaaliseen mediaan
 - [x] Poista yksityiset postaukset kun logataan ulos
+- [ ] Error händläys järjestelmällisesti action objekteissa
+- [ ] Popup login
+- [ ] Toast jolla voisi näyttää viestejä käyttäjälle

@@ -198,4 +198,14 @@ router.patch("/comments/remove", auth, async (req, res) => {
   }
 });
 
+router.patch("/likes/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    await post.toggleLike(req.body.userId);
+    res.status(201).send();
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
 module.exports = router;

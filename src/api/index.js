@@ -28,10 +28,16 @@ export const editPost = (_id, updates) =>
   });
 export const getAllPosts = () => api.get("/backend/posts/all");
 export const getPrivatePosts = id => api.get(`/backend/private/${id}`);
+export const toggleLike = (postId, userId) =>
+  api
+    .patch(`/backend/posts/likes/${postId}`, { userId })
+    .catch(e => e.response);
 
 // Comments
 export const saveComment = ({ id, ...comment }) =>
-  api.post("/backend/posts/comments/create", { comment, id }).catch(e => e.response);
+  api
+    .post("/backend/posts/comments/create", { comment, id })
+    .catch(e => e.response);
 export const removeComment = ({ commentId, postId }) =>
   api.patch("/backend/posts/comments/remove", { commentId, postId });
 
@@ -63,6 +69,7 @@ export default {
   getPrivatePosts,
   createUser,
   removeUser,
+  toggleLike,
   updateUser,
   login,
   logout,

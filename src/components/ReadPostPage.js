@@ -70,7 +70,7 @@ const ReadPostPage = ({ match, history }) => {
                 <i className="fas fa-times"></i> No
               </button>
             </Modal>
-            <Post post={post} />
+            <Post post={post} user={user} />
           </div>
           {user && user._id === post.author._id && (
             <div className="content-container__edit">

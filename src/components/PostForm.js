@@ -12,10 +12,10 @@ import MarkdownHelper from "./MarkdownHelper";
 
 export const PostForm = ({ post, onSubmit, active }) => {
   const hasHeroImage = post && post.image && post.image.name;
-  const [title, setTitle] = useState(sessionStorage.getItem("title") || "");
-  const [body, setBody] = useState(sessionStorage.getItem("body") || "");
+  const [title, setTitle] = useState(localStorage.getItem("title") || "");
+  const [body, setBody] = useState(localStorage.getItem("body") || "");
   const [description, setDescription] = useState(
-    sessionStorage.getItem("description") || ""
+    localStorage.getItem("description") || ""
   );
   const [file, setFile] = useState(hasHeroImage ? post.image.name : null);
   const [postType, setPostType] = useState(
@@ -62,8 +62,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
       formData.append("description", description);
       formData.append("isPublic", isPublic);
 
-      sessionStorage.clear();
-
       onSubmit(formData);
     }
   };
@@ -90,15 +88,15 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
   const autoSave = useCallback(() => {
     console.log("Auto saving...");
-    sessionStorage.setItem("title", title);
-    sessionStorage.setItem("description", description);
-    sessionStorage.setItem("body", body);
+    localStorage.setItem("title", title);
+    localStorage.setItem("description", description);
+    localStorage.setItem("body", body);
   }, [title, description, body]);
 
   useEffect(() => {
     const autosaver = setTimeout(() => {
       autoSave();
-    }, 10000);
+    }, 5000);
 
     return () => clearTimeout(autosaver);
   }, [autoSave]);

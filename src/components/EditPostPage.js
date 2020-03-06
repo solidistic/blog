@@ -10,12 +10,12 @@ const EditPostPage = ({ match, history }) => {
 
   useEffect(() => {
     const postData = posts.find(post => post._id === match.params.id);
-    // if(!postData) history.push("/");
     setPost(postData);
   }, [match.params.id, history, posts]);
 
   const editPost = async updates => {
     dispatch(await startEditPost(match.params.id, updates));
+    localStorage.clear();
     history.push(`/posts/${match.params.id}`);
   };
 

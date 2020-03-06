@@ -38,6 +38,21 @@ export default (state = [], action) => {
         return post;
       });
     }
+    case "TOGGLE_LIKE": {
+      return state.map(post => {
+        if (post._id === action.postId) {
+          if (post.likes.users.includes(action.userId)) {
+            post.likes.users = post.likes.users.filter(
+              id => id !== action.userId
+            );
+          } else {
+            post.likes.users.push(action.userId);
+          }
+        }
+        post.likes.count = post.likes.users.length;
+        return post;
+      });
+    }
     default:
       throw new Error("Error in posts reducer");
   }

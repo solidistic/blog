@@ -1,0 +1,30 @@
+.post-container__title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+}
+
+.post-container__likes {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 5px;
+}
+
+.post__likes {
+  font-size: $font-m-size;
+  font-weight: 500;
+  margin: $s-size;
+  
+  @media (max-width: $mobile-breakpoint) {
+    margin: 0 $s-size 0 0;
+  }
+}
+
+.post__heart {
+  cursor: pointer;
+  height: 20px;
+  margin: $s-size 0;
+}

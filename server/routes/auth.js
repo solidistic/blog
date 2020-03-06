@@ -24,7 +24,6 @@ router.post("/login", async (req, res) => {
       throw new Error();
     }
 
-    console.log(user);
     if (!user) throw new Error("User not found");
 
     const privatePosts = await User.findById(
@@ -44,7 +43,6 @@ router.post("/login", async (req, res) => {
           populate: { path: "postedBy", select: "username" }
         }
       });
-    console.log(privatePosts);
 
     res
       .status(200)
