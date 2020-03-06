@@ -41,12 +41,12 @@
   }
 
   @media (max-width: $mobile-breakpoint) {
-    font-size: $font-m-size;
+    font-size: $font-l-size;
   }
 }
 
 .list-item__subtitle {
-  margin: $xs-size 0;
+  margin: $xs-size 0 0 0;
   color: $font-sand;
   font-size: $font-s-size;
   font-style: italic;
@@ -83,6 +83,7 @@
 }
 
 .list-item__commentTitle {
+  font-size: $font-s-size;
   color: $font-primary-color;
   margin: 0;
 }
