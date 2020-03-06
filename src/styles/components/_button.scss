@@ -5,7 +5,7 @@
   background: $secondary;
   color: $font-secondary-color;
   cursor: pointer;
-  padding: $xs-size;
+  padding: $s-size;
   margin: 0 $s-size 0 0;
   font-size: $font-s-size;
   text-align: center;
@@ -17,6 +17,7 @@
 
   @media (max-width: $tablet-breakpoint) {
     margin: 0 $s-size $s-size 0;
+    padding: $xs-size;
   }
 
   @media (max-width: $mobile-breakpoint) {
