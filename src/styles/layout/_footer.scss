@@ -29,6 +29,10 @@
     margin: 2px;
   }
 
+  i {
+    margin-right: $s-size;
+  }
+
   @media (min-width: 961px) {
     div:nth-child(1) {
       align-items: flex-end;
