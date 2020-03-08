@@ -56,7 +56,6 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  console.log("SIGNUP", req.body);
   try {
     const user = new User(req.body.user);
     const account = await user.save();
@@ -76,7 +75,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/logout", auth, async (req, res) => {
+router.post("/logout", async (req, res) => {
   try {
     const user = await User.findById(req.signedCookies.id);
     user.tokens = user.tokens.filter(

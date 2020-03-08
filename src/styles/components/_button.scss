@@ -32,7 +32,7 @@
   margin: 0 $xl-size $xl-size 0;
   color: $font-sand;
   font-size: $font-s-size;
-  font-weight: 800;
+  font-weight: 600;
   box-shadow: 0px 2px 0 darken($secondary, 10%);
   transition: box-shadow 0.3s ease-in-out;
 
@@ -42,9 +42,9 @@
   }
 
   @media (max-width: $tablet-breakpoint) {
-    margin: 0 0 $m-size 0;
+    margin: 0 $s-size 0 0;
     width: fit-content;
-    min-width: 230px;
+    padding: $s-size;
   }
 
   @media (max-width: $mobile-breakpoint) {

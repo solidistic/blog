@@ -38,7 +38,7 @@ const Hero = ({ user, post }) => {
           ) : (
             <>
               <h1 className="hero__title">Welcome to BlogPortal!</h1>
-              <p className="hero__subtitle">Blogging made easy. Start writing and share instantly with others!</p>
+              <p className="hero__subtitle">Blogging made easy</p>
               <div className="hero__button-group">
                 <Link className="button button--big" to="/signup">
                   Signup

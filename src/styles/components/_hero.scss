@@ -31,11 +31,6 @@
   flex-direction: row;
   margin: $xl-size 0 0 0;
   white-space: nowrap;
-  
-  @media (max-width: 700px) {
-    flex-direction: column;
-    margin: $l-size 0;
-  }
 }
 
 .hero__title {
