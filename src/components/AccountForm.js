@@ -44,7 +44,6 @@ class AccountForm extends React.Component {
   };
 
   passwordsMatch = match => {
-    console.log("accountform passwords match function");
     if (match)
       this.setState(() => ({
         passwordsMatch: true
@@ -58,7 +57,12 @@ class AccountForm extends React.Component {
   render() {
     return (
       <>
-        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && (
+          <p className="message__error">{this.state.error}</p>
+        )}
+        {this.props.error && (
+          <p className="message__error">{this.props.error}</p>
+        )}
         <form onSubmit={this.handleSubmit}>
           <input
             className="input"

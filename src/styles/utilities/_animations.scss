@@ -6,3 +6,15 @@
     opacity: 1;
   }
 }
+
+@keyframes pop {
+  0% {
+    scale: 0.3;
+  }
+  50% {
+    scale: 1.4;
+  }
+  100% {
+    scale: 1;
+  }
+}

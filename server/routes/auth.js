@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
       .json({ message: "Logged in successfully ", user, privatePosts });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: "Unable to login", error: e });
+    res.status(500).json({ message: "Unable to login", error: e.message });
   }
 });
 
@@ -67,10 +67,10 @@ router.post("/signup", async (req, res) => {
         message: "Account created succesfully",
         account
       });
-  } catch (e) {
-    res.status(400).json({
+  } catch (error) {
+    res.status(500).json({
       message: "Unable to create account",
-      body: e
+      body: error
     });
   }
 });

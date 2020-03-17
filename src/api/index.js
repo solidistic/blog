@@ -45,7 +45,7 @@ export const removeComment = ({ commentId, postId }) =>
 export const getUserById = id => api.get(`/backend/users/${id}`).catch(e => e);
 export const removeUser = () => api.post("/backend/users/remove");
 export const createUser = (user, isPublic) =>
-  api.post("/backend/signup", { user, isPublic });
+  api.post("/backend/signup", { user, isPublic }).catch(e => e.response);
 export const updateUser = (id, updates, password) =>
   api.patch("/backend/users/update", { id, updates, password });
 
@@ -54,7 +54,13 @@ export const login = (username, password) =>
   api.post("/backend/login", { username, password });
 export const logout = () => api.post("/backend/logout");
 export const signup = (username, password) =>
-  api.post("/backend/signup", { username, password });
+  api
+    .post("/backend/signup", { username, password })
+    .then(res => console.log(res))
+    .catch(e => {
+      console.log("from api:", e.response);
+      return e.response;
+    });
 
 export default {
   editPost,

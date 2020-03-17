@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountForm from "./AccountForm";
 import api from "../api";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 const CreateAccount = ({ history }) => {
+  const [error, setError] = useState(null);
+
   const createAccount = async (user, isPublic) => {
     console.log("CREATE ACCOUNT", user);
     const res = await api.createUser(user, isPublic);
-    console.log(res);
-    if (res.status === 201) history.push("/");
+    
+    if (res.status === 201) return history.push("/");
+
+    setError(getErrorMessage(res));
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   };
 
   return (
@@ -20,6 +27,7 @@ const CreateAccount = ({ history }) => {
         <AccountForm
           history={history}
           handleSubmit={createAccount}
+          error={error}
         />
       </div>
     </div>
