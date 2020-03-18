@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
+const secureCookie = {
+  httpOnly: true,
+  maxAge: 5000000,
+  signed: true,
+  secure: process.env.NODE_ENV === "production"
+};
 
 router.post("/login", async (req, res) => {
   let user, token;
-  const secureCookie = {
-    httpOnly: true,
-    maxAge: 5000000,
-    signed: true,
-    secure: process.env.NODE_ENV === "production"
-  };
   const querySelector = "-posts -comments";
 
   try {
@@ -58,11 +58,14 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     const user = new User(req.body.user);
+    const token = await user.createToken();
     const account = await user.save();
+    console.log(account);
+    console.log(token);
     res
       .status(201)
-      .clearCookie("id")
-      .clearCookie("jwt_token")
+      .cookie("jwt_token", token, secureCookie)
+      .cookie("id", account._id, secureCookie)
       .json({
         message: "Account created succesfully",
         account

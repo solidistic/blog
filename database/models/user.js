@@ -60,6 +60,7 @@ userSchema.pre("save", async function(next) {
       throw new Error("Error in presave function");
     }
   }
+
   next();
 });
 
@@ -68,8 +69,13 @@ userSchema.statics.findByName = async function(username, querySelector) {
 };
 
 userSchema.methods.createToken = async function(password) {
-  const pwMatch = await bcrypt.compare(password, this.password);
-  
+  let pwMatch = true;
+
+  if (password)
+    pwMatch = await bcrypt
+      .compare(password, this.password)
+      .catch(e => console.log(e));
+
   if (pwMatch) {
     const token = await jwt.sign({ _id: this._id.toString() }, tokenSecret, {
       expiresIn: "1h"

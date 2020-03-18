@@ -5,8 +5,13 @@ export const login = user => ({
   user
 });
 
-export const startLogin = async ({ username, password }) => {
-  const res = await api.login(username, password);
+export const startLogin = async ({ username, password } = {}) => {
+  let res;
+  if (username && password) res = await api.login(username, password);
+  else res = await api.login();
+
+  console.log("startLogin", res);
+
   const { password: pw, tokens, ...user } = res.data.user;
   const privatePosts = res.data.privatePosts.posts;
 
