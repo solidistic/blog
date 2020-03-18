@@ -20,7 +20,6 @@ const CreateAccount = ({ history }) => {
 
     if (res && res.status === 201) {
       const [action, privatePosts] = await startLogin();
-      console.log(action);
       await userDispatch(action);
       if (privatePosts.length > 0) {
         privatePosts.forEach(post => {

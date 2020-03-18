@@ -14,10 +14,10 @@ const Footer = () => {
         <div>
           <span>
             <a className="link" href="https://www.linkedin.com/in/jannemulari/">
-              <i class="fab fa-linkedin fa-2x"></i>
+              <i className="fab fa-linkedin fa-2x"></i>
             </a>
             <a className="link" href="https://github.com/solidistic">
-              <i class="fab fa-github fa-2x"></i>
+              <i className="fab fa-github fa-2x"></i>
             </a>
           </span>
           <p
