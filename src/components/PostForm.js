@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
+import { ToastContainer, toast } from "react-toastify";
 import md from "../utils/markdown/config";
 import Modal from "./Modal";
 import InputSelector from "./InputSelector";
@@ -48,7 +49,8 @@ export const PostForm = ({ post, onSubmit, active }) => {
     if (!title || !body) {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
-      setError("You need to fill all the fields");
+      //setError("You need to fill all the fields");
+      toast("You need to fill out all the fields!")
     } else {
       if (post) {
         createdAt = post.createdAt;
@@ -139,6 +141,11 @@ export const PostForm = ({ post, onSubmit, active }) => {
 
   return (
     <div className="input-group">
+      <ToastContainer
+        hideProgressBar
+        toastClassName="toast toast--alert"
+        position="top-center"
+      />
       <ErrorBoundary>
         {heroSelectedFrom === "Gallery" && (
           <Modal
@@ -166,11 +173,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
         )}
       </ErrorBoundary>
       <form onSubmit={submitPost}>
-        {error && (
-          <p className="message__error">
-            {error}
-          </p>
-        )}
         <div className="input-group--vertical">
           <input
             className="input"

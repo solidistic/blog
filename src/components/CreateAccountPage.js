@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import AccountForm from "./AccountForm";
 import api from "../api";
 import { getErrorMessage } from "../utils/getErrorMessage";
@@ -10,7 +11,6 @@ import PostContext from "../context/posts-context";
 const CreateAccount = ({ history }) => {
   const { userDispatch } = useContext(UserContext);
   const { dispatch } = useContext(PostContext);
-  const [error, setError] = useState(null);
 
   const createAccount = async (user, isPublic) => {
     console.log("CREATE ACCOUNT", user);
@@ -28,14 +28,22 @@ const CreateAccount = ({ history }) => {
       }
       history.push("/");
     } else {
-      setError(getErrorMessage(res));
+      // setError(getErrorMessage(res));
+      toast(getErrorMessage(res));
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }
   };
 
+  const showError = message => toast(message);
+
   return (
     <div className="content">
+      <ToastContainer
+        hideProgressBar
+        toastClassName="toast toast--alert"
+        position="top-center"
+      />
       <div className="content-container">
         <h2 className="content-container__title">Create a new account</h2>
         <p className="content-container__subtitle--secondary">
@@ -44,7 +52,7 @@ const CreateAccount = ({ history }) => {
         <AccountForm
           history={history}
           handleSubmit={createAccount}
-          error={error}
+          showError={showError}
         />
       </div>
     </div>

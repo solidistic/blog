@@ -7,7 +7,7 @@ const Post = require("../../database/models/post");
 const Comment = require("../../database/models/comment");
 const User = require("../../database/models/user");
 const auth = require("../middleware/auth");
-const AWS_S3 = require("../storage/aws-s3");
+// const AWS_S3 = require("../storage/aws-s3");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {

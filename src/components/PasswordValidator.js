@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
+const PasswordValidator = ({
+  password,
+  repeatedPassword,
+  passwordsMatch,
+  updateErrorMessage
+}) => {
   const [message, setMessage] = useState({ type: null, text: "" });
   const [barLength, setBarLength] = useState(1);
   const [security, setSecurity] = useState({
@@ -56,6 +61,12 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
   useEffect(() => {
     if (password && password.length < 6) {
       setMessage({ type: "error", text: "Password is too short" });
+    } else if (security.level < 3) {
+      setMessage({
+        type: "error",
+        text: "Password has to match atleast three requirements"
+      });
+      passwordsMatch(false);
     } else if (password && password.length >= 6) {
       if (password !== repeatedPassword) {
         setMessage({ type: "error", text: "Passwords doesn't match" });
@@ -66,6 +77,10 @@ const PasswordValidator = ({ password, repeatedPassword, passwordsMatch }) => {
       }
     }
   }, [password, repeatedPassword, passwordsMatch, security.level]);
+
+  useEffect(() => {
+    if (message.type === "error") updateErrorMessage(message);
+  }, [message, updateErrorMessage]);
 
   useEffect(() => {
     setBarLength((security.level / 5) * 100);

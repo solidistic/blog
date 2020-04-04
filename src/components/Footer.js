@@ -7,7 +7,7 @@ const Footer = () => {
         <div>
           <h3>Contact me</h3>
           <p>janne.mulari@gmail.com</p>
-          <a className="link" href="https://janne.mulari.com">
+          <a className="link" href="https://jannemulari.com">
             www.jannemulari.com
           </a>
         </div>

@@ -25,7 +25,7 @@ class AccountForm extends React.Component {
       },
       repeatedPassword: null,
       passwordsMatch: false,
-      error: null,
+      errorMessage: null,
       disableInput: this.props.user ? true : false
     };
   }
@@ -36,7 +36,8 @@ class AccountForm extends React.Component {
       this.props.location.pathname === "/signup" &&
       !this.state.passwordsMatch
     ) {
-      return console.log("Passwords doesn't match");
+      console.log("Passwords doesn't match", this.state.errorMessage);
+      return this.props.showError(this.state.errorMessage);
     } else {
       console.log("passed", this.state.user);
       this.props.handleSubmit(this.state.user);
@@ -54,15 +55,15 @@ class AccountForm extends React.Component {
       }));
   };
 
+  // update error message from child
+  getMessage = message =>
+    this.setState(() => ({
+      errorMessage: message.text
+    }));
+
   render() {
     return (
       <>
-        {this.state.error && (
-          <p className="message__error">{this.state.error}</p>
-        )}
-        {this.props.error && (
-          <p className="message__error">{this.props.error}</p>
-        )}
         <form onSubmit={this.handleSubmit}>
           <input
             className="input"
@@ -211,6 +212,7 @@ class AccountForm extends React.Component {
                 password={this.state.user.password}
                 repeatedPassword={this.state.repeatedPassword}
                 passwordsMatch={this.passwordsMatch}
+                updateErrorMessage={this.getMessage}
               />
             </div>
           )}
