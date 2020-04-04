@@ -26,7 +26,6 @@ const LoginForm = ({ history }) => {
       history.push("/");
     } catch (e) {
       console.error(e);
-      // return setError("Unable to login, try again");
       toast("Unable to login, try again!");
     }
   };

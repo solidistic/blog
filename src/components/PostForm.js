@@ -22,7 +22,6 @@ export const PostForm = ({ post, onSubmit, active }) => {
   const [postType, setPostType] = useState(
     post && post.isPublic ? "Public" : "Private"
   );
-  const [error, setError] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
   const [heroSelectedFrom, setHeroSelectedFrom] = useState("Gallery");
   const fileInput = useRef(null);

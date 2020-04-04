@@ -42,8 +42,8 @@ const Post = ({ post, author, user }) => {
       const action = await startToggleLike(post._id, user._id);
       console.log("TOGGLE LIKE ACTION", action);
       dispatch(action);
-    } catch (error) {
-      console.log(error);
+    } catch (_) {
+      // console.log(error);
     }
   };
 
