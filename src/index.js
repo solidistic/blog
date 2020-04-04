@@ -1,6 +1,7 @@
 import React from "react";
 import * as serviceWorker from "./serviceWorker";
 import ReactDOM from "react-dom";
+import "react-toastify/dist/ReactToastify.css";
 import "./styles/styles.scss";
 import 'highlight.js/styles/atom-one-dark.css';
 import BlogApp from "./components/BlogApp";
