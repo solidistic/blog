@@ -1,0 +1,9 @@
+.toast {
+  border-radius: 3px;
+  color: $font-primary-color;
+  padding: $m-size;
+}
+
+.toast--alert {
+  background: $alert;
+}

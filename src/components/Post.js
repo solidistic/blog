@@ -4,11 +4,11 @@ import md from "../utils/markdown/config";
 import { Link } from "react-router-dom";
 import { startToggleLike } from "../actions/posts";
 import PostsContext from "../context/posts-context";
+import { ToastContainer, toast } from "react-toastify";
 
 const Post = ({ post, author, user }) => {
   const { dispatch } = useContext(PostsContext);
   const [postMoment, setPostMoment] = useState("");
-  const [error, setError] = useState(null);
   const [editMoment, setEditMoment] = useState(undefined);
 
   useEffect(() => {
@@ -35,7 +35,8 @@ const Post = ({ post, author, user }) => {
   }, [post]);
 
   const toggleLike = async () => {
-    if (!user) setError("Please login to like the post");
+    if (!user) toast("Please login to like the post");
+    // if (!user) setError("Please login to like the post");
 
     try {
       const action = await startToggleLike(post._id, user._id);
@@ -48,10 +49,14 @@ const Post = ({ post, author, user }) => {
 
   return (
     <div>
+      <ToastContainer
+        hideProgressBar
+        toastClassName="toast toast--alert"
+        position="top-center"
+      />
       <div className="post-container__title">
         <h2 className="content-container__title">{post.title}</h2>
         <div className="post-container__likes">
-          {error && <p className="message__error">{error}</p>}
           <p className="post__likes">{post.likes.count || 0}</p>
           {user && post.likes.users.includes(user._id) ? (
             <img
