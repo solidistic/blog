@@ -30,3 +30,6 @@ yarn-error.log*
 
 # fileserver images
 **/server/public/images
+
+# local mongodb data
+**/mongodb
