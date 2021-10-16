@@ -16,11 +16,18 @@ const BlogApp = () => {
 
   useEffect(() => {
     api
+      .helloWorld()
+      .then((res) => console.log("hello response", res))
+      .catch((e) => console.error("hello error", e));
+  }, []);
+
+  useEffect(() => {
+    api
       .getAllPosts()
-      .then(response => {
+      .then((response) => {
         dispatch(populatePosts(response.data));
       })
-      .catch(e => console.error(e))
+      .catch((e) => console.error(e))
       .finally(() => {
         console.log("Data fetched from database");
         setDataFetched(true);
@@ -29,7 +36,7 @@ const BlogApp = () => {
     // check for possible login with current active token
     api
       .login()
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           const { username, password } = res.data.user;
           const privatePosts = res.data.privatePosts.posts;
@@ -39,14 +46,14 @@ const BlogApp = () => {
           return privatePosts;
         }
       })
-      .then(privatePosts => {
+      .then((privatePosts) => {
         if (privatePosts.length > 0) {
-          privatePosts.forEach(post => {
+          privatePosts.forEach((post) => {
             dispatch(addPost(post));
           });
         }
       })
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
   }, []);
 
   if (!dataFetched) return <LoadingPage />;

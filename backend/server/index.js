@@ -17,10 +17,7 @@ require("../database/mongoose");
 const buildPath = path.join(__dirname, "..", "build");
 const imagesPath = path.join(__dirname, "public", "images");
 
-const origin =
-  process.env.NODE_ENV === "production"
-    ? `https://solidistic-blog.herokuapp.com`
-    : "http://localhost:3000";
+const origin = process.env.ALLOWED_ORIGIN ?? "http://localhost:3000";
 
 // Static
 app.use(express.static(buildPath));
@@ -39,11 +36,16 @@ app.use("/backend/users", userRoutes);
 app.use("/backend/", authRoutes);
 app.use("/backend/images", imagesRoutes);
 
+app.get("/hello", (req, res) => {
+  res.status(200).json("world");
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(buildPath, "index.html"));
 });
 
-app.on("error", e => console.log("Server error:", e));
+app.on("error", (e) => console.log("Server error:", e));
 app.listen(port, host, () => {
+  console.log("Allowed origin -- ", process.env.ALLOWED_ORIGIN);
   console.log(`Server is up and running on http://${host}:${port}`);
 });

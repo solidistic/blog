@@ -1,5 +1,6 @@
 export const getErrorMessage = responseObject => {
   console.log(responseObject);
+  if (!responseObject) return "An error occurred, please try again later"
 
   if (responseObject.data.body.name === "MongoError") {
     if (responseObject.data.body.code === 11000) {
