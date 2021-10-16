@@ -7,16 +7,31 @@ const Footer = () => {
         <div>
           <h3>Contact me</h3>
           <p>janne.mulari@gmail.com</p>
-          <a className="link" href="https://jannemulari.com">
+          <a
+            className="link"
+            href="https://jannemulari.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             www.jannemulari.com
           </a>
         </div>
         <div>
           <span>
-            <a className="link" href="https://www.linkedin.com/in/jannemulari/">
+            <a
+              className="link"
+              href="https://www.linkedin.com/in/jannemulari/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <i className="fab fa-linkedin fa-2x"></i>
             </a>
-            <a className="link" href="https://github.com/solidistic">
+            <a
+              className="link"
+              href="https://github.com/solidistic"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <i className="fab fa-github fa-2x"></i>
             </a>
           </span>
