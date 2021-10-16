@@ -12,7 +12,6 @@ RUN apt install -y nodejs
 COPY package-lock.json ./
 COPY package.json ./
 
-RUN npm install -g nodemon
 RUN npm install
 
 COPY server ./server
