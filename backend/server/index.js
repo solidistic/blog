@@ -19,6 +19,8 @@ const imagesPath = path.join(__dirname, "public", "images");
 
 const origin = process.env.ALLOWED_ORIGIN ?? "http://localhost:3000";
 
+app.set("trust proxy", 1);
+
 // Static
 app.use(express.static(buildPath));
 app.use("/images", express.static(imagesPath));

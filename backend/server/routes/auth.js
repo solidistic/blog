@@ -6,7 +6,8 @@ const secureCookie = {
   httpOnly: true,
   maxAge: 5000000,
   signed: true,
-  secure: process.env.NODE_ENV === "production"
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 router.post("/login", async (req, res) => {
