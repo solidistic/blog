@@ -1,17 +1,35 @@
-name: Heroku Deploy
+name: Deploy to heroku
 
+# Run workflow on every push to master branch.
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
+# Your workflows jobs.
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build, Push and Release frontend to Heroku
+        uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "solidistic-blog"
-          heroku_email: "janne.mulari@gmail.com"
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
+          dockerfile_directory: ./frontend
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+      # - name: Build, Push and Release backend to Heroku
+      #   uses: gonuit/heroku-docker-deploy@v1.3.3
+      #   with:
+      #     email: ${{ secrets.HEROKU_EMAIL }}
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+      #     heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
+      #     dockerfile_directory: ./backend
+      #     dockerfile_name: Dockerfile
+      #     docker_options: "--no-cache"
+      #     process_type: web
+          
