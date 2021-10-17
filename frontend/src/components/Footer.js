@@ -47,6 +47,7 @@ const Footer = () => {
           </p>
         </div>
       </div>
+      <p className="footer__version-number">version 1.01</p>
     </div>
   );
 };

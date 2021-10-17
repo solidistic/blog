@@ -2,9 +2,10 @@
   background: darken($primary, 5%);
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: column;
   font-size: $font-s-size;
   padding: $l-size;
+  align-items: center;
   justify-content: center;
 
   @media (max-width: $mobile-breakpoint) {
@@ -59,4 +60,10 @@
       padding-top: $s-size;
     }
   }
+}
+
+.footer__version-number {
+  color: darken($font-sand, 15%);
+  font-size: $font-xxs-size;
+  font-style: italic;
 }
