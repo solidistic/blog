@@ -3,7 +3,9 @@ version: "3.8"
 
 services:
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: dev.Dockerfile
     container_name: blogi-backend
     environment:
       - ALLOWED_ORIGIN=http://localhost:3000
@@ -20,7 +22,9 @@ services:
     networks:
       - main-network
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      dockerfile: dev.Dockerfile
     container_name: blogi-frontend
     environment:
       - REACT_APP_BACKEND_URI=http://localhost:8080

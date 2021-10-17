@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 WORKDIR /usr/src/app
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 RUN apt update && apt-get update && apt install -y curl
 RUN apt-get install -y build-essential && apt-get install -y python
@@ -19,4 +19,4 @@ COPY database ./database
 
 EXPOSE 8080
 
-CMD [ "node", "server/index.js" ]
+CMD [ "npm", "run", "dev-server" ]
