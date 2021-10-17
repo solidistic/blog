@@ -2,6 +2,7 @@ FROM ubuntu:latest
 
 WORKDIR /usr/src/app
 
+# test
 ENV NODE_ENV=production
 
 RUN apt update && apt-get update && apt install -y curl
