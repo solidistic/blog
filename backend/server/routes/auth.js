@@ -14,6 +14,8 @@ router.post("/login", async (req, res) => {
   let user, token;
   const querySelector = "-posts -comments";
 
+  console.log(req.signedCookies);
+
   try {
     if (req.signedCookies.id && req.signedCookies.jwt_token) {
       user = await User.findById(req.signedCookies.id, querySelector);
